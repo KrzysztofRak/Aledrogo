@@ -9,9 +9,9 @@ namespace Aledrogo.Models
         public int UserId { get; set; }
         public int CategoryId { get; set; }
         public User User { get; set; }
-        public Category Cateogory { get; set; }
+        public Category Category { get; set; }
         public ICollection<Image> Images { get; set; }
-        public ICollection<SpecyficationValueProduct> SpecyficationValueProducts { get; set; }
+        public ICollection<CategoryFieldValue> CategoryFieldsValues { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public string Condition { get; set; }
