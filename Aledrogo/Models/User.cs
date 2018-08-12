@@ -5,9 +5,9 @@ namespace Aledrogo.Models
 {
     public class User : IdentityUser
     {
-        public ICollection<Product> Products { get; set; }
-        public ICollection<Address> GetAddresses { get; set; }
-        public ICollection<Order> Orders { get; set; }
-        public ICollection<Basket> Baskets { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
+        public virtual ICollection<Address> Addresses { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
+        public virtual ICollection<Basket> Baskets { get; set; }
     }
 }
