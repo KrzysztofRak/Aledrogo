@@ -7,7 +7,7 @@ namespace Aledrogo.Models
         public int Id { get; set; }
         public int ParentId { get; set; }
         public ICollection<Product> Products { get; set; }
-        public ICollection<CategoryField> CategoryFields { get; set; }
+        public ICollection<CategorySpecificField> CategorySpecificFields { get; set; }
         public string Name { get; set; }
     }
 }
