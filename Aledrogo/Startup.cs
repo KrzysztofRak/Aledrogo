@@ -1,23 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Aledrogo.Data;
+using Aledrogo.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Aledrogo
 {
     public class Startup
     {
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        private readonly IConfiguration _config;
+
+        public Startup(IHostingEnvironment environment)
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(environment.ContentRootPath)
+                .AddJsonFile("appsettings.json");
+
+            _config = builder.Build();
+        }
         public void ConfigureServices(IServiceCollection services)
         {
-        }
+            string connectionString = _config.GetConnectionString("DefaultConnection");
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+            services.AddDbContext<AledrogoContext>(options => options.UseSqlServer(connectionString));
+            services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<AledrogoContext>();
+        }
+        
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
