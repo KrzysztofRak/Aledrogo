@@ -5,7 +5,7 @@ namespace Aledrogo.Attribute
 {
     public class DateRangeAttribute : RangeAttribute
     {
-        public DateRangeAttribute(int addDayToBeginDate, int addDayToEndDate) 
-            : base(typeof(DateTime), DateTime.UtcNow.AddDays(addDayToBeginDate).ToString(), DateTime.UtcNow.AddDays(addDayToEndDate).ToString()) { }
+        public DateRangeAttribute(int minDurationInDays, int maxDurationInDays) 
+            : base(typeof(DateTime), DateTime.UtcNow.AddDays(minDurationInDays).ToString(), DateTime.UtcNow.AddDays(maxDurationInDays).ToString()) { }
     }
 }

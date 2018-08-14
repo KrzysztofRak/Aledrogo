@@ -1,17 +1,26 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Aledrogo.Models
 {
-    public class ProductOpinion
+    public class TransactionRating
     {
         [Key]
         public int Id { get; set; }
-
-        public int UserId { get; set; }
+        public string SellerId { get; set; }
+        public string CustomerId { get; set; }
         public int ProductId { get; set; }
+        public int DeliveryMethodId { get; set; }
+
+        [ForeignKey("SellerId")]
+        public virtual User Seller { get; set; }
+        [ForeignKey("CustomerId")]
+        public virtual User Customer { get; set; }
+
         public virtual Product Product { get; set; }
-        public virtual User User { get; set; }
+        public virtual DeliveryMethod DeliveryMethod { get; set; }
+
         public bool IsPositive { get; set; }
 
         [Required]

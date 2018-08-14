@@ -14,7 +14,9 @@ namespace Aledrogo.Data
         public DbSet<Image> Images { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Product> Products { get; set; }
-        public DbSet<ProductOpinion> ProductOpinions { get; set; }
+        public DbSet<TransactionRating> TransactionRatings { get; set; }
+        public DbSet<DeliveryMethod> DeliveryMethods { get; set; }
+        public DbSet<ProductDeliveryMethod> ProductDeliveryMethods { get; set; }
 
         public AledrogoContext(DbContextOptions options) : base(options) { }
 
@@ -28,7 +30,9 @@ namespace Aledrogo.Data
             builder.Entity<Image>().ToTable("Image");
             builder.Entity<Order>().ToTable("Order");
             builder.Entity<Product>().ToTable("Product");
-            builder.Entity<ProductOpinion>().ToTable("ProductOpinion");
+            builder.Entity<TransactionRating>().ToTable("TransactionRating");
+            builder.Entity<DeliveryMethod>().ToTable("DeliveryMethod");
+            builder.Entity<ProductDeliveryMethod>().ToTable("ProductDeliveryMethod");
 
             base.OnModelCreating(builder);
         }

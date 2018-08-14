@@ -11504,23 +11504,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\bartosza\\.nuget\\packages\\": {},
+    "C:\\Users\\rakk1\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\bartosza\\Documents\\GitHub\\Aledrogo\\Aledrogo\\Aledrogo.csproj",
+      "projectUniqueName": "C:\\Users\\rakk1\\source\\repos\\Aledrogo\\Aledrogo\\Aledrogo.csproj",
       "projectName": "Aledrogo",
-      "projectPath": "C:\\Users\\bartosza\\Documents\\GitHub\\Aledrogo\\Aledrogo\\Aledrogo.csproj",
-      "packagesPath": "C:\\Users\\bartosza\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\bartosza\\Documents\\GitHub\\Aledrogo\\Aledrogo\\obj\\",
+      "projectPath": "C:\\Users\\rakk1\\source\\repos\\Aledrogo\\Aledrogo\\Aledrogo.csproj",
+      "packagesPath": "C:\\Users\\rakk1\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\rakk1\\source\\repos\\Aledrogo\\Aledrogo\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\bartosza\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\rakk1\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

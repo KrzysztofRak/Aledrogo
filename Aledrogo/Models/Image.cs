@@ -11,6 +11,6 @@ namespace Aledrogo.Models
         public virtual Product Product { get; set; }
 
         [Required]
-        public byte[] ImageFile { get; set; }
+        public string ImagePath { get; set; }
     }
 }

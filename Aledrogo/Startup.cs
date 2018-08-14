@@ -14,6 +14,7 @@ namespace Aledrogo
     {
         private readonly IConfiguration _config;
 
+
         public Startup(IHostingEnvironment environment)
         {
             var builder = new ConfigurationBuilder()

@@ -14,6 +14,6 @@ namespace Aledrogo.Models
 
         [Required]
         [MaxLength(100)]
-        public string Name { get; set; }
+        public string FieldName { get; set; }
     }
 }

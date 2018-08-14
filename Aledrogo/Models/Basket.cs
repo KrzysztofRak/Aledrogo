@@ -13,7 +13,7 @@ namespace Aledrogo.Models
         public virtual Product Product { get; set; }
 
         [Required]
-        [Range(minimum:1, maximum:999)]
+        [Range(minimum:1, maximum:10000)]
         public int Quantity { get; set; }
     }
 }
