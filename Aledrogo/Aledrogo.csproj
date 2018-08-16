@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20180816142904_TransactionRating.cs" />
+    <Compile Remove="Migrations\20180816142904_TransactionRating.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Data\" />
     <Folder Include="Controllers\" />
     <Folder Include="wwwroot\" />

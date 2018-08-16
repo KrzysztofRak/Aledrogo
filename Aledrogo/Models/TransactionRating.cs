@@ -1,25 +1,21 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Aledrogo.Models
 {
     public class TransactionRating
     {
-        [Key]
         public int Id { get; set; }
-        public string SellerId { get; set; }
-        public string CustomerId { get; set; }
-        public int ProductId { get; set; }
-        public int DeliveryMethodId { get; set; }
 
-        [ForeignKey("SellerId")]
+        public int OrderId { get; set; }
+        public virtual Order Order { get; set; }
+
+        public int SellerId { get; set; }
         public virtual User Seller { get; set; }
-        [ForeignKey("CustomerId")]
-        public virtual User Customer { get; set; }
 
-        public virtual Product Product { get; set; }
-        public virtual DeliveryMethod DeliveryMethod { get; set; }
+        public virtual ICollection<TransactionRatingResponse> TransactionRatingResponses { get; set; }
 
         public bool IsPositive { get; set; }
 

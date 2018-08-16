@@ -10,15 +10,18 @@ namespace Aledrogo.Models
     {
         [Key]
         public int Id { get; set; }
-        public string SellerId { get; set; }
-        public int CategoryId { get; set; }
 
-        [ForeignKey("SellerId")]
-        public virtual User User { get; set; }
+        public string SellerId { get; set; }
+        public virtual User Seller { get; set; }
+
+        public int CategoryId { get; set; }
         public virtual Category Category { get; set; }
-        public ICollection<Image> Images { get; set; }
-        public ICollection<CategorySpecificFieldValue> CategorySpecificFieldsValues { get; set; }
-        public ICollection<ProductDeliveryMethod> ProductDeliveryMethods { get; set; }
+        
+        public virtual ICollection<Image> Images { get; set; }
+        public virtual ICollection<CategorySpecificFieldValue> CategorySpecificFieldsValues { get; set; }
+        public virtual ICollection<Basket> Baskets { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
+        public virtual ICollection<ProductDeliveryMethod> ProductDeliveryMethods { get; set; }
 
         [Required]
         [MaxLength(100)]
@@ -37,7 +40,7 @@ namespace Aledrogo.Models
 
         [Required]
         [Range(0, 10000)]
-        public int ItemInStock { get; set; }
+        public int ItemsInStock { get; set; }
 
         [Required]
         [Range(1, 14)]
