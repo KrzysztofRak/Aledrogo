@@ -1,8 +1,9 @@
 ﻿using Aledrogo.Data;
 using Aledrogo.Models;
+using Aledrogo.Repositories;
+using Aledrogo.Utility;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -27,10 +28,19 @@ namespace Aledrogo
         public void ConfigureServices(IServiceCollection services)
         {
             string connectionString = _config.GetConnectionString("DefaultConnection");
+            var configMapper = new AutoMapper.MapperConfiguration(c =>
+            {
+                c.AddProfile(new ApplicationProfile());
+            });
+            var mapper = configMapper.CreateMapper();
 
+            services.AddMvc();
             services.AddDbContext<AledrogoContext>(options => options.UseSqlServer(connectionString));
+            services.AddSingleton(mapper);
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<AledrogoContext>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            
         }
         
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -45,11 +55,12 @@ namespace Aledrogo
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.Run(async (context) =>
+            else
             {
-                await context.Response.WriteAsync("Hello World!");
-            });
+                app.UseExceptionHandler();
+            }
+
+            app.UseMvcWithDefaultRoute();
         }
     }
 }
