@@ -4,14 +4,16 @@ using Aledrogo.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Aledrogo.Migrations
 {
     [DbContext(typeof(AledrogoContext))]
-    partial class AledrogoContextModelSnapshot : ModelSnapshot
+    [Migration("20180816143105_TransactionRating")]
+    partial class TransactionRating
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

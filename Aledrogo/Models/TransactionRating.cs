@@ -1,17 +1,22 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Aledrogo.Models
 {
-    public class ProductOpinion
+    public class TransactionRating
     {
-        [Key]
         public int Id { get; set; }
 
-        public int UserId { get; set; }
-        public int ProductId { get; set; }
-        public virtual Product Product { get; set; }
-        public virtual User User { get; set; }
+        public int OrderId { get; set; }
+        public virtual Order Order { get; set; }
+
+        public int SellerId { get; set; }
+        public virtual User Seller { get; set; }
+
+        public virtual ICollection<TransactionRatingResponse> TransactionRatingResponses { get; set; }
+
         public bool IsPositive { get; set; }
 
         [Required]

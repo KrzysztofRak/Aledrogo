@@ -7,7 +7,9 @@ namespace Aledrogo.Models
     {
         [Key]
         public int Id { get; set; }
-        public int ParentCatrgoryId { get; set; }
+
+        public int? ParentCategoryId { get; set; }
+        public virtual Category ParentCategory { get; set; }
 
         public virtual ICollection<Product> Products { get; set; }
         public virtual ICollection<CategorySpecificField> CategorySpecificFields { get; set; }

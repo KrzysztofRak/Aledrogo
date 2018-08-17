@@ -4,14 +4,16 @@ using Aledrogo.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Aledrogo.Migrations
 {
     [DbContext(typeof(AledrogoContext))]
-    partial class AledrogoContextModelSnapshot : ModelSnapshot
+    [Migration("20180814133729_DeliveryMethods")]
+    partial class DeliveryMethods
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -89,11 +91,9 @@ namespace Aledrogo.Migrations
                         .IsRequired()
                         .HasMaxLength(100);
 
-                    b.Property<int?>("ParentCategoryId");
+                    b.Property<int>("ParentCatrgoryId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ParentCategoryId");
 
                     b.ToTable("Category");
                 });
@@ -185,25 +185,21 @@ namespace Aledrogo.Migrations
 
                     b.Property<int>("AddressId");
 
-                    b.Property<bool>("Completed");
-
-                    b.Property<string>("CustomerId");
-
-                    b.Property<int>("DeliveryMethodId");
-
                     b.Property<int>("ProductId");
 
-                    b.Property<int>("Quantity");
+                    b.Property<int?>("SelectedDeliveryMethodId");
+
+                    b.Property<string>("UserId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId");
 
-                    b.HasIndex("CustomerId");
-
-                    b.HasIndex("DeliveryMethodId");
-
                     b.HasIndex("ProductId");
+
+                    b.HasIndex("SelectedDeliveryMethodId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Order");
                 });
@@ -224,7 +220,7 @@ namespace Aledrogo.Migrations
 
                     b.Property<DateTime>("EndDate");
 
-                    b.Property<int>("ItemsInStock");
+                    b.Property<int>("ItemInStock");
 
                     b.Property<decimal>("MinimalPrice");
 
@@ -234,19 +230,21 @@ namespace Aledrogo.Migrations
 
                     b.Property<decimal>("Price");
 
-                    b.Property<string>("SellerId");
-
                     b.Property<byte>("ShippingTimeInWorkingDays");
 
                     b.Property<DateTime>("StartDate");
 
                     b.Property<int>("State");
 
+                    b.Property<int>("UserId");
+
+                    b.Property<string>("UserId1");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("SellerId");
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Product");
                 });
@@ -259,11 +257,15 @@ namespace Aledrogo.Migrations
 
                     b.Property<int>("DeliveryMethodId");
 
+                    b.Property<int?>("ProductDeliveryMethodId");
+
                     b.Property<int>("ProductId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("DeliveryMethodId");
+
+                    b.HasIndex("ProductDeliveryMethodId");
 
                     b.HasIndex("ProductId");
 
@@ -286,13 +288,11 @@ namespace Aledrogo.Migrations
 
                     b.Property<byte>("CustomerServiceRating");
 
+                    b.Property<int?>("DeliveryMethodId");
+
                     b.Property<bool>("IsPositive");
 
-                    b.Property<int>("OrderId");
-
-                    b.Property<int>("SellerId");
-
-                    b.Property<string>("SellerId1");
+                    b.Property<int>("ProductId");
 
                     b.Property<byte>("ShippingCostRating");
 
@@ -300,35 +300,11 @@ namespace Aledrogo.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderId")
-                        .IsUnique();
+                    b.HasIndex("DeliveryMethodId");
 
-                    b.HasIndex("SellerId1");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("TransactionRating");
-                });
-
-            modelBuilder.Entity("Aledrogo.Models.TransactionRatingResponse", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Response")
-                        .IsRequired()
-                        .HasMaxLength(500);
-
-                    b.Property<int>("TransactionRatingId");
-
-                    b.Property<string>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TransactionRatingId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("TransactionRatingResponses");
                 });
 
             modelBuilder.Entity("Aledrogo.Models.User", b =>
@@ -502,20 +478,13 @@ namespace Aledrogo.Migrations
             modelBuilder.Entity("Aledrogo.Models.Basket", b =>
                 {
                     b.HasOne("Aledrogo.Models.Product", "Product")
-                        .WithMany("Baskets")
+                        .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Aledrogo.Models.User", "User")
                         .WithMany("Baskets")
                         .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("Aledrogo.Models.Category", b =>
-                {
-                    b.HasOne("Aledrogo.Models.Category", "ParentCategory")
-                        .WithMany()
-                        .HasForeignKey("ParentCategoryId");
                 });
 
             modelBuilder.Entity("Aledrogo.Models.CategorySpecificField", b =>
@@ -553,19 +522,18 @@ namespace Aledrogo.Migrations
                         .HasForeignKey("AddressId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Aledrogo.Models.User", "Customer")
-                        .WithMany("Orders")
-                        .HasForeignKey("CustomerId");
-
-                    b.HasOne("Aledrogo.Models.DeliveryMethod", "DeliveryMethod")
-                        .WithMany()
-                        .HasForeignKey("DeliveryMethodId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("Aledrogo.Models.Product", "Product")
-                        .WithMany("Orders")
+                        .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Aledrogo.Models.DeliveryMethod", "SelectedDeliveryMethod")
+                        .WithMany()
+                        .HasForeignKey("SelectedDeliveryMethodId");
+
+                    b.HasOne("Aledrogo.Models.User", "User")
+                        .WithMany("Orders")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Aledrogo.Models.Product", b =>
@@ -575,9 +543,9 @@ namespace Aledrogo.Migrations
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Aledrogo.Models.User", "Seller")
+                    b.HasOne("Aledrogo.Models.User", "User")
                         .WithMany("Products")
-                        .HasForeignKey("SellerId");
+                        .HasForeignKey("UserId1");
                 });
 
             modelBuilder.Entity("Aledrogo.Models.ProductDeliveryMethod", b =>
@@ -587,6 +555,10 @@ namespace Aledrogo.Migrations
                         .HasForeignKey("DeliveryMethodId")
                         .OnDelete(DeleteBehavior.Cascade);
 
+                    b.HasOne("Aledrogo.Models.ProductDeliveryMethod")
+                        .WithMany("ProductDeliveryMethods")
+                        .HasForeignKey("ProductDeliveryMethodId");
+
                     b.HasOne("Aledrogo.Models.Product", "Product")
                         .WithMany("ProductDeliveryMethods")
                         .HasForeignKey("ProductId")
@@ -595,26 +567,14 @@ namespace Aledrogo.Migrations
 
             modelBuilder.Entity("Aledrogo.Models.TransactionRating", b =>
                 {
-                    b.HasOne("Aledrogo.Models.Order", "Order")
-                        .WithOne("TransactionRating")
-                        .HasForeignKey("Aledrogo.Models.TransactionRating", "OrderId")
+                    b.HasOne("Aledrogo.Models.DeliveryMethod", "DeliveryMethod")
+                        .WithMany()
+                        .HasForeignKey("DeliveryMethodId");
+
+                    b.HasOne("Aledrogo.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Aledrogo.Models.User", "Seller")
-                        .WithMany("TransactionRatings")
-                        .HasForeignKey("SellerId1");
-                });
-
-            modelBuilder.Entity("Aledrogo.Models.TransactionRatingResponse", b =>
-                {
-                    b.HasOne("Aledrogo.Models.TransactionRating", "TransactionRating")
-                        .WithMany("TransactionRatingResponses")
-                        .HasForeignKey("TransactionRatingId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Aledrogo.Models.User", "User")
-                        .WithMany("TransactionRatingResponses")
-                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
