@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Aledrogo.Migrations
 {
     [DbContext(typeof(AledrogoContext))]
-    [Migration("20180816143105_TransactionRating")]
-    partial class TransactionRating
+    [Migration("20180817141611_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -330,7 +330,7 @@ namespace Aledrogo.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("TransactionRatingResponses");
+                    b.ToTable("TransactionRatingResponse");
                 });
 
             modelBuilder.Entity("Aledrogo.Models.User", b =>

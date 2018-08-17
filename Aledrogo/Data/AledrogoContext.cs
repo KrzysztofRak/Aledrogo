@@ -24,6 +24,8 @@ namespace Aledrogo.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            base.OnModelCreating(builder);
+
             builder.Entity<Address>().ToTable("Address");
             builder.Entity<Basket>().ToTable("Basket");
             builder.Entity<Category>().ToTable("Category");
@@ -35,9 +37,7 @@ namespace Aledrogo.Data
             builder.Entity<Product>().ToTable("Product");
             builder.Entity<ProductDeliveryMethod>().ToTable("ProductDeliveryMethod");
             builder.Entity<TransactionRating>().ToTable("TransactionRating");
-      //      builder.Entity<TransactionRatingResponse>().ToTable("TransactionRatingResponse");
-
-            base.OnModelCreating(builder);
+            builder.Entity<TransactionRatingResponse>().ToTable("TransactionRatingResponse");    
         }
     }
 }

@@ -53,12 +53,34 @@ namespace Aledrogo.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ParentCatrgoryId = table.Column<int>(nullable: false),
+                    ParentCategoryId = table.Column<int>(nullable: true),
                     Name = table.Column<string>(maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Category", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Category_Category_ParentCategoryId",
+                        column: x => x.ParentCategoryId,
+                        principalTable: "Category",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DeliveryMethod",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    Price = table.Column<decimal>(nullable: false),
+                    IsSafe = table.Column<bool>(nullable: false),
+                    ExpectedDeliveryTime = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DeliveryMethod", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -199,7 +221,7 @@ namespace Aledrogo.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CategoryId = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(maxLength: 100, nullable: false)
+                    FieldName = table.Column<string>(maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -218,14 +240,16 @@ namespace Aledrogo.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    UserId = table.Column<int>(nullable: false),
+                    SellerId = table.Column<string>(nullable: true),
                     CategoryId = table.Column<int>(nullable: false),
-                    UserId1 = table.Column<string>(nullable: true),
-                    Title = table.Column<string>(maxLength: 100, nullable: false),
+                    Name = table.Column<string>(maxLength: 100, nullable: false),
                     Description = table.Column<string>(maxLength: 100, nullable: false),
                     MinimalPrice = table.Column<decimal>(nullable: false),
                     Price = table.Column<decimal>(nullable: false),
-                    ItemInStock = table.Column<int>(nullable: false),
+                    DaysForReturn = table.Column<int>(nullable: false),
+                    State = table.Column<int>(nullable: false),
+                    ItemsInStock = table.Column<int>(nullable: false),
+                    ShippingTimeInWorkingDays = table.Column<byte>(nullable: false),
                     StartDate = table.Column<DateTime>(nullable: false),
                     EndDate = table.Column<DateTime>(nullable: false)
                 },
@@ -239,8 +263,8 @@ namespace Aledrogo.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Product_AspNetUsers_UserId1",
-                        column: x => x.UserId1,
+                        name: "FK_Product_AspNetUsers_SellerId",
+                        column: x => x.SellerId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -252,8 +276,8 @@ namespace Aledrogo.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ProductId = table.Column<int>(nullable: false),
                     UserId = table.Column<string>(nullable: true),
+                    ProductId = table.Column<int>(nullable: false),
                     Quantity = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -280,8 +304,8 @@ namespace Aledrogo.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CategoryFieldId = table.Column<int>(nullable: false),
-                    ProductId = table.Column<int>(nullable: false),
                     CategorySpecificFieldId = table.Column<int>(nullable: true),
+                    ProductId = table.Column<int>(nullable: false),
                     Value = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -308,7 +332,7 @@ namespace Aledrogo.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ProductId = table.Column<int>(nullable: false),
-                    ImageFile = table.Column<byte[]>(nullable: false)
+                    ImagePath = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -327,9 +351,12 @@ namespace Aledrogo.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CustomerId = table.Column<string>(nullable: true),
                     AddressId = table.Column<int>(nullable: false),
                     ProductId = table.Column<int>(nullable: false),
-                    UserId = table.Column<string>(nullable: true)
+                    DeliveryMethodId = table.Column<int>(nullable: false),
+                    Quantity = table.Column<int>(nullable: false),
+                    Completed = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -341,28 +368,60 @@ namespace Aledrogo.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
+                        name: "FK_Order_AspNetUsers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Order_DeliveryMethod_DeliveryMethodId",
+                        column: x => x.DeliveryMethodId,
+                        principalTable: "DeliveryMethod",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Order_Product_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Product",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Order_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductOpinion",
+                name: "ProductDeliveryMethod",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    UserId = table.Column<int>(nullable: false),
                     ProductId = table.Column<int>(nullable: false),
-                    UserId1 = table.Column<string>(nullable: true),
+                    DeliveryMethodId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductDeliveryMethod", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProductDeliveryMethod_DeliveryMethod_DeliveryMethodId",
+                        column: x => x.DeliveryMethodId,
+                        principalTable: "DeliveryMethod",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProductDeliveryMethod_Product_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Product",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TransactionRating",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    OrderId = table.Column<int>(nullable: false),
+                    SellerId = table.Column<int>(nullable: false),
+                    SellerId1 = table.Column<string>(nullable: true),
                     IsPositive = table.Column<bool>(nullable: false),
                     CompatibilityWithDescriptionRating = table.Column<byte>(nullable: false),
                     ShippingTimeRating = table.Column<byte>(nullable: false),
@@ -373,16 +432,43 @@ namespace Aledrogo.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductOpinion", x => x.Id);
+                    table.PrimaryKey("PK_TransactionRating", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProductOpinion_Product_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Product",
+                        name: "FK_TransactionRating_Order_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Order",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ProductOpinion_AspNetUsers_UserId1",
-                        column: x => x.UserId1,
+                        name: "FK_TransactionRating_AspNetUsers_SellerId1",
+                        column: x => x.SellerId1,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TransactionRatingResponse",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    UserId = table.Column<string>(nullable: true),
+                    TransactionRatingId = table.Column<int>(nullable: false),
+                    Response = table.Column<string>(maxLength: 500, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TransactionRatingResponse", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TransactionRatingResponse_TransactionRating_TransactionRatingId",
+                        column: x => x.TransactionRatingId,
+                        principalTable: "TransactionRating",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TransactionRatingResponse_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -443,6 +529,11 @@ namespace Aledrogo.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Category_ParentCategoryId",
+                table: "Category",
+                column: "ParentCategoryId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CategorySpecificField_CategoryId",
                 table: "CategorySpecificField",
                 column: "CategoryId");
@@ -468,14 +559,19 @@ namespace Aledrogo.Migrations
                 column: "AddressId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Order_CustomerId",
+                table: "Order",
+                column: "CustomerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Order_DeliveryMethodId",
+                table: "Order",
+                column: "DeliveryMethodId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Order_ProductId",
                 table: "Order",
                 column: "ProductId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Order_UserId",
-                table: "Order",
-                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Product_CategoryId",
@@ -483,19 +579,40 @@ namespace Aledrogo.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Product_UserId1",
+                name: "IX_Product_SellerId",
                 table: "Product",
-                column: "UserId1");
+                column: "SellerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductOpinion_ProductId",
-                table: "ProductOpinion",
+                name: "IX_ProductDeliveryMethod_DeliveryMethodId",
+                table: "ProductDeliveryMethod",
+                column: "DeliveryMethodId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductDeliveryMethod_ProductId",
+                table: "ProductDeliveryMethod",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductOpinion_UserId1",
-                table: "ProductOpinion",
-                column: "UserId1");
+                name: "IX_TransactionRating_OrderId",
+                table: "TransactionRating",
+                column: "OrderId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TransactionRating_SellerId1",
+                table: "TransactionRating",
+                column: "SellerId1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TransactionRatingResponse_TransactionRatingId",
+                table: "TransactionRatingResponse",
+                column: "TransactionRatingId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TransactionRatingResponse_UserId",
+                table: "TransactionRatingResponse",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -525,10 +642,10 @@ namespace Aledrogo.Migrations
                 name: "Image");
 
             migrationBuilder.DropTable(
-                name: "Order");
+                name: "ProductDeliveryMethod");
 
             migrationBuilder.DropTable(
-                name: "ProductOpinion");
+                name: "TransactionRatingResponse");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -537,7 +654,16 @@ namespace Aledrogo.Migrations
                 name: "CategorySpecificField");
 
             migrationBuilder.DropTable(
+                name: "TransactionRating");
+
+            migrationBuilder.DropTable(
+                name: "Order");
+
+            migrationBuilder.DropTable(
                 name: "Address");
+
+            migrationBuilder.DropTable(
+                name: "DeliveryMethod");
 
             migrationBuilder.DropTable(
                 name: "Product");

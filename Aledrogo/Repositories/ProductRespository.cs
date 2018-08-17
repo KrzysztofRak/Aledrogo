@@ -10,23 +10,23 @@ namespace Aledrogo.Repositories
 {
     public class ProductRespository
     {
-        private AledrogoContext ctx;
+        private AledrogoContext context;
 
-        public ProductRespository(AledrogoContext ctx)
+        public ProductRespository(AledrogoContext context)
         {
-            this.ctx = ctx;
+            this.context = context;
         }
 
         public Product GetById(int productId)
         {
-            return ctx.Products.Where(p => p.Id == productId).FirstOrDefault();
+            return context.Products.Where(p => p.Id == productId).FirstOrDefault();
         }
 
         public void Remove(Product product)
         {
             try
             {
-                ctx.Products.Remove(product);
+                context.Products.Remove(product);
             }
             catch(Exception ex)
             {
@@ -49,7 +49,7 @@ namespace Aledrogo.Repositories
 
         public IEnumerable<Product> SearchByName(string productName)
         {
-            return ctx.Products.Where(p => p.Name.Contains(productName));
+            return context.Products.Where(p => p.Name.Contains(productName));
         }
 
         public IEnumerable<Product> FilterProductsBy(ProductFilter productFilter)

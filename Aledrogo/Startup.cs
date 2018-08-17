@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace Aledrogo
 {
@@ -34,6 +35,12 @@ namespace Aledrogo
         
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            using (var scope = app.ApplicationServices.CreateScope())
+            {
+                IServiceProvider serviceProvider = scope.ServiceProvider;
+                SeedData.Initialize(serviceProvider);
+            }
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

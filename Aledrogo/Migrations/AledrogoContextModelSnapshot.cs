@@ -328,7 +328,7 @@ namespace Aledrogo.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("TransactionRatingResponses");
+                    b.ToTable("TransactionRatingResponse");
                 });
 
             modelBuilder.Entity("Aledrogo.Models.User", b =>
