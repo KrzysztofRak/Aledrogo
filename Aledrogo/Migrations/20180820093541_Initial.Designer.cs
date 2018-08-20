@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Aledrogo.Migrations
 {
     [DbContext(typeof(AledrogoContext))]
-    [Migration("20180817141611_Initial")]
+    [Migration("20180820093541_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
