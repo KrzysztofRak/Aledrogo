@@ -18,7 +18,7 @@ namespace Aledrogo.Models
         public virtual Category Category { get; set; }
         
         public virtual ICollection<Image> Images { get; set; }
-        public virtual ICollection<CategorySpecificFieldValue> CategorySpecificFieldsValues { get; set; }
+        public virtual ICollection<SelectedValueForCategoryField> SelectedValuesForCategoryFields { get; set; }
         public virtual ICollection<Basket> Baskets { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
         public virtual ICollection<ProductDeliveryMethod> ProductDeliveryMethods { get; set; }
@@ -28,7 +28,7 @@ namespace Aledrogo.Models
         public string Name { get; set; }
 
         [Required]
-        [MaxLength(100)]
+        [MaxLength(10000)]
         public string Description { get; set; }
 
         public decimal MinimalPrice { get; set; }

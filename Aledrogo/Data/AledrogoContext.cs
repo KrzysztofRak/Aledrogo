@@ -9,8 +9,9 @@ namespace Aledrogo.Data
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Basket> Baskets { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<CategorySpecificField> CategorySpecificFields { get; set; }
-        public DbSet<CategorySpecificFieldValue> CategorySpecificFieldValues { get; set; }
+        public DbSet<CategoryField> CategoryFields { get; set; }
+        public DbSet<PredefinedValueForCategoryField> PredefinedValuesForCategoryField { get; set; }
+        public DbSet<SelectedValueForCategoryField> SelectedValuesForCategoryField { get; set; }
         public DbSet<DeliveryMethod> DeliveryMethods { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<Order> Orders { get; set; }
@@ -29,8 +30,9 @@ namespace Aledrogo.Data
             builder.Entity<Address>().ToTable("Address");
             builder.Entity<Basket>().ToTable("Basket");
             builder.Entity<Category>().ToTable("Category");
-            builder.Entity<CategorySpecificField>().ToTable("CategorySpecificField");
-            builder.Entity<CategorySpecificFieldValue>().ToTable("CategorySpecificFieldValue");
+            builder.Entity<CategoryField>().ToTable("CategorySpecificField");
+            builder.Entity<PredefinedValueForCategoryField>().ToTable("PredefinedValueForCategoryField");
+            builder.Entity<SelectedValueForCategoryField>().ToTable("SelectedValueForCategoryField");
             builder.Entity<DeliveryMethod>().ToTable("DeliveryMethod");
             builder.Entity<Image>().ToTable("Image");
             builder.Entity<Order>().ToTable("Order");

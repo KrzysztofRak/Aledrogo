@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Aledrogo.Migrations
 {
     [DbContext(typeof(AledrogoContext))]
-    [Migration("20180820093541_Initial")]
+    [Migration("20180820145648_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -100,15 +100,25 @@ namespace Aledrogo.Migrations
                     b.ToTable("Category");
                 });
 
-            modelBuilder.Entity("Aledrogo.Models.CategorySpecificField", b =>
+            modelBuilder.Entity("Aledrogo.Models.CategoryField", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<bool>("CanBeUnknown");
+
                     b.Property<int>("CategoryId");
 
-                    b.Property<string>("FieldName")
+                    b.Property<bool>("CustomNumericValueAllowed");
+
+                    b.Property<bool>("IsRequired");
+
+                    b.Property<int?>("MaxNumber");
+
+                    b.Property<int?>("MinNumber");
+
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100);
 
@@ -117,29 +127,6 @@ namespace Aledrogo.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("CategorySpecificField");
-                });
-
-            modelBuilder.Entity("Aledrogo.Models.CategorySpecificFieldValue", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CategoryFieldId");
-
-                    b.Property<int?>("CategorySpecificFieldId");
-
-                    b.Property<int>("ProductId");
-
-                    b.Property<string>("Value");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CategorySpecificFieldId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("CategorySpecificFieldValue");
                 });
 
             modelBuilder.Entity("Aledrogo.Models.DeliveryMethod", b =>
@@ -210,6 +197,24 @@ namespace Aledrogo.Migrations
                     b.ToTable("Order");
                 });
 
+            modelBuilder.Entity("Aledrogo.Models.PredefinedValueForCategoryField", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CategoryFieldId");
+
+                    b.Property<string>("Value")
+                        .HasMaxLength(100);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryFieldId");
+
+                    b.ToTable("PredefinedValueForCategoryField");
+                });
+
             modelBuilder.Entity("Aledrogo.Models.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -222,7 +227,7 @@ namespace Aledrogo.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(100);
+                        .HasMaxLength(10000);
 
                     b.Property<DateTime>("EndDate");
 
@@ -270,6 +275,27 @@ namespace Aledrogo.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductDeliveryMethod");
+                });
+
+            modelBuilder.Entity("Aledrogo.Models.SelectedValueForCategoryField", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CategoryFieldId");
+
+                    b.Property<int>("ProductId");
+
+                    b.Property<string>("Value");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryFieldId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("SelectedValueForCategoryField");
                 });
 
             modelBuilder.Entity("Aledrogo.Models.TransactionRating", b =>
@@ -520,23 +546,11 @@ namespace Aledrogo.Migrations
                         .HasForeignKey("ParentCategoryId");
                 });
 
-            modelBuilder.Entity("Aledrogo.Models.CategorySpecificField", b =>
+            modelBuilder.Entity("Aledrogo.Models.CategoryField", b =>
                 {
                     b.HasOne("Aledrogo.Models.Category", "Category")
-                        .WithMany("CategorySpecificFields")
+                        .WithMany("CategoryFields")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Aledrogo.Models.CategorySpecificFieldValue", b =>
-                {
-                    b.HasOne("Aledrogo.Models.CategorySpecificField", "CategorySpecificField")
-                        .WithMany("CategorySpecificFieldValues")
-                        .HasForeignKey("CategorySpecificFieldId");
-
-                    b.HasOne("Aledrogo.Models.Product", "Product")
-                        .WithMany("CategorySpecificFieldsValues")
-                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -570,6 +584,14 @@ namespace Aledrogo.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("Aledrogo.Models.PredefinedValueForCategoryField", b =>
+                {
+                    b.HasOne("Aledrogo.Models.CategoryField", "CategoryField")
+                        .WithMany("PredefinedValuesForCategoryField")
+                        .HasForeignKey("CategoryFieldId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("Aledrogo.Models.Product", b =>
                 {
                     b.HasOne("Aledrogo.Models.Category", "Category")
@@ -591,6 +613,19 @@ namespace Aledrogo.Migrations
 
                     b.HasOne("Aledrogo.Models.Product", "Product")
                         .WithMany("ProductDeliveryMethods")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Aledrogo.Models.SelectedValueForCategoryField", b =>
+                {
+                    b.HasOne("Aledrogo.Models.CategoryField", "CategoryField")
+                        .WithMany()
+                        .HasForeignKey("CategoryFieldId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Aledrogo.Models.Product", "Product")
+                        .WithMany("SelectedValuesForCategoryFields")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

@@ -9,6 +9,7 @@ namespace Aledrogo.Models
     {
         NEW,
         SECONDHAND,
-        DAMAGED
+        DAMAGED,
+        OUTLET
     }
 }

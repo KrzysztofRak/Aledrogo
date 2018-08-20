@@ -5,15 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20180816142904_TransactionRating.cs" />
-    <Compile Remove="Migrations\20180816142904_TransactionRating.Designer.cs" />
-    <Compile Remove="Migrations\20180817085034_CategoriesSeedData.cs" />
-    <Compile Remove="Migrations\20180817085034_CategoriesSeedData.Designer.cs" />
-    <Compile Remove="Migrations\20180817085051_CategoriesSeedData2.cs" />
-    <Compile Remove="Migrations\20180817085051_CategoriesSeedData2.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Controllers\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
