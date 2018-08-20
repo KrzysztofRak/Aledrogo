@@ -283,7 +283,7 @@ namespace Aledrogo.Migrations
 
                     b.Property<int>("CategoryFieldId");
 
-                    b.Property<int>("ProductId");
+                    b.Property<int?>("ProductId");
 
                     b.Property<string>("Value");
 
@@ -618,14 +618,13 @@ namespace Aledrogo.Migrations
             modelBuilder.Entity("Aledrogo.Models.SelectedValueForCategoryField", b =>
                 {
                     b.HasOne("Aledrogo.Models.CategoryField", "CategoryField")
-                        .WithMany()
+                        .WithMany("SelectedValuesForCategoryField")
                         .HasForeignKey("CategoryFieldId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Aledrogo.Models.Product", "Product")
                         .WithMany("SelectedValuesForCategoryFields")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ProductId");
                 });
 
             modelBuilder.Entity("Aledrogo.Models.TransactionRating", b =>

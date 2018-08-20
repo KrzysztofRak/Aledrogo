@@ -10,8 +10,8 @@ namespace Aledrogo.Data
         public DbSet<Basket> Baskets { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<CategoryField> CategoryFields { get; set; }
-        public DbSet<PredefinedValueForCategoryField> PredefinedValuesForCategoryField { get; set; }
-        public DbSet<SelectedValueForCategoryField> SelectedValuesForCategoryField { get; set; }
+        public DbSet<PredefinedValueForCategoryField> PredefinedValuesForCategoryFields { get; set; }
+        public DbSet<SelectedValueForCategoryField> SelectedValuesForCategoryFields { get; set; }
         public DbSet<DeliveryMethod> DeliveryMethods { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<Order> Orders { get; set; }

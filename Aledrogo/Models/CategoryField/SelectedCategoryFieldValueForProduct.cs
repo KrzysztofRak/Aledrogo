@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Aledrogo.Models
 {
@@ -6,7 +7,7 @@ namespace Aledrogo.Models
     {
         public int Id { get; set; }
 
-        public int ProductId { get; set; }
+        public int? ProductId { get; set; }
         public virtual Product Product { get; set; }
 
         public int CategoryFieldId { get; set; }

@@ -93,9 +93,9 @@ namespace Aledrogo.Data
 
         private static async Task SeedPredefinedValueForCategoryField(PredefinedValueForCategoryField predefinedValueForCategoryField)
         {
-            if (_context.PredefinedValuesForCategoryField.Where(v => v.Value == v.Value).FirstOrDefault() == null)
+            if (_context.PredefinedValuesForCategoryFields.Where(v => v.Value == v.Value).FirstOrDefault() == null)
             {
-                await _context.PredefinedValuesForCategoryField.AddAsync(predefinedValueForCategoryField);
+                await _context.PredefinedValuesForCategoryFields.AddAsync(predefinedValueForCategoryField);
                 await _context.SaveChangesAsync();
             }
         }

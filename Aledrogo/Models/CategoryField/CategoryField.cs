@@ -12,10 +12,12 @@ namespace Aledrogo.Models
         public virtual Category Category { get; set; }
 
         public virtual ICollection<PredefinedValueForCategoryField> PredefinedValuesForCategoryField { get; set; }
+        public virtual ICollection<SelectedValueForCategoryField> SelectedValuesForCategoryField { get; set; }
 
         [Required]
         [MaxLength(100)]
         public string Name { get; set; }
+
         public bool IsRequired { get; set; } = false;
         public bool CanBeUnknown { get; set; } = true;
         public bool CustomNumericValueAllowed { get; set; }
