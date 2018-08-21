@@ -332,3 +332,8 @@ ASALocalRun/
 .localhistory/
 *.cache
 *.cache
+*.cache
+*.cs
+Aledrogo/Models/PredefinedDeliveryMethod.cs
+*.cs
+Aledrogo/Data/DataToSeed/CategoryFieldsSeed/CategoryFieldSeed.cs

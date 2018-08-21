@@ -14,9 +14,9 @@ namespace Aledrogo.Data.DataToSeed
             {
                 Category = _category,
                 Name = _fieldName,
-                CustomNumericValueAllowed = !(_minNumber != null || _maxNumber != null),
-                MinNumber = _maxNumber,
-                MaxNumber = _maxNumber
+                IsCustomNumericValue = !(_minNumber != null || _maxNumber != null),
+                MinNumericValue = _maxNumber,
+                MaxNumericValue = _maxNumber
             };
         }
 

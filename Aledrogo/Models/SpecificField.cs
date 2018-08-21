@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Aledrogo.Models
 {
@@ -8,20 +9,17 @@ namespace Aledrogo.Models
         public int Id { get; set; }
 
         public int CategoryId { get; set; }
-        public int SpecificFieldValueId { get; set; }
-
         public virtual Category Category { get; set; }
-        public virtual SpecificFieldValue SpecificFieldValue { get; set; }
 
+        public virtual ICollection<SpecificFieldValue> SpecificFieldValues { get; set; }
 
         [Required]
         [MaxLength(100)]
         public string Name { get; set; }
 
         public bool IsRequired { get; set; } = false;
-        public bool CanBeUnknown { get; set; } = true;
-        public bool CustomNumericValueAllowed { get; set; }
-        public int? MinNumber { get; set; }
-        public int? MaxNumber { get; set; }
+        public bool IsCustomNumericValue { get; set; } = false;
+        public int? MinNumericValue { get; set; }
+        public int? MaxNumericValue { get; set; }
     }
 }
