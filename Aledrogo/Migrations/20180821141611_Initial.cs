@@ -215,31 +215,6 @@ namespace Aledrogo.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CategorySpecificField",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CategoryId = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(maxLength: 100, nullable: false),
-                    IsRequired = table.Column<bool>(nullable: false),
-                    CanBeUnknown = table.Column<bool>(nullable: false),
-                    CustomNumericValueAllowed = table.Column<bool>(nullable: false),
-                    MinNumber = table.Column<int>(nullable: true),
-                    MaxNumber = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CategorySpecificField", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_CategorySpecificField_Category_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Category",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Product",
                 columns: table => new
                 {
@@ -256,7 +231,9 @@ namespace Aledrogo.Migrations
                     ItemsInStock = table.Column<int>(nullable: false),
                     ShippingTimeInWorkingDays = table.Column<byte>(nullable: false),
                     StartDate = table.Column<DateTime>(nullable: false),
-                    EndDate = table.Column<DateTime>(nullable: false)
+                    EndDate = table.Column<DateTime>(nullable: false),
+                    IsHighlighted = table.Column<bool>(nullable: false),
+                    ViewsNumber = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -276,21 +253,25 @@ namespace Aledrogo.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PredefinedValueForCategoryField",
+                name: "SpecificField",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CategoryFieldId = table.Column<int>(nullable: false),
-                    Value = table.Column<string>(maxLength: 100, nullable: true)
+                    CategoryId = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(maxLength: 100, nullable: false),
+                    IsRequired = table.Column<bool>(nullable: false),
+                    IsCustomNumericValue = table.Column<bool>(nullable: false),
+                    MinNumericValue = table.Column<int>(nullable: true),
+                    MaxNumericValue = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PredefinedValueForCategoryField", x => x.Id);
+                    table.PrimaryKey("PK_SpecificField", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PredefinedValueForCategoryField_CategorySpecificField_CategoryFieldId",
-                        column: x => x.CategoryFieldId,
-                        principalTable: "CategorySpecificField",
+                        name: "FK_SpecificField_Category_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Category",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -385,7 +366,7 @@ namespace Aledrogo.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductDeliveryMethod",
+                name: "Product_DeliveryMethod",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -395,15 +376,15 @@ namespace Aledrogo.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductDeliveryMethod", x => x.Id);
+                    table.PrimaryKey("PK_Product_DeliveryMethod", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProductDeliveryMethod_DeliveryMethod_DeliveryMethodId",
+                        name: "FK_Product_DeliveryMethod_DeliveryMethod_DeliveryMethodId",
                         column: x => x.DeliveryMethodId,
                         principalTable: "DeliveryMethod",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ProductDeliveryMethod_Product_ProductId",
+                        name: "FK_Product_DeliveryMethod_Product_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Product",
                         principalColumn: "Id",
@@ -411,30 +392,23 @@ namespace Aledrogo.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SelectedValueForCategoryField",
+                name: "SpecificFieldValue",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ProductId = table.Column<int>(nullable: true),
-                    CategoryFieldId = table.Column<int>(nullable: false),
+                    SpecificFieldId = table.Column<int>(nullable: false),
                     Value = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SelectedValueForCategoryField", x => x.Id);
+                    table.PrimaryKey("PK_SpecificFieldValue", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_SelectedValueForCategoryField_CategorySpecificField_CategoryFieldId",
-                        column: x => x.CategoryFieldId,
-                        principalTable: "CategorySpecificField",
+                        name: "FK_SpecificFieldValue_SpecificField_SpecificFieldId",
+                        column: x => x.SpecificFieldId,
+                        principalTable: "SpecificField",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_SelectedValueForCategoryField_Product_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Product",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -444,8 +418,7 @@ namespace Aledrogo.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     OrderId = table.Column<int>(nullable: false),
-                    SellerId = table.Column<int>(nullable: false),
-                    SellerId1 = table.Column<string>(nullable: true),
+                    SellerId = table.Column<string>(nullable: true),
                     IsPositive = table.Column<bool>(nullable: false),
                     CompatibilityWithDescriptionRating = table.Column<byte>(nullable: false),
                     ShippingTimeRating = table.Column<byte>(nullable: false),
@@ -464,11 +437,37 @@ namespace Aledrogo.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_TransactionRating_AspNetUsers_SellerId1",
-                        column: x => x.SellerId1,
+                        name: "FK_TransactionRating_AspNetUsers_SellerId",
+                        column: x => x.SellerId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Product_SpecificFieldValue",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ProductId = table.Column<int>(nullable: true),
+                    SpecificFieldValueId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Product_SpecificFieldValue", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Product_SpecificFieldValue_Product_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Product",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Product_SpecificFieldValue_SpecificFieldValue_SpecificFieldValueId",
+                        column: x => x.SpecificFieldValueId,
+                        principalTable: "SpecificFieldValue",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -558,11 +557,6 @@ namespace Aledrogo.Migrations
                 column: "ParentCategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CategorySpecificField_CategoryId",
-                table: "CategorySpecificField",
-                column: "CategoryId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Image_ProductId",
                 table: "Image",
                 column: "ProductId");
@@ -588,11 +582,6 @@ namespace Aledrogo.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PredefinedValueForCategoryField_CategoryFieldId",
-                table: "PredefinedValueForCategoryField",
-                column: "CategoryFieldId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Product_CategoryId",
                 table: "Product",
                 column: "CategoryId");
@@ -603,24 +592,34 @@ namespace Aledrogo.Migrations
                 column: "SellerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductDeliveryMethod_DeliveryMethodId",
-                table: "ProductDeliveryMethod",
+                name: "IX_Product_DeliveryMethod_DeliveryMethodId",
+                table: "Product_DeliveryMethod",
                 column: "DeliveryMethodId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductDeliveryMethod_ProductId",
-                table: "ProductDeliveryMethod",
+                name: "IX_Product_DeliveryMethod_ProductId",
+                table: "Product_DeliveryMethod",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SelectedValueForCategoryField_CategoryFieldId",
-                table: "SelectedValueForCategoryField",
-                column: "CategoryFieldId");
+                name: "IX_Product_SpecificFieldValue_ProductId",
+                table: "Product_SpecificFieldValue",
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SelectedValueForCategoryField_ProductId",
-                table: "SelectedValueForCategoryField",
-                column: "ProductId");
+                name: "IX_Product_SpecificFieldValue_SpecificFieldValueId",
+                table: "Product_SpecificFieldValue",
+                column: "SpecificFieldValueId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SpecificField_CategoryId",
+                table: "SpecificField",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SpecificFieldValue_SpecificFieldId",
+                table: "SpecificFieldValue",
+                column: "SpecificFieldId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TransactionRating_OrderId",
@@ -629,9 +628,9 @@ namespace Aledrogo.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_TransactionRating_SellerId1",
+                name: "IX_TransactionRating_SellerId",
                 table: "TransactionRating",
-                column: "SellerId1");
+                column: "SellerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TransactionRatingResponse_TransactionRatingId",
@@ -668,13 +667,10 @@ namespace Aledrogo.Migrations
                 name: "Image");
 
             migrationBuilder.DropTable(
-                name: "PredefinedValueForCategoryField");
+                name: "Product_DeliveryMethod");
 
             migrationBuilder.DropTable(
-                name: "ProductDeliveryMethod");
-
-            migrationBuilder.DropTable(
-                name: "SelectedValueForCategoryField");
+                name: "Product_SpecificFieldValue");
 
             migrationBuilder.DropTable(
                 name: "TransactionRatingResponse");
@@ -683,10 +679,13 @@ namespace Aledrogo.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "CategorySpecificField");
+                name: "SpecificFieldValue");
 
             migrationBuilder.DropTable(
                 name: "TransactionRating");
+
+            migrationBuilder.DropTable(
+                name: "SpecificField");
 
             migrationBuilder.DropTable(
                 name: "Order");

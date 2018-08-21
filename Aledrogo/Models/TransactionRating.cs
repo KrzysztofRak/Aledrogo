@@ -12,7 +12,7 @@ namespace Aledrogo.Models
         public int OrderId { get; set; }
         public virtual Order Order { get; set; }
 
-        public int SellerId { get; set; }
+        public string SellerId { get; set; }
         public virtual User Seller { get; set; }
 
         public virtual ICollection<TransactionRatingResponse> TransactionRatingResponses { get; set; }

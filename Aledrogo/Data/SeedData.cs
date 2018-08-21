@@ -40,20 +40,30 @@ namespace Aledrogo.Data
                 await SeedCategory(category);
             }
 
-            foreach (var categoryField in CategoryFieldSeed.CategoryFields)
+            foreach (var specificField in SpecificFieldSeed.SpecificFields)
             {
-                await SeedCategoryField(categoryField);
+                await SeedSpecificField(specificField);
             }
 
-            //foreach (var predefinedValueForCategoryField in PredefinedValueForCategoryFieldSeed.PredefinedValuesForCategoryFields)
-            //{
-            //    await SeedPredefinedValueForCategoryField(predefinedValueForCategoryField);
-            //}
+            foreach (var specificFieldValue in SpecificFieldValueSeed.SpecificFieldsValues)
+            {
+                await SeedSpecificFieldValue(specificFieldValue);
+            }
 
             foreach (var product in ProductSeed.Products)
-            {
                 await SeedProduct(product);
+
+            foreach (var image in ImageSeed.Images)
+            {
+                await SeedImage(image);
             }
+
+            foreach (var product_SpecificFieldValue in Product_SpecificFieldValueSeed.Products_SpecificFieldValues)
+            {
+                await SeedProduct_SpecificFieldValue(product_SpecificFieldValue);
+            }
+
+            await _context.SaveChangesAsync();
         }
 
         private static async Task SeedRole(string roleName)
@@ -78,34 +88,46 @@ namespace Aledrogo.Data
             if (_context.Categories.Where(c => c.Name == category.Name).FirstOrDefault() == null)
             {
                 await _context.Categories.AddAsync(category);
-                await _context.SaveChangesAsync();
             }
         }
 
-        private static async Task SeedCategoryField(SpecificField categoryField)
+        private static async Task SeedSpecificField(SpecificField specificField)
         {
-            if (_context.Categories.Where(f => f.Name == f.Name).FirstOrDefault() == null)
+            if (_context.SpecificFields.Where(f => f.Name == specificField.Name).FirstOrDefault() == null)
             {
-                await _context.AddAsync(categoryField);
-                await _context.SaveChangesAsync();
+                await _context.SpecificFields.AddAsync(specificField);
             }
         }
 
-        //private static async Task SeedPredefinedValueForCategoryField(PredefinedValueForCategoryField predefinedValueForCategoryField)
-        //{
-        //    if (_context.PredefinedValuesForCategoryFields.Where(v => v.Value == v.Value).FirstOrDefault() == null)
-        //    {
-        //        await _context.PredefinedValuesForCategoryFields.AddAsync(predefinedValueForCategoryField);
-        //        await _context.SaveChangesAsync();
-        //    }
-        //}
+        private static async Task SeedSpecificFieldValue(SpecificFieldValue specificFieldValue)
+        {
+            if (_context.SpecificFieldValues.Where(s => s.Value == specificFieldValue.Value && s.SpecificField == specificFieldValue.SpecificField).FirstOrDefault() == null)
+            {
+                await _context.SpecificFieldValues.AddAsync(specificFieldValue);
+            }
+        }
 
         private static async Task SeedProduct(Product product)
         {
             if (_context.Products.Where(p => p.Name == product.Name).FirstOrDefault() == null)
             {
                 await _context.Products.AddAsync(product);
-                await _context.SaveChangesAsync();
+            }
+        }
+
+        private static async Task SeedImage(Image image)
+        {
+            if (_context.Images.Where(i => i.ImagePath == image.ImagePath && i.Product == image.Product).FirstOrDefault() == null)
+            {
+                await _context.Images.AddAsync(image);
+            }
+        }
+
+        private static async Task SeedProduct_SpecificFieldValue(Product_SpecificFieldValue product_SpecificFieldValue)
+        {
+            if (_context.Product_SpecificFieldValues.Where(p => p.Product == product_SpecificFieldValue.Product && p.SpecificFieldValue == product_SpecificFieldValue.SpecificFieldValue).FirstOrDefault() == null)
+            {
+                await _context.Product_SpecificFieldValues.AddAsync(product_SpecificFieldValue);
             }
         }
     }

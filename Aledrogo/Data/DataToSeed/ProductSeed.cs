@@ -1,8 +1,6 @@
 ﻿using Aledrogo.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Aledrogo.Data.DataToSeed
 {
@@ -52,7 +50,7 @@ namespace Aledrogo.Data.DataToSeed
             State = ProductState.SECONDHAND,
             ItemsInStock = 1,
             ShippingTimeInWorkingDays = 3,
-            EndDate = DateTime.UtcNow.AddDays(7)
+            EndDate = DateTime.UtcNow.AddDays(7),
         };
 
         public static Product arduino = new Product()
@@ -82,7 +80,7 @@ namespace Aledrogo.Data.DataToSeed
             State = ProductState.NEW,
             ItemsInStock = 10,
             ShippingTimeInWorkingDays = 3,
-            EndDate = DateTime.UtcNow.AddDays(8),
+            EndDate = DateTime.UtcNow.AddDays(8)
         };
 
 
@@ -99,6 +97,7 @@ namespace Aledrogo.Data.DataToSeed
             ItemsInStock = 100,
             ShippingTimeInWorkingDays = 1,
             EndDate = DateTime.UtcNow.AddDays(20),
+            IsHighlighted = true
         };
 
         public static Product etui = new Product()
@@ -113,7 +112,7 @@ namespace Aledrogo.Data.DataToSeed
             State = ProductState.NEW,
             ItemsInStock = 30,
             ShippingTimeInWorkingDays = 1,
-            EndDate = DateTime.UtcNow.AddDays(14),
+            EndDate = DateTime.UtcNow.AddDays(14)
         };
 
         public static Product ladowarka = new Product()
@@ -128,7 +127,7 @@ namespace Aledrogo.Data.DataToSeed
             State = ProductState.SECONDHAND,
             ItemsInStock = 50,
             ShippingTimeInWorkingDays = 3,
-            EndDate = DateTime.UtcNow.AddDays(14),
+            EndDate = DateTime.UtcNow.AddDays(14)
         };
 
         public static Product telewizor = new Product()
@@ -140,10 +139,11 @@ namespace Aledrogo.Data.DataToSeed
             MinimalPrice = 500,
             Price = 1100,
             DaysForReturn = 14,
-            State = ProductState.OUTLET,
+            State = ProductState.AFTER_EXHIBITION,
             ItemsInStock = 2,
             ShippingTimeInWorkingDays = 2,
             EndDate = DateTime.UtcNow.AddDays(14),
+            IsHighlighted = true
         };
 
 
@@ -160,6 +160,7 @@ namespace Aledrogo.Data.DataToSeed
             ItemsInStock = 1,
             ShippingTimeInWorkingDays = 3,
             EndDate = DateTime.UtcNow.AddDays(7),
+            IsHighlighted = true
         };
 
         public static List<Product> Products { get; } = new List<Product>()

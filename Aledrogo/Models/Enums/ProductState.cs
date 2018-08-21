@@ -9,7 +9,10 @@ namespace Aledrogo.Models
     {
         NEW,
         SECONDHAND,
+        AFTER_RETURN,
+        AFTER_EXHIBITION,
         DAMAGED,
-        OUTLET
+        RENEWED_BY_SELLER,
+        RENEWED_BY_PRODUCENT
     }
 }

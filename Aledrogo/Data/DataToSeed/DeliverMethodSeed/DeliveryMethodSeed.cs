@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Aledrogo.Data.DataToSeed
 {
-    public class PredefinedDeliveryMethodSeed
+    public class DeliveryMethodSeed
     {
     }
 }

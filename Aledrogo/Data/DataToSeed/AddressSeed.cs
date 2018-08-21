@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Aledrogo.Data.DataToSeed
+﻿namespace Aledrogo.Data.DataToSeed
 {
     public class AddressSeed
     {
