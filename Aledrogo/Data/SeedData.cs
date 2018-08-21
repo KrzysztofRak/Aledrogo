@@ -45,10 +45,10 @@ namespace Aledrogo.Data
                 await SeedCategoryField(categoryField);
             }
 
-            foreach (var predefinedValueForCategoryField in PredefinedValueForCategoryFieldSeed.PredefinedValuesForCategoryFields)
-            {
-                await SeedPredefinedValueForCategoryField(predefinedValueForCategoryField);
-            }
+            //foreach (var predefinedValueForCategoryField in PredefinedValueForCategoryFieldSeed.PredefinedValuesForCategoryFields)
+            //{
+            //    await SeedPredefinedValueForCategoryField(predefinedValueForCategoryField);
+            //}
 
             foreach (var product in ProductSeed.Products)
             {
@@ -82,7 +82,7 @@ namespace Aledrogo.Data
             }
         }
 
-        private static async Task SeedCategoryField(CategoryField categoryField)
+        private static async Task SeedCategoryField(SpecificField categoryField)
         {
             if (_context.Categories.Where(f => f.Name == f.Name).FirstOrDefault() == null)
             {
@@ -91,14 +91,14 @@ namespace Aledrogo.Data
             }
         }
 
-        private static async Task SeedPredefinedValueForCategoryField(PredefinedValueForCategoryField predefinedValueForCategoryField)
-        {
-            if (_context.PredefinedValuesForCategoryFields.Where(v => v.Value == v.Value).FirstOrDefault() == null)
-            {
-                await _context.PredefinedValuesForCategoryFields.AddAsync(predefinedValueForCategoryField);
-                await _context.SaveChangesAsync();
-            }
-        }
+        //private static async Task SeedPredefinedValueForCategoryField(PredefinedValueForCategoryField predefinedValueForCategoryField)
+        //{
+        //    if (_context.PredefinedValuesForCategoryFields.Where(v => v.Value == v.Value).FirstOrDefault() == null)
+        //    {
+        //        await _context.PredefinedValuesForCategoryFields.AddAsync(predefinedValueForCategoryField);
+        //        await _context.SaveChangesAsync();
+        //    }
+        //}
 
         private static async Task SeedProduct(Product product)
         {

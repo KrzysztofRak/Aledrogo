@@ -8,9 +8,9 @@ namespace Aledrogo.Data.DataToSeed
 {
     public static class CategoryFieldSeed
     {
-        private static CategoryField Create(Category _category, string _fieldName, int? _minNumber = null, int? _maxNumber = null)
+        private static SpecificField Create(Category _category, string _fieldName, int? _minNumber = null, int? _maxNumber = null)
         {
-            return new CategoryField()
+            return new SpecificField()
             {
                 Category = _category,
                 Name = _fieldName,
@@ -20,22 +20,22 @@ namespace Aledrogo.Data.DataToSeed
             };
         }
 
-        public static CategoryField klasa_energetyczna = Create(CategorySeed.rtv_i_agd, "Klasa energetyczna");
+        public static SpecificField klasa_energetyczna = Create(CategorySeed.rtv_i_agd, "Klasa energetyczna");
 
-        public static CategoryField typ = Create(CategorySeed.komputery, "Typ");
-        public static CategoryField liczba_rdzeni = Create(CategorySeed.komputery, "Liczba rdzeni", 0, 64);
-        public static CategoryField pamiec_ram = Create(CategorySeed.komputery, "Pamięć RAM [MB]", 0, 1000000);
-        public static CategoryField pojemnosc_dysku = Create(CategorySeed.komputery, "Pojemność dysku [GB]", 0, 100000);
+        public static SpecificField typ = Create(CategorySeed.komputery, "Typ");
+        public static SpecificField liczba_rdzeni = Create(CategorySeed.komputery, "Liczba rdzeni", 0, 64);
+        public static SpecificField pamiec_ram = Create(CategorySeed.komputery, "Pamięć RAM [MB]", 0, 1000000);
+        public static SpecificField pojemnosc_dysku = Create(CategorySeed.komputery, "Pojemność dysku [GB]", 0, 100000);
 
-        public static CategoryField maksymalne_obroty = Create(CategorySeed.pralki, "Maksymalne obroty", 0, 2000);
-        public static CategoryField ladownosc = Create(CategorySeed.pralki, "Ładowność [kg]", 0, 50);
-        public static CategoryField wyswietlacz = Create(CategorySeed.pralki, "Wyświetlacz");
+        public static SpecificField maksymalne_obroty = Create(CategorySeed.pralki, "Maksymalne obroty", 0, 2000);
+        public static SpecificField ladownosc = Create(CategorySeed.pralki, "Ładowność [kg]", 0, 50);
+        public static SpecificField wyswietlacz = Create(CategorySeed.pralki, "Wyświetlacz");
 
-        public static CategoryField kolor = Create(CategorySeed.telefony_i_akcesoria, "Kolor");
+        public static SpecificField kolor = Create(CategorySeed.telefony_i_akcesoria, "Kolor");
 
-        public static CategoryField interfejs = Create(CategorySeed.xiaomi, "Interfejs");
+        public static SpecificField interfejs = Create(CategorySeed.xiaomi, "Interfejs");
 
-        public static List<CategoryField> CategoryFields { get; } = new List<CategoryField>()
+        public static List<SpecificField> CategoryFields { get; } = new List<SpecificField>()
         {
             klasa_energetyczna,
             typ, liczba_rdzeni, pamiec_ram, pojemnosc_dysku,

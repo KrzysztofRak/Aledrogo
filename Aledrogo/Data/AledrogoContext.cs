@@ -9,9 +9,7 @@ namespace Aledrogo.Data
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Basket> Baskets { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<CategoryField> CategoryFields { get; set; }
-        public DbSet<PredefinedValueForCategoryField> PredefinedValuesForCategoryFields { get; set; }
-        public DbSet<SelectedValueForCategoryField> SelectedValuesForCategoryFields { get; set; }
+        public DbSet<SpecificField> CategoryFields { get; set; }
         public DbSet<DeliveryMethod> DeliveryMethods { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<Order> Orders { get; set; }
@@ -19,6 +17,9 @@ namespace Aledrogo.Data
         public DbSet<ProductDeliveryMethod> ProductDeliveryMethods { get; set; }
         public DbSet<TransactionRating> TransactionRatings { get; set; }
         public DbSet<TransactionRatingResponse> TransactionRatingResponses { get; set; }
+        public DbSet<SpecificField> SpecificFields { get; set; }
+        public DbSet<SpecificFieldValue> SpecificFieldValues { get; set; }
+        public DbSet<ProductSpecificFieldValues> Product_SpecificFieldValues { get; set; }
 
 
         public AledrogoContext(DbContextOptions options) : base(options) { }
@@ -30,16 +31,16 @@ namespace Aledrogo.Data
             builder.Entity<Address>().ToTable("Address");
             builder.Entity<Basket>().ToTable("Basket");
             builder.Entity<Category>().ToTable("Category");
-            builder.Entity<CategoryField>().ToTable("CategorySpecificField");
-            builder.Entity<PredefinedValueForCategoryField>().ToTable("PredefinedValueForCategoryField");
-            builder.Entity<SelectedValueForCategoryField>().ToTable("SelectedValueForCategoryField");
+            builder.Entity<SpecificField>().ToTable("CategorySpecificField");
             builder.Entity<DeliveryMethod>().ToTable("DeliveryMethod");
             builder.Entity<Image>().ToTable("Image");
             builder.Entity<Order>().ToTable("Order");
             builder.Entity<Product>().ToTable("Product");
             builder.Entity<ProductDeliveryMethod>().ToTable("ProductDeliveryMethod");
             builder.Entity<TransactionRating>().ToTable("TransactionRating");
-            builder.Entity<TransactionRatingResponse>().ToTable("TransactionRatingResponse");    
+            builder.Entity<TransactionRatingResponse>().ToTable("TransactionRatingResponse");
+            builder.Entity<SpecificField>().ToTable("SpecificField");
+            builder.Entity<SpecificFieldValue>().ToTable("SpecificFieldValue");
         }
     }
 }

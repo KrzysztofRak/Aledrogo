@@ -1,18 +1,18 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Aledrogo.Models
 {
-    public class CategoryField
+    public class SpecificField
     {
         [Key]
         public int Id { get; set; }
 
         public int CategoryId { get; set; }
-        public virtual Category Category { get; set; }
+        public int SpecificFieldValueId { get; set; }
 
-        public virtual ICollection<PredefinedValueForCategoryField> PredefinedValuesForCategoryField { get; set; }
-        public virtual ICollection<SelectedValueForCategoryField> SelectedValuesForCategoryField { get; set; }
+        public virtual Category Category { get; set; }
+        public virtual SpecificFieldValue SpecificFieldValue { get; set; }
+
 
         [Required]
         [MaxLength(100)]

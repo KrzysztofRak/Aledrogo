@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Aledrogo.Models
 {
@@ -18,7 +17,7 @@ namespace Aledrogo.Models
         public virtual Category Category { get; set; }
         
         public virtual ICollection<Image> Images { get; set; }
-        public virtual ICollection<SelectedValueForCategoryField> SelectedValuesForCategoryFields { get; set; }
+        public virtual ICollection<ProductSpecificFieldValues> Product_SpecificFieldValues { get; set; }
         public virtual ICollection<Basket> Baskets { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
         public virtual ICollection<ProductDeliveryMethod> ProductDeliveryMethods { get; set; }
