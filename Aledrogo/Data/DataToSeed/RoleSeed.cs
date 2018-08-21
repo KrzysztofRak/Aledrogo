@@ -7,7 +7,7 @@ namespace Aledrogo.Data.DataToSeed
 {
     public class RoleSeed
     {
-        public static List<string> Roles { get; } = new List<string>()
+        public static List<string> RoleNames { get; } = new List<string>()
         {
             "Admin", "User"
         };

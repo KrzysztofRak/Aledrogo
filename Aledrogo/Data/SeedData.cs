@@ -14,67 +14,50 @@ namespace Aledrogo.Data
         private static UserManager<User> _userManager;
         private static RoleManager<IdentityRole> _roleManager;
 
-        public static void Initialize(IServiceProvider serviceProvider)
+        public static async Task Initialize(IServiceProvider serviceProvider)
         {
             _context = serviceProvider.GetRequiredService<AledrogoContext>();
             _userManager = serviceProvider.GetRequiredService<UserManager<User>>();
             _roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-            Seed().Wait();
+            await _context.Database.EnsureDeletedAsync();
+            await _context.Database.EnsureCreatedAsync();
+
+            await Seed();
         }
 
         private static async Task Seed()
         {
-            foreach(var role in RoleSeed.Roles)
-            {
-                await SeedRole(role);
-            }
-
-            foreach (var user in UserSeed.Users)
-            {
-                await SeedUser(user);
-            }
-
-            foreach (var category in CategorySeed.Categories)
-            {
-                await SeedCategory(category);
-            }
-
-            foreach (var specificField in SpecificFieldSeed.SpecificFields)
-            {
-                await SeedSpecificField(specificField);
-            }
-
-            foreach (var specificFieldValue in SpecificFieldValueSeed.SpecificFieldsValues)
-            {
-                await SeedSpecificFieldValue(specificFieldValue);
-            }
-
-            foreach (var product in ProductSeed.Products)
-                await SeedProduct(product);
-
-            foreach (var image in ImageSeed.Images)
-            {
-                await SeedImage(image);
-            }
-
-            foreach (var product_SpecificFieldValue in Product_SpecificFieldValueSeed.Products_SpecificFieldValues)
-            {
-                await SeedProduct_SpecificFieldValue(product_SpecificFieldValue);
-            }
+            await SeedRoles();
+            await SeedUsers();
+            await SeedAddresses();
+            await SeedBaskets();
+            await SeedDeliveryMethods();
+            await SeedImages();
+            await SeedOrders();
+            await SeedProducts();
+            await SeedProducts_DeliveryMethods();
+            await SeedProducts_SpecificFieldValues();
+            await SeedSpecificFields();
+            await SeedSpecificFieldValues();
+            await SeedTransactionRatings();
+            await SeedTransactionRatingsResponses();
 
             await _context.SaveChangesAsync();
         }
 
-        private static async Task SeedRole(string roleName)
+        private static async Task SeedRoles()
         {
-            if (!await _roleManager.RoleExistsAsync(roleName))
+            foreach (var roleName in RoleSeed.RoleNames)
+            {
                 await _roleManager.CreateAsync(new IdentityRole { Name = roleName });
+            }
         }
 
-        private static async Task SeedUser(UserSeed user)
+        private static async Task SeedUsers()
         {
-            if (await _userManager.FindByNameAsync(user.UserName) == null)
+
+            foreach (var user in UserSeed.Users)
             {
                 User newUser = new User { UserName = user.UserName, Email = user.Email };
                 await _userManager.CreateAsync(newUser, user.Password);
@@ -83,52 +66,88 @@ namespace Aledrogo.Data
             }
         }
 
-        private static async Task SeedCategory(Category category)
+        private static async Task SeedAddresses()
         {
-            if (_context.Categories.Where(c => c.Name == category.Name).FirstOrDefault() == null)
+
+        }
+
+        private static async Task SeedBaskets()
+        {
+
+        }
+
+        private static async Task SeedCategories()
+        {
+            foreach (var category in CategorySeed.Categories)
             {
                 await _context.Categories.AddAsync(category);
             }
         }
 
-        private static async Task SeedSpecificField(SpecificField specificField)
+        private static async Task SeedDeliveryMethods()
         {
-            if (_context.SpecificFields.Where(f => f.Name == specificField.Name).FirstOrDefault() == null)
-            {
-                await _context.SpecificFields.AddAsync(specificField);
-            }
+
         }
 
-        private static async Task SeedSpecificFieldValue(SpecificFieldValue specificFieldValue)
+        private static async Task SeedImages()
         {
-            if (_context.SpecificFieldValues.Where(s => s.Value == specificFieldValue.Value && s.SpecificField == specificFieldValue.SpecificField).FirstOrDefault() == null)
-            {
-                await _context.SpecificFieldValues.AddAsync(specificFieldValue);
-            }
-        }
-
-        private static async Task SeedProduct(Product product)
-        {
-            if (_context.Products.Where(p => p.Name == product.Name).FirstOrDefault() == null)
-            {
-                await _context.Products.AddAsync(product);
-            }
-        }
-
-        private static async Task SeedImage(Image image)
-        {
-            if (_context.Images.Where(i => i.ImagePath == image.ImagePath && i.Product == image.Product).FirstOrDefault() == null)
+            foreach (var image in ImageSeed.Images)
             {
                 await _context.Images.AddAsync(image);
             }
         }
 
-        private static async Task SeedProduct_SpecificFieldValue(Product_SpecificFieldValue product_SpecificFieldValue)
+        private static async Task SeedOrders()
         {
-            if (_context.Product_SpecificFieldValues.Where(p => p.Product == product_SpecificFieldValue.Product && p.SpecificFieldValue == product_SpecificFieldValue.SpecificFieldValue).FirstOrDefault() == null)
+
+        }
+
+        private static async Task SeedProducts()
+        {
+            foreach (var product in ProductSeed.Products)
+            {
+                await _context.Products.AddAsync(product);
+            }
+        }
+
+        private static async Task SeedProducts_DeliveryMethods()
+        {
+
+        }
+
+        private static async Task SeedProducts_SpecificFieldValues()
+        {
+
+            foreach (var product_SpecificFieldValue in Product_SpecificFieldValueSeed.Products_SpecificFieldValues)
             {
                 await _context.Product_SpecificFieldValues.AddAsync(product_SpecificFieldValue);
             }
+        }
+
+        private static async Task SeedSpecificFields()
+        {
+            foreach (var specificField in SpecificFieldSeed.SpecificFields)
+            {
+                await _context.SpecificFields.AddAsync(specificField);
+            }
+        }
+
+        private static async Task SeedSpecificFieldValues()
+        {
+            foreach (var specificFieldValue in SpecificFieldValueSeed.SpecificFieldsValues)
+            {
+                await _context.SpecificFieldValues.AddAsync(specificFieldValue);
+            }
+        }
+
+        private static async Task SeedTransactionRatings()
+        {
+
+        }
+
+        private static async Task SeedTransactionRatingsResponses()
+        {
+
         }
     }
 }

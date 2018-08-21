@@ -48,7 +48,7 @@ namespace Aledrogo
             using (var scope = app.ApplicationServices.CreateScope())
             {
                 IServiceProvider serviceProvider = scope.ServiceProvider;
-                SeedData.Initialize(serviceProvider);
+                SeedData.Initialize(serviceProvider).Wait();
             }
 
             if (env.IsDevelopment())
