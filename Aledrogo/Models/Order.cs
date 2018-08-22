@@ -21,10 +21,16 @@ namespace Aledrogo.Models
 
         public virtual TransactionRating TransactionRating { get;set;}
 
+        public string Name { get; set; }
+
         [Required]
         [Range(minimum: 1, maximum: 10000)]
         public int Quantity { get; set; }
 
+        public decimal Value { get; set; }
+        public decimal DeliveryValue { get; set; }
+
+        public bool Paid { get; set; } = false;
         public bool Completed { get; set; } = false;
     }
 }

@@ -32,14 +32,14 @@ namespace Aledrogo.Models
 
         public decimal MinimalPrice { get; set; }
         public decimal Price { get; set; }
-        public int DaysForReturn { get; set; }
+        public ushort DaysForReturn { get; set; }
 
         [Required]
         public ProductState State { get; set; }
 
         [Required]
         [Range(0, 10000)]
-        public int ItemsInStock { get; set; }
+        public ushort ItemsInStock { get; set; }
 
         [Required]
         [Range(1, 14)]

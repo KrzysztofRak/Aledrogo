@@ -34,11 +34,11 @@ namespace Aledrogo.Data.DataToSeed
             new Image() { ImagePath = _img_04_Path, Product = ProductSeed.komputer_nowy },
             new Image() { ImagePath = _img_05_Path, Product = ProductSeed.komputer_nowy },
 
-            new Image() { ImagePath = _img_04_Path, Product = ProductSeed.komputer_uzywany },
-            new Image() { ImagePath = _img_01_Path, Product = ProductSeed.komputer_uzywany },
-            new Image() { ImagePath = _img_02_Path, Product = ProductSeed.komputer_uzywany },
-            new Image() { ImagePath = _img_03_Path, Product = ProductSeed.komputer_uzywany },
-            new Image() { ImagePath = _img_05_Path, Product = ProductSeed.komputer_uzywany },
+            new Image() { ImagePath = _img_04_Path, Product = ProductSeed.laptop_uzywany },
+            new Image() { ImagePath = _img_01_Path, Product = ProductSeed.laptop_uzywany },
+            new Image() { ImagePath = _img_02_Path, Product = ProductSeed.laptop_uzywany },
+            new Image() { ImagePath = _img_03_Path, Product = ProductSeed.laptop_uzywany },
+            new Image() { ImagePath = _img_05_Path, Product = ProductSeed.laptop_uzywany },
 
             new Image() { ImagePath = _img_05_Path, Product = ProductSeed.konsola_ps4 },
             new Image() { ImagePath = _img_01_Path, Product = ProductSeed.konsola_ps4 },

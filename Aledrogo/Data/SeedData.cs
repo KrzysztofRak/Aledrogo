@@ -34,6 +34,7 @@ namespace Aledrogo.Data
             await SeedBaskets();
             await SeedDeliveryMethods();
             await SeedImages();
+            await SeedOffers();
             await SeedOrders();
             await SeedProducts();
             await SeedProducts_DeliveryMethods();
@@ -68,12 +69,18 @@ namespace Aledrogo.Data
 
         private static async Task SeedAddresses()
         {
-
+            foreach (var address in AddressSeed.Addresses)
+            {
+                await _context.Addresses.AddAsync(address);
+            }
         }
 
         private static async Task SeedBaskets()
         {
-
+            foreach (var basket in BasketSeed.Baskets)
+            {
+                await _context.Baskets.AddAsync(basket);
+            }
         }
 
         private static async Task SeedCategories()
@@ -86,7 +93,10 @@ namespace Aledrogo.Data
 
         private static async Task SeedDeliveryMethods()
         {
-
+            foreach (var deliveryMethod in DeliveryMethodSeed.DeliveryMethods)
+            {
+                await _context.DeliveryMethods.AddAsync(deliveryMethod);
+            }
         }
 
         private static async Task SeedImages()
@@ -94,6 +104,14 @@ namespace Aledrogo.Data
             foreach (var image in ImageSeed.Images)
             {
                 await _context.Images.AddAsync(image);
+            }
+        }
+
+        private static async Task SeedOffers()
+        {
+            foreach (var offer in OfferSeed.Offers)
+            {
+                await _context.Offers.AddAsync(offer);
             }
         }
 
@@ -112,7 +130,10 @@ namespace Aledrogo.Data
 
         private static async Task SeedProducts_DeliveryMethods()
         {
-
+            foreach (var productDeliveryMethod in Product_DeliveryMethodSeed.Products_DeliveryMethods)
+            {
+                await _context.Products_DeliveryMethods.AddAsync(productDeliveryMethod);
+            }
         }
 
         private static async Task SeedProducts_SpecificFieldValues()
@@ -120,7 +141,7 @@ namespace Aledrogo.Data
 
             foreach (var product_SpecificFieldValue in Product_SpecificFieldValueSeed.Products_SpecificFieldValues)
             {
-                await _context.Product_SpecificFieldValues.AddAsync(product_SpecificFieldValue);
+                await _context.Products_SpecificFieldValues.AddAsync(product_SpecificFieldValue);
             }
         }
 

@@ -9,8 +9,7 @@ namespace Aledrogo.Models
         public virtual ICollection<Product_DeliveryMethod> Products_DeliveryMethods { get; set; }
 
         public string Name { get; set; }
-        public decimal Price { get; set; }
-        public bool IsSafe { get; set; }
-        public bool ExpectedDeliveryTime { get; set; }
+        public bool IsSafe { get; set; } = true;
+        public decimal? Price { get; set; } = null;
     }
 }

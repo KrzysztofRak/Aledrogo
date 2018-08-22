@@ -15,6 +15,6 @@ namespace Aledrogo.Models
 
         [Required]
         [Range(minimum:1, maximum:10000)]
-        public int Quantity { get; set; }
+        public ushort Quantity { get; set; }
     }
 }

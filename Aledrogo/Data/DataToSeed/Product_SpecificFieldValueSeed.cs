@@ -13,11 +13,11 @@ namespace Aledrogo.Data.DataToSeed
           new Product_SpecificFieldValue() { Product = ProductSeed.komputer_nowy, SpecificFieldValue = SpecificFieldValueSeed.pojemnosc_dysku_2000gb },
           new Product_SpecificFieldValue() { Product = ProductSeed.komputer_nowy, SpecificFieldValue = SpecificFieldValueSeed.rodzaj_dysku_hdd },
 
-          new Product_SpecificFieldValue() { Product = ProductSeed.komputer_uzywany, SpecificFieldValue = SpecificFieldValueSeed.klasa_energetyczna_niedotyczy },
-          new Product_SpecificFieldValue() { Product = ProductSeed.komputer_uzywany, SpecificFieldValue = SpecificFieldValueSeed.liczba_rdzeni_4 },
-          new Product_SpecificFieldValue() { Product = ProductSeed.komputer_uzywany, SpecificFieldValue = SpecificFieldValueSeed.pamiec_ram_8gb },
-          new Product_SpecificFieldValue() { Product = ProductSeed.komputer_uzywany, SpecificFieldValue = SpecificFieldValueSeed.pojemnosc_dysku_256gb },
-          new Product_SpecificFieldValue() { Product = ProductSeed.komputer_uzywany, SpecificFieldValue = SpecificFieldValueSeed.rodzaj_dysku_ssd },
+          new Product_SpecificFieldValue() { Product = ProductSeed.laptop_uzywany, SpecificFieldValue = SpecificFieldValueSeed.klasa_energetyczna_niedotyczy },
+          new Product_SpecificFieldValue() { Product = ProductSeed.laptop_uzywany, SpecificFieldValue = SpecificFieldValueSeed.liczba_rdzeni_4 },
+          new Product_SpecificFieldValue() { Product = ProductSeed.laptop_uzywany, SpecificFieldValue = SpecificFieldValueSeed.pamiec_ram_8gb },
+          new Product_SpecificFieldValue() { Product = ProductSeed.laptop_uzywany, SpecificFieldValue = SpecificFieldValueSeed.pojemnosc_dysku_256gb },
+          new Product_SpecificFieldValue() { Product = ProductSeed.laptop_uzywany, SpecificFieldValue = SpecificFieldValueSeed.rodzaj_dysku_ssd },
 
           new Product_SpecificFieldValue() { Product = ProductSeed.konsola_ps4, SpecificFieldValue = SpecificFieldValueSeed.klasa_energetyczna_niedotyczy },
 

@@ -10,6 +10,6 @@
         public int DeliveryMethodId { get; set; }
         public virtual DeliveryMethod DeliveryMethod { get; set; }
         
-        decimal Price { get; set; }
+        public decimal Price { get; set; } = null;
     }
 }
