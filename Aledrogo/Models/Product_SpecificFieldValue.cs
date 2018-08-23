@@ -1,4 +1,6 @@
-﻿namespace Aledrogo.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Aledrogo.Models
 {
     public class Product_SpecificFieldValue
     {

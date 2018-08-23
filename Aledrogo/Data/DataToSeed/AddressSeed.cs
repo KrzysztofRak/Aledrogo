@@ -16,7 +16,7 @@ namespace Aledrogo.Data.DataToSeed
 
         public static Address test2_address1 = new Address() { UserId = UserSeed.test2.Id, FullName = "Test Dwa", StreetAddress = "Powstańcza 126", PostCode = "22-150", City = "Warszawa", Country = "Polska", PhoneNumber = "+48 791-485-323" };
 
-        public static Address test3_address1 = new Address() { UserId = UserSeed.test3.Id, FullName = "Test Trzy", StreetAddress = "Henryka 8", PostCode = "29-300", City = "Białystok", Country = "Polska", PhoneNumber = "+48 681-339-783" }
+        public static Address test3_address1 = new Address() { UserId = UserSeed.test3.Id, FullName = "Test Trzy", StreetAddress = "Henryka 8", PostCode = "29-300", City = "Białystok", Country = "Polska", PhoneNumber = "+48 681-339-783" };
 
         public static List<Address> Addresses = new List<Address>()
         {

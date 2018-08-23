@@ -117,7 +117,10 @@ namespace Aledrogo.Data
 
         private static async Task SeedOrders()
         {
-
+            foreach (var order in OrderSeed.Orders)
+            {
+                await _context.Orders.AddAsync(order);
+            }
         }
 
         private static async Task SeedProducts()
@@ -163,12 +166,18 @@ namespace Aledrogo.Data
 
         private static async Task SeedTransactionRatings()
         {
-
+            foreach (var transactionRating in TransactionRatingSeed.TransactionRatings)
+            {
+                await _context.TransactionRatings.AddAsync(transactionRating);
+            }
         }
 
         private static async Task SeedTransactionRatingsResponses()
         {
-
+            foreach (var transactionRatingResponse in TransactionRatingResponseSeed.TransactionRatingResponses)
+            {
+                await _context.TransactionRatingResponses.AddAsync(transactionRatingResponse);
+            }
         }
     }
 }
