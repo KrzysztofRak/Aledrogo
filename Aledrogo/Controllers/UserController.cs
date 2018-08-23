@@ -1,6 +1,7 @@
 ﻿using Aledrogo.DTO;
 using Aledrogo.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace Aledrogo.Controllers
@@ -25,25 +26,107 @@ namespace Aledrogo.Controllers
                 return BadRequest(dto);
             }
 
-            bool result = await _repo.LogIn(dto);
-
-            return new ObjectResult(result);
+            try
+            {
+                bool result = await _repo.LogIn(dto);
+                return new ObjectResult(result);
+            }
+            catch (Exception exc)
+            {
+                return BadRequest(exc);
+            }
         }
         [HttpPost]
-        public async Task<IActionResult> Registration([FromBody] RegistrationDTO dto)
+        public async Task<IActionResult> Set([FromBody] RegistrationDTO dto)
         {
             if (dto == null)
             {
-                return BadRequest("cos");
+                return BadRequest();
             }
             if (!ModelState.IsValid)
             {
                 return BadRequest(dto);
             }
 
-            var result = await _repo.Registration(dto, "user");
+            try
+            {
+                var result = await _repo.Registration(dto, "user");
+                return new ObjectResult(result);
+            }
+            catch (Exception exc)
+            {
+                return BadRequest(exc);
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            try
+            {
+                var result = await _repo.GetAll();
+                return new ObjectResult(result);
+            }
+            catch (Exception exc)
+            {
+                return BadRequest(exc);
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> Get(string name)
+        {
+            try
+            {
+                var result = await _repo.GetAllByName(name);
+                return new ObjectResult(result);
+            }
+            catch (Exception exc)
+            {
+                return BadRequest(exc);
+            }
+        }
+        [HttpPut]
+        public async Task<IActionResult> ChangePassword([FromBody]PasswordDTO dto)
+        {
+            if (dto == null)
+            {
+                return BadRequest();
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(dto);
+            }
 
-            return new ObjectResult(result);
+            try
+            {
+                var result = await _repo.ChangePassword(dto);
+                return new ObjectResult(result);
+            }
+            catch (Exception exc)
+            {
+                return BadRequest(exc);
+            }
+        }
+        [HttpPut]
+        public async Task<IActionResult> ChangeRole([FromBody]RoleDTO dto)
+        {
+            if (dto == null)
+            {
+                return BadRequest();
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(dto);
+            }
+
+            try
+            {
+                await _repo.ChangeRole(dto);
+                return new EmptyResult();
+            }
+            catch (Exception exc)
+            {
+                return BadRequest(exc);
+            }
         }
     }
 }
