@@ -50,7 +50,7 @@ namespace Aledrogo.Data.DataToSeed
         public static List<TransactionRating> TransactionRatings = new List<TransactionRating>()
         {
             telefon_xiaomi_transaction_rating,
-            telewizor_transaction_rating,
+            telefon_xiaomi_transaction_rating,
             powerbank_transaction_rating
         };
     }

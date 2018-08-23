@@ -13,7 +13,7 @@ namespace Aledrogo.Models
         public int AddressId { get; set; }
         public virtual Address Address { get; set; }
 
-        public int? ProductId { get; set; }
+        public int ProductId { get; set; }
         public virtual Product Product { get; set; }
 
         public int DeliveryMethodId { get; set; }

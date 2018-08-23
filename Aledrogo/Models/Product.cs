@@ -20,6 +20,7 @@ namespace Aledrogo.Models
         public virtual ICollection<Product_SpecificFieldValue> ProductSpecificFieldsValues { get; set; }
         public virtual ICollection<Basket> Baskets { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
+        public virtual ICollection<TransactionRating> TransactionRatings { get; set; }
         public virtual ICollection<Product_DeliveryMethod> ProductDeliveryMethods { get; set; }
 
         [Required]
