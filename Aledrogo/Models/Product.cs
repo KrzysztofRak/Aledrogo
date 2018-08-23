@@ -15,11 +15,12 @@ namespace Aledrogo.Models
 
         public int CategoryId { get; set; }
         public virtual Category Category { get; set; }
-        
+
         public virtual ICollection<Image> Images { get; set; }
-        public virtual ICollection<Product_SpecificFieldValue> ProductSpecificFieldValues { get; set; }
+        public virtual ICollection<Product_SpecificFieldValue> ProductSpecificFieldsValues { get; set; }
         public virtual ICollection<Basket> Baskets { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
+        public virtual ICollection<TransactionRating> TransactionRatings { get; set; }
         public virtual ICollection<Product_DeliveryMethod> ProductDeliveryMethods { get; set; }
 
         [Required]
@@ -32,14 +33,14 @@ namespace Aledrogo.Models
 
         public decimal MinimalPrice { get; set; }
         public decimal Price { get; set; }
-        public int DaysForReturn { get; set; }
+        public ushort DaysForReturn { get; set; }
 
         [Required]
         public ProductState State { get; set; }
 
         [Required]
         [Range(0, 10000)]
-        public int ItemsInStock { get; set; }
+        public ushort ItemsInStock { get; set; }
 
         [Required]
         [Range(1, 14)]
@@ -49,5 +50,9 @@ namespace Aledrogo.Models
 
         [DateRange(1,20)]
         public DateTime EndDate { get; set; }
+
+
+        public bool IsHighlighted { get; set; } = false;
+        public uint ViewsNumber { get; set; } = 0;
     }
 }

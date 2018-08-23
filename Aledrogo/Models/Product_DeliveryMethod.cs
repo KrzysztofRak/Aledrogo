@@ -1,4 +1,6 @@
-﻿namespace Aledrogo.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Aledrogo.Models
 {
     public class Product_DeliveryMethod
     {
@@ -10,6 +12,6 @@
         public int DeliveryMethodId { get; set; }
         public virtual DeliveryMethod DeliveryMethod { get; set; }
         
-        decimal Price { get; set; }
+        public decimal Price { get; set; }
     }
 }

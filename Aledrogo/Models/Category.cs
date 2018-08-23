@@ -13,7 +13,7 @@ namespace Aledrogo.Models
         public virtual Category ParentCategory { get; set; }
 
         public virtual ICollection<Product> Products { get; set; }
-        public virtual ICollection<SpecificField> CategoryFields { get; set; }
+        public virtual ICollection<SpecificField> SpecificFields { get; set; }
 
         [Required]
         [MaxLength(100)]

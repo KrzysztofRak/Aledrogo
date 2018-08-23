@@ -25,6 +25,9 @@ namespace Aledrogo.Models
         [Range(minimum: 1, maximum: 10000)]
         public int Quantity { get; set; }
 
-        public bool Completed { get; set; } = false;
+        public decimal Value { get; set; }
+        public decimal DeliveryValue { get; set; }
+
+        public bool Paid { get; set; } = false;
     }
 }

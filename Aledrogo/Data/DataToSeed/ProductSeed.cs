@@ -1,8 +1,6 @@
 ﻿using Aledrogo.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Aledrogo.Data.DataToSeed
 {
@@ -25,13 +23,13 @@ namespace Aledrogo.Data.DataToSeed
             EndDate = DateTime.UtcNow.AddDays(14)
         };
 
-        public static Product komputer_uzywany = new Product()
+        public static Product laptop_uzywany = new Product()
         {
             SellerId = UserSeed.krzysztof.Id,
             Category = CategorySeed.komputery,
             Name = "Używany laptop DELL. Licytacja!",
             Description = DESCRIPTION,
-            MinimalPrice = 100,
+            MinimalPrice = 300,
             Price = 0,
             DaysForReturn = 0,
             State = ProductState.SECONDHAND,
@@ -42,17 +40,17 @@ namespace Aledrogo.Data.DataToSeed
 
         public static Product telefon_xiaomi = new Product()
         {
-            SellerId = UserSeed.krzysztof.Id,
+            SellerId = UserSeed.test1.Id,
             Category = CategorySeed.xiaomi,
             Name = "Xiaomi Redmi Note 4X",
             Description = DESCRIPTION,
-            MinimalPrice = 200,
+            MinimalPrice = 350,
             Price = 500,
             DaysForReturn = 0,
             State = ProductState.SECONDHAND,
             ItemsInStock = 1,
             ShippingTimeInWorkingDays = 3,
-            EndDate = DateTime.UtcNow.AddDays(7)
+            EndDate = DateTime.UtcNow.AddDays(7),
         };
 
         public static Product arduino = new Product()
@@ -65,14 +63,14 @@ namespace Aledrogo.Data.DataToSeed
             Price = 50,
             DaysForReturn = 0,
             State = ProductState.DAMAGED,
-            ItemsInStock = 5,
+            ItemsInStock = 30,
             ShippingTimeInWorkingDays = 3,
             EndDate = DateTime.UtcNow.AddDays(10)
         };
 
         public static Product pralka = new Product()
         {
-            SellerId = UserSeed.artur.Id,
+            SellerId = UserSeed.test1.Id,
             Category = CategorySeed.pralki,
             Name = "Pralka BOSCH",
             Description = DESCRIPTION,
@@ -82,13 +80,13 @@ namespace Aledrogo.Data.DataToSeed
             State = ProductState.NEW,
             ItemsInStock = 10,
             ShippingTimeInWorkingDays = 3,
-            EndDate = DateTime.UtcNow.AddDays(8),
+            EndDate = DateTime.UtcNow.AddDays(8)
         };
 
 
         public static Product powerbank = new Product()
         {
-            SellerId = UserSeed.artur.Id,
+            SellerId = UserSeed.test2.Id,
             Category = CategorySeed.powerbanki,
             Name = "Powerbanki z biedronki",
             Description = DESCRIPTION,
@@ -99,11 +97,12 @@ namespace Aledrogo.Data.DataToSeed
             ItemsInStock = 100,
             ShippingTimeInWorkingDays = 1,
             EndDate = DateTime.UtcNow.AddDays(20),
+            IsHighlighted = true
         };
 
         public static Product etui = new Product()
         {
-            SellerId = UserSeed.artur.Id,
+            SellerId = UserSeed.test3.Id,
             Category = CategorySeed.telefony_i_akcesoria,
             Name = "Etui do iPHONE X",
             Description = DESCRIPTION,
@@ -113,7 +112,7 @@ namespace Aledrogo.Data.DataToSeed
             State = ProductState.NEW,
             ItemsInStock = 30,
             ShippingTimeInWorkingDays = 1,
-            EndDate = DateTime.UtcNow.AddDays(14),
+            EndDate = DateTime.UtcNow.AddDays(14)
         };
 
         public static Product ladowarka = new Product()
@@ -128,7 +127,7 @@ namespace Aledrogo.Data.DataToSeed
             State = ProductState.SECONDHAND,
             ItemsInStock = 50,
             ShippingTimeInWorkingDays = 3,
-            EndDate = DateTime.UtcNow.AddDays(14),
+            EndDate = DateTime.UtcNow.AddDays(14)
         };
 
         public static Product telewizor = new Product()
@@ -140,16 +139,17 @@ namespace Aledrogo.Data.DataToSeed
             MinimalPrice = 500,
             Price = 1100,
             DaysForReturn = 14,
-            State = ProductState.OUTLET,
-            ItemsInStock = 2,
+            State = ProductState.AFTER_EXHIBITION,
+            ItemsInStock = 1,
             ShippingTimeInWorkingDays = 2,
             EndDate = DateTime.UtcNow.AddDays(14),
+            IsHighlighted = true
         };
 
 
         public static Product konsola_ps4 = new Product()
         {
-            SellerId = UserSeed.krzysztof.Id,
+            SellerId = UserSeed.artur.Id,
             Category = CategorySeed.rtv_i_agd,
             Name = "Konsola PlayStation 4 + GRY",
             Description = DESCRIPTION,
@@ -157,14 +157,15 @@ namespace Aledrogo.Data.DataToSeed
             Price = 950,
             DaysForReturn = 0,
             State = ProductState.NEW,
-            ItemsInStock = 1,
+            ItemsInStock = 4,
             ShippingTimeInWorkingDays = 3,
             EndDate = DateTime.UtcNow.AddDays(7),
+            IsHighlighted = true
         };
 
         public static List<Product> Products { get; } = new List<Product>()
         {
-            komputer_nowy, komputer_uzywany, telefon_xiaomi, arduino, pralka,
+            komputer_nowy, laptop_uzywany, telefon_xiaomi, arduino, pralka,
             powerbank, etui, ladowarka, telewizor, konsola_ps4
         };
     }
