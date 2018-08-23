@@ -8,12 +8,12 @@ namespace Aledrogo.ModelFilters
 {
     public class ProductFilter
     {
-        public string Name { get; set; }
+        public string SearchName { get; set; }
+        public int CategoryId { get; set; }
+        public ProductState State { get; set; }
         public decimal MinPrice { get; set; }
         public decimal MaxPrice { get; set; }
-        public ProductState State { get; set; }
         public bool AuctionsOnly { get; set; }
         public bool BuyItNowOnly { get; set; }
-
     }
 }

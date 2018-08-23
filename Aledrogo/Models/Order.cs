@@ -28,6 +28,6 @@ namespace Aledrogo.Models
         public decimal Value { get; set; }
         public decimal DeliveryValue { get; set; }
 
-        public bool Paid { get; set; } = false;
+        public bool PaymentCompleted { get; set; } = false;
     }
 }

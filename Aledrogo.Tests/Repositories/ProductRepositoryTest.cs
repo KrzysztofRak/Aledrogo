@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Aledrogo.Tests
 {
-    public class UnitTest1
+    public class ProductRepositoryTest
     {
         [Fact]
         public void Test1()

@@ -23,10 +23,10 @@ namespace Aledrogo.Data
             await _context.Database.EnsureDeletedAsync();
             await _context.Database.EnsureCreatedAsync();
 
-            await Seed();
+            await SeedAll();
         }
 
-        private static async Task Seed()
+        private static async Task SeedAll()
         {
             await SeedRoles();
             await SeedUsers();
