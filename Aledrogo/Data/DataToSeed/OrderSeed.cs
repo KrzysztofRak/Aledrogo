@@ -12,10 +12,10 @@ namespace Aledrogo.Data.DataToSeed
             Address = AddressSeed.artur_address2,
             Product = ProductSeed.telefon_xiaomi,
             Quantity = 1,
-            Value = 500,
+            ProductPrice = 500,
             DeliveryMethod = Product_DeliveryMethodSeed.telefon_xiaomi_paczkomaty.DeliveryMethod,
-            DeliveryValue = Product_DeliveryMethodSeed.telefon_xiaomi_paczkomaty.Price,
-            Paid = true
+            DeliveryPrice = Product_DeliveryMethodSeed.telefon_xiaomi_paczkomaty.Price,
+            PaymentCompleted = true
         };
 
         public static Order laptop_uzywany_test1_order = new Order()
@@ -24,9 +24,9 @@ namespace Aledrogo.Data.DataToSeed
             Address = AddressSeed.test1_address1,
             Product = ProductSeed.laptop_uzywany,
             Quantity = 1,
-            Value = 1200,
+            ProductPrice = 1200,
             DeliveryMethod = Product_DeliveryMethodSeed.laptop_uzywany_przesylka_kurierska.DeliveryMethod,
-            DeliveryValue = Product_DeliveryMethodSeed.laptop_uzywany_przesylka_kurierska.Price
+            DeliveryPrice = Product_DeliveryMethodSeed.laptop_uzywany_przesylka_kurierska.Price
         };
 
         public static Order telewizor_test3_order = new Order()
@@ -35,10 +35,10 @@ namespace Aledrogo.Data.DataToSeed
             Address = AddressSeed.test3_address1,
             Product = ProductSeed.telewizor,
             Quantity = 1,
-            Value = 980,
+            ProductPrice = 980,
             DeliveryMethod = Product_DeliveryMethodSeed.telefon_xiaomi_odbior_osobisty_po_przedplacie.DeliveryMethod,
-            DeliveryValue = Product_DeliveryMethodSeed.telefon_xiaomi_odbior_osobisty_po_przedplacie.Price,
-            Paid = true
+            DeliveryPrice = Product_DeliveryMethodSeed.telefon_xiaomi_odbior_osobisty_po_przedplacie.Price,
+            PaymentCompleted = true
         };
 
         public static Order etui_artur_order = new Order()
@@ -47,9 +47,9 @@ namespace Aledrogo.Data.DataToSeed
             Address = AddressSeed.artur_address1,
             Product = ProductSeed.etui,
             Quantity = 3,
-            Value = ProductSeed.etui.Price,
+            ProductPrice = ProductSeed.etui.Price,
             DeliveryMethod = Product_DeliveryMethodSeed.etui_paczkomaty.DeliveryMethod,
-            DeliveryValue = Product_DeliveryMethodSeed.etui_paczkomaty.Price
+            DeliveryPrice = Product_DeliveryMethodSeed.etui_paczkomaty.Price
         };
 
         public static Order powerbank_krzysztof_order = new Order()
@@ -58,10 +58,10 @@ namespace Aledrogo.Data.DataToSeed
             Address = AddressSeed.krzysztof_address2,
             Product = ProductSeed.powerbank,
             Quantity = 5,
-            Value = ProductSeed.powerbank.Price,
+            ProductPrice = ProductSeed.powerbank.Price,
             DeliveryMethod = Product_DeliveryMethodSeed.powerbank_list_polecony_priorytetowy.DeliveryMethod,
-            DeliveryValue = Product_DeliveryMethodSeed.powerbank_list_polecony_priorytetowy.Price,
-            Paid = true
+            DeliveryPrice = Product_DeliveryMethodSeed.powerbank_list_polecony_priorytetowy.Price,
+            PaymentCompleted = true
         };
 
         public static Order konsola_ps4_test2_order = new Order()
@@ -70,9 +70,9 @@ namespace Aledrogo.Data.DataToSeed
             Address = AddressSeed.test2_address1,
             Product = ProductSeed.konsola_ps4,
             Quantity = 2,
-            Value = ProductSeed.konsola_ps4.Price,
+            ProductPrice = ProductSeed.konsola_ps4.Price,
             DeliveryMethod = Product_DeliveryMethodSeed.konsola_ps4_przesylka_kurierska.DeliveryMethod,
-            DeliveryValue = Product_DeliveryMethodSeed.konsola_ps4_przesylka_kurierska.Price
+            DeliveryPrice = Product_DeliveryMethodSeed.konsola_ps4_przesylka_kurierska.Price
         };
 
         public static List<Order> Orders = new List<Order>()

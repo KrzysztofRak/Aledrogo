@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Aledrogo.Repositories
 {
-    public class ProductRespository
+    public class ProductRespository : IProductRepository
     {
-        private AledrogoContext _context;
+        private readonly AledrogoContext _context;
 
         public ProductRespository(AledrogoContext context)
         {
@@ -43,9 +43,13 @@ namespace Aledrogo.Repositories
             return _context.Products.Where(p => p.Name.Contains(productName));
         }
 
-        public async Task<IEnumerable<Product>> GetByFilters(string productName)
+        public async Task<IEnumerable<Product>> GetByFilters(ProductFilter productFilter, int categoryId)
         {
-            return _context.Products.Where(p => p.Name.Contains(productName));
+            //IEnumerable<Product> categoryProducts = await GetAllFromCategory(categoryId);
+            //IEnumerable<Product> categoryProducts = await GetAllFromCategory(categoryId);
+
+            //return _context.Products.Where(p => p.Name.Contains(productName));
+            return null;
         }
 
         public async Task Update(Product product) 
