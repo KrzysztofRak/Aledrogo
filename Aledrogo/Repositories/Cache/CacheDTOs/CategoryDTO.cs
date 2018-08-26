@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace Aledrogo.Repositories.Cache.CacheDTO
 {
-    public class CategoryCacheDTO
+    public class CategoryDTO
     {
         public int CategoryId { get; set; }
-        public ICollection<int> ChildCategoriesIds { get; set; }
+        public ICollection<int> ChildCategoriesIds { get; set; } = new List<int>();
     }
 }

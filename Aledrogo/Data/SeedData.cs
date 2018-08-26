@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Aledrogo.Data.DataToSeed;
 
@@ -32,6 +31,8 @@ namespace Aledrogo.Data
             await SeedUsers();
             await SeedAddresses();
             await SeedBaskets();
+            await SeedCategories();
+            await SeedDeliveryMethodTypes();
             await SeedDeliveryMethods();
             await SeedImages();
             await SeedOffers();
@@ -88,6 +89,14 @@ namespace Aledrogo.Data
             foreach (var category in CategorySeed.Categories)
             {
                 await _context.Categories.AddAsync(category);
+            }
+        }
+
+        private static async Task SeedDeliveryMethodTypes()
+        {
+            foreach (var deliveryMethodType in DeliveryMethodTypeSeed.DeliveryMethodTypes)
+            {
+                await _context.DeliveryMethodTypes.AddAsync(deliveryMethodType);
             }
         }
 

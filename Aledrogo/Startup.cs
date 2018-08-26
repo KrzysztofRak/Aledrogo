@@ -3,6 +3,7 @@ using Aledrogo.Models;
 using Aledrogo.Repositories;
 using Aledrogo.Repositories.Cache;
 using Aledrogo.Utility;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -29,30 +30,36 @@ namespace Aledrogo
         public void ConfigureServices(IServiceCollection services)
         {
             string connectionString = _config.GetConnectionString("DefaultConnection");
-            var configMapper = new AutoMapper.MapperConfiguration(c =>
+
+            var configMapper = new MapperConfiguration(c =>
             {
                 c.AddProfile(new ApplicationProfile());
             });
             var mapper = configMapper.CreateMapper();
+
             services.AddMvc();
             services.AddDbContext<AledrogoContext>(options => options.UseSqlServer(connectionString));
-            services.AddSingleton(mapper);
             services.AddSingleton(mapper);
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<AledrogoContext>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IProductRepository, ProductRespository>();
-            services.AddScoped<ICategoryCache, CategoryCache>();
 
+            IServiceProvider provider = services.BuildServiceProvider();
+            var context = provider.GetRequiredService<AledrogoContext>();
+
+            services.AddSingleton(new CategoryCache(context));
+            services.AddScoped<ICategoryCache, CategoryCache>();
         }
         
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            using (var scope = app.ApplicationServices.CreateScope())
+            using (IServiceScope scope = app.ApplicationServices.CreateScope())
             {
                 IServiceProvider serviceProvider = scope.ServiceProvider;
                 SeedData.Initialize(serviceProvider).Wait();
+                var x = serviceProvider.GetRequiredService<CategoryCache>();
             }
-            var test = new UserRepository();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Aledrogo.Repositories.Cache.CacheDTO;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Aledrogo.Repositories.Cache
 {
     public interface ICategoryCache
     {
-
+        void Load();
+        ICollection<CategoryDTO> CategoryDTOs { get; set; }
+        IEnumerable<int> GetConcernedCategoriesIds(int categoryId);
     }
 }

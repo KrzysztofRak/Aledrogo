@@ -1,10 +1,8 @@
 ﻿using Aledrogo.Data;
 using Aledrogo.Models;
 using Aledrogo.Repositories.Cache.CacheDTO;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Aledrogo.Repositories.Cache
 {
@@ -12,38 +10,50 @@ namespace Aledrogo.Repositories.Cache
     {
         private readonly AledrogoContext _context;
 
-        public ICollection<CategoryCacheDTO> CategoriesCache { get; set; }
-        public IEnumerable<Category> Categories { get; set; }
+        private IEnumerable<Category> Categories { get; set; }
+
+        public ICollection<CategoryDTO> CategoryDTOs { get; set; }
 
         public CategoryCache(AledrogoContext context)
         {
             _context = context;
-            InitializeCategoriesCache();
+            Load();
         }
 
-        private void InitializeCategoriesCache()
+        public void Load()
         {
-            CategoriesCache = new List<CategoryCacheDTO>();
             Categories = _context.Categories.ToList();
+            CategoryDTOs = new List<CategoryDTO>();
 
             foreach(Category category in Categories)
             {
-                CategoryCacheDTO cachedCategory = new CategoryCacheDTO();
-                cachedCategory.CategoryId = category.Id;
-                AddChildCategoriesIdsOf(category.Id, cachedCategory);
+                CategoryDTO cachedCategoryDTO = new CategoryDTO();
+                cachedCategoryDTO.CategoryId = category.Id;
+                AddChildCategoriesIds(category.Id, cachedCategoryDTO.ChildCategoriesIds);
 
-                CategoriesCache.Add(cachedCategory);
+                CategoryDTOs.Add(cachedCategoryDTO);
             }
         }
 
-        private void AddChildCategoriesIdsOf(int parentCategoryId, CategoryCacheDTO cachedCategoryToAddTo)
+        public IEnumerable<int> GetConcernedCategoriesIds(int categoryId)
+        {
+            ICollection<int> concernedCategoriesIds = CategoryDTOs
+                                          .Where(c => c.CategoryId == categoryId)
+                                          .First().ChildCategoriesIds;
+
+            concernedCategoriesIds.Add(categoryId);
+
+            return concernedCategoriesIds;
+        }
+
+        private void AddChildCategoriesIds(int parentCategoryId, ICollection<int> childCategoriesIds)
         {
             foreach (Category category in Categories)
             {
                 if (category.ParentCategoryId == parentCategoryId)
                 {
-                    cachedCategoryToAddTo.ChildCategoriesIds.Add(category.Id);
-                    AddChildCategoriesIdsOf(category.Id, cachedCategoryToAddTo);
+                    childCategoriesIds.Add(category.Id);
+                    AddChildCategoriesIds(category.Id, childCategoriesIds);
                 }
             }
         }

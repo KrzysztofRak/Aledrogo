@@ -1,4 +1,5 @@
 ﻿using Aledrogo.Attribute;
+using Aledrogo.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -33,10 +34,13 @@ namespace Aledrogo.Models
 
         public decimal MinimalPrice { get; set; }
         public decimal Price { get; set; }
+
+        public TypeOfOffer TypeOfOffer { get; set; }
+
         public ushort DaysForReturn { get; set; }
 
         [Required]
-        public ProductState State { get; set; }
+        public ProductState ProductState { get; set; }
 
         [Required]
         [Range(0, 10000)]

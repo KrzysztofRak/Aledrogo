@@ -8,13 +8,13 @@ namespace Aledrogo.Data.DataToSeed
 {
     public static class DeliveryMethodSeed
     {
-        public static DeliveryMethod przesylka_kurierska = new DeliveryMethod() { Name = "Przesyłka kurierska" };
-        public static DeliveryMethod paczkomaty = new DeliveryMethod() { Name = "Paczkomaty 24/7", Price = 8.70m };
-        public static DeliveryMethod list_ekonomiczny = new DeliveryMethod() { Name = "List ekonomiczny", IsSafe = false };
-        public static DeliveryMethod list_priorytetowy = new DeliveryMethod() { Name = "List priorytetowy", IsSafe = false };
-        public static DeliveryMethod list_polecony_priorytetowy = new DeliveryMethod() { Name = "List polecony priorytetowy" };
-        public static DeliveryMethod paczka_pocztowa_ekonomiczna = new DeliveryMethod() { Name = "Paczka pocztowa ekonomiczna" };
-        public static DeliveryMethod odbior_osobisty_po_przedplacie = new DeliveryMethod() { Name = "Odbiór osobity po przedpłacie", Price = 0.00m };
+        public static DeliveryMethod przesylka_kurierska = new DeliveryMethod() { Name = "Przesyłka kurierska", DeliveryMethodType = DeliveryMethodTypeSeed.kurier };
+        public static DeliveryMethod paczkomaty = new DeliveryMethod() { Name = "Paczkomaty 24/7", Price = 8.70m, DeliveryMethodType = DeliveryMethodTypeSeed.paczkomat };
+        public static DeliveryMethod list_ekonomiczny = new DeliveryMethod() { Name = "List ekonomiczny", IsSafe = false, DeliveryMethodType = DeliveryMethodTypeSeed.list };
+        public static DeliveryMethod list_priorytetowy = new DeliveryMethod() { Name = "List priorytetowy", IsSafe = false, DeliveryMethodType = DeliveryMethodTypeSeed.list };
+        public static DeliveryMethod list_polecony_priorytetowy = new DeliveryMethod() { Name = "List polecony priorytetowy", DeliveryMethodType = DeliveryMethodTypeSeed.list };
+        public static DeliveryMethod paczka_pocztowa_ekonomiczna = new DeliveryMethod() { Name = "Paczka pocztowa ekonomiczna", DeliveryMethodType = DeliveryMethodTypeSeed.paczka };
+        public static DeliveryMethod odbior_osobisty_po_przedplacie = new DeliveryMethod() { Name = "Odbiór osobity po przedpłacie", Price = 0.00m, DeliveryMethodType = DeliveryMethodTypeSeed.odbior_osobisty };
 
         public static List<DeliveryMethod> DeliveryMethods = new List<DeliveryMethod>()
         {

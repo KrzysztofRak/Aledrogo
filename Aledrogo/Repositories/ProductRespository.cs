@@ -1,6 +1,8 @@
 ﻿using Aledrogo.Data;
 using Aledrogo.ModelFilters;
 using Aledrogo.Models;
+using Aledrogo.Models.Enums;
+using Aledrogo.Repositories.Cache;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +13,12 @@ namespace Aledrogo.Repositories
     public class ProductRespository : IProductRepository
     {
         private readonly AledrogoContext _context;
+        private readonly ICategoryCache _categoryCache;
 
-        public ProductRespository(AledrogoContext context)
+        public ProductRespository(AledrogoContext context, ICategoryCache categoryCache)
         {
             _context = context;
+            _categoryCache = categoryCache;
         }
 
         public async Task<Product> GetById(int productId)
@@ -32,19 +36,48 @@ namespace Aledrogo.Repositories
             return _context.Products.Where(p => p.SellerId == userId).ToList();
         }
 
-        public async Task<IEnumerable<Product>> GetAllFromCategory(int categoryId)
+        public async Task<ICollection<Product>> GetAllFromCategory(int categoryId)
         {
-            ICollection<int> concernedCategoriesIds = new List<int>(); // @@@ Tutaj potrzebny cache dla kategorii @@@
+            IEnumerable<int> concernedCategoriesIds = _categoryCache.GetConcernedCategoriesIds(categoryId);
+
             return _context.Products.Where(p => concernedCategoriesIds.Contains(p.CategoryId)).ToList();
         }
 
-        public async Task<IEnumerable<Product>> GetByNameSearchInCategory(string productName, int categoryId)
+        public async Task<ICollection<Product>> GetBySearchInCategory(string serchString, int categoryId)
         {
-            return _context.Products.Where(p => p.Name.Contains(productName));
+            IEnumerable<int> concernedCategoriesIds = _categoryCache.GetConcernedCategoriesIds(categoryId);
+
+            return _context.Products.Where(p => p.Name.Contains(serchString) && concernedCategoriesIds.Contains(p.CategoryId)).ToList();
         }
 
-        public async Task<IEnumerable<Product>> GetByFilters(ProductFilter productFilter, int categoryId)
+        public async Task<ICollection<Product>> GetBySearch(string serchString)
         {
+            return _context.Products.Where(p => p.Name.Contains(serchString)).ToList();
+        }
+
+        public async Task<IEnumerable<Product>> GetByFilter(ProductFilter productFilter)
+        {
+            ICollection<Product> products = new List<Product>();
+
+            if (productFilter.SearchString != String.Empty && productFilter.CategoryId != -1)
+                products = await GetBySearchInCategory(productFilter.SearchString, productFilter.CategoryId);
+            else if(productFilter.SearchString != String.Empty)
+                products = await GetBySearch(productFilter.SearchString);
+            else if (productFilter.CategoryId != -1)
+                products = await GetAllFromCategory(productFilter.CategoryId);
+
+
+            if(productFilter.MinPrice > 0)
+                products = products.Where(p => p.Price > productFilter.MinPrice || p.MinimalPrice > productFilter.MinPrice).ToList();
+            if(productFilter.MaxPrice > 0)
+                products = products.Where(p => p.Price < productFilter.MaxPrice || p.MinimalPrice < productFilter.MaxPrice).ToList();
+
+            if(productFilter.ProductStates != null)
+                products = products.Where(p => productFilter.ProductStates.Contains(p.ProductState)).ToList();
+
+            if (productFilter.TypesOfOffers != null)
+                products = products.Where(p => productFilter.TypesOfOffers.Contains(p.TypeOfOffer)).ToList();
+            //   categoryProducts = categoryProducts.Where(p => p.P)
             //IEnumerable<Product> categoryProducts = await GetAllFromCategory(categoryId);
             //IEnumerable<Product> categoryProducts = await GetAllFromCategory(categoryId);
 
@@ -52,7 +85,7 @@ namespace Aledrogo.Repositories
             return null;
         }
 
-        public async Task Update(Product product) 
+        public async Task Update(Product product)
         {
             try
             {
@@ -72,9 +105,9 @@ namespace Aledrogo.Repositories
             {
                 _context.Products.Remove(product);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-              
+
             }
         }
 

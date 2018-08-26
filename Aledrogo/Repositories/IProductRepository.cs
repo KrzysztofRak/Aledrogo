@@ -11,7 +11,7 @@ namespace Aledrogo.Repositories
         Task<Product> GetById(int productId);
         Task<ICollection<Product>> GetAllBuyedBy(string userId);
         Task<IEnumerable<Product>> GetAllSelledBy(string userId);
-        Task<IEnumerable<Product>> GetAllFromCategory(int categoryId);
-        Task<IEnumerable<Product>> GetByNameSearchInCategory(string productName, int categoryId);
+        Task<ICollection<Product>> GetAllFromCategory(int categoryId);
+        Task<ICollection<Product>> GetBySearchInCategory(string productName, int categoryId);
     }
 }

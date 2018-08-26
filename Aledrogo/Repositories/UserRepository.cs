@@ -1,6 +1,7 @@
 ﻿using Aledrogo.Data;
 using Aledrogo.DTO;
 using Aledrogo.Models;
+using Aledrogo.Repositories.Cache;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace Aledrogo.Repositories
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
         private readonly AledrogoContext _context;
+
         public UserRepository(SignInManager<User> signInManager, UserManager<User> userManager, AledrogoContext context)
         {
             _signInManager = signInManager;
