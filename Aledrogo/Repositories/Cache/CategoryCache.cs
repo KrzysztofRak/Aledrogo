@@ -17,21 +17,32 @@ namespace Aledrogo.Repositories.Cache
         public CategoryCache(AledrogoContext context)
         {
             _context = context;
-            Load();
+            LoadFromDatabase();
         }
 
-        public void Load()
+        public void LoadFromDatabase()
         {
             Categories = _context.Categories.ToList();
             CategoryDTOs = new List<CategoryDTO>();
 
-            foreach(Category category in Categories)
+            foreach (Category category in Categories)
             {
                 CategoryDTO cachedCategoryDTO = new CategoryDTO();
                 cachedCategoryDTO.CategoryId = category.Id;
-                AddChildCategoriesIds(category.Id, cachedCategoryDTO.ChildCategoriesIds);
+                AppendChildCategoriesIds(category.Id, cachedCategoryDTO.ChildCategoriesIds);
 
                 CategoryDTOs.Add(cachedCategoryDTO);
+            }
+        }
+
+        private void AppendChildCategoriesIds(int parentCategoryId, ICollection<int> childCategoriesIds)
+        {
+            IEnumerable<Category> firstLevelChildCategories = Categories.Where(c => c.ParentCategoryId == parentCategoryId);
+
+            foreach (Category category in firstLevelChildCategories)
+            {
+                childCategoriesIds.Add(category.Id);
+                AppendChildCategoriesIds(category.Id, childCategoriesIds);
             }
         }
 
@@ -44,18 +55,6 @@ namespace Aledrogo.Repositories.Cache
             concernedCategoriesIds.Add(categoryId);
 
             return concernedCategoriesIds;
-        }
-
-        private void AddChildCategoriesIds(int parentCategoryId, ICollection<int> childCategoriesIds)
-        {
-            foreach (Category category in Categories)
-            {
-                if (category.ParentCategoryId == parentCategoryId)
-                {
-                    childCategoriesIds.Add(category.Id);
-                    AddChildCategoriesIds(category.Id, childCategoriesIds);
-                }
-            }
         }
     }
 }

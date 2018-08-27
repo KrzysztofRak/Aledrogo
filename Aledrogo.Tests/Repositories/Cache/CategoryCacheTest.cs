@@ -1,17 +1,23 @@
 using Aledrogo.Repositories.Cache;
 using Microsoft.Extensions.DependencyInjection;
+using System.Linq;
 using Xunit;
 
 namespace Aledrogo.Tests
 {
     public class CategoryCacheTest
     {
-        [Fact]
-        public void Load()
-        {
-            CategoryCache categoryCache = Services.Provider.GetRequiredService<CategoryCache>();
+        private readonly CategoryCache _categoryCache;
 
-            Assert.True(categoryCache.CategoryDTOs.Count > 0);
+        public CategoryCacheTest()
+        {
+            _categoryCache = Services.Provider.GetRequiredService<CategoryCache>();
+        }
+
+        [Fact]
+        public async void LoadFromDatabaseTest()
+        {
+            Assert.True(_categoryCache.CategoryDTOs.Any());
         }
     }
 }

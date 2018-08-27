@@ -5,8 +5,8 @@ namespace Aledrogo.Repositories.Cache
 {
     public interface ICategoryCache
     {
-        void Load();
         ICollection<CategoryDTO> CategoryDTOs { get; set; }
+        void LoadFromDatabase();
         IEnumerable<int> GetConcernedCategoriesIds(int categoryId);
     }
 }

@@ -5,8 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Repositories\Enums\**" />
+    <Content Remove="Repositories\Enums\**" />
+    <EmbeddedResource Remove="Repositories\Enums\**" />
+    <None Remove="Repositories\Enums\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Controllers\" />
-    <Folder Include="Repositories\Enums\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

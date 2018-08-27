@@ -15,9 +15,10 @@ namespace Aledrogo.ModelFilters
         public decimal MinPrice { get; set; } = 0;
         public decimal MaxPrice { get; set; } = 0;
 
-        public ICollection<ProductState> ProductStates { get; set; } = null;
-        public ICollection<TypeOfOffer> TypesOfOffers { get; set; } = null;
-        public ICollection<DeliveryMethodType> DeliveryMethodTypes { get; set; } = null;
+        public ICollection<ProductState> ProductStates { get; set; } = new List<ProductState>();
+        public ICollection<TypeOfOffer> TypesOfOffers { get; set; } = new List<TypeOfOffer>();
+        public ICollection<DeliveryMethodType> DeliveryMethodTypes { get; set; } = new List<DeliveryMethodType>();
+
         public ICollection<SpecificFieldValueDTO> SpecificFieldsValues { get; set; }
     }
 }
