@@ -23,7 +23,6 @@ namespace Aledrogo.Data
         public DbSet<SpecificFieldValue> SpecificFieldValues { get; set; }
         public DbSet<Product_SpecificFieldValue> Products_SpecificFieldValues { get; set; }
 
-
         public AledrogoContext(DbContextOptions options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder builder)

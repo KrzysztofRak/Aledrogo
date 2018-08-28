@@ -5,19 +5,20 @@ using Xunit;
 
 namespace Aledrogo.Tests
 {
+    [Collection("Services Collection")]
     public class CategoryCacheTest
     {
-        private readonly CategoryCache _categoryCache;
+        private readonly ServicesFixture _servicesFixture;
 
-        public CategoryCacheTest()
+        public CategoryCacheTest(ServicesFixture servicesFixture)
         {
-            _categoryCache = Service.Provider.GetRequiredService<CategoryCache>();
+            _servicesFixture = servicesFixture;
         }
 
         [Fact]
         public async void LoadFromDatabaseTest()
         {
-            Assert.True(_categoryCache.CategoryDTOs.Any());
+            Assert.True(_servicesFixture.CategoryCache.CategoryDTOs.Any());
         }
     }
 }

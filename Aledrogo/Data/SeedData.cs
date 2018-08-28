@@ -1,9 +1,7 @@
-﻿using Aledrogo.Models;
+﻿using Aledrogo.Data.DataToSeed;
+using Aledrogo.Models;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
-using System;
 using System.Threading.Tasks;
-using Aledrogo.Data.DataToSeed;
 
 namespace Aledrogo.Data
 {

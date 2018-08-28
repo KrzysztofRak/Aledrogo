@@ -17,7 +17,6 @@ namespace Aledrogo.Repositories.Cache
         public CategoryCache(AledrogoContext context)
         {
             _context = context;
-            LoadFromDatabase();
         }
 
         public void LoadFromDatabase()

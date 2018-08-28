@@ -11,6 +11,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.IO;
+using System.Reflection;
 
 namespace Aledrogo
 {
@@ -18,11 +20,23 @@ namespace Aledrogo
     {
         private readonly IConfiguration _config;
 
-
         public Startup(IHostingEnvironment environment)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(environment.ContentRootPath)
+                .AddJsonFile("appsettings.json");
+
+            _config = builder.Build();
+        }
+
+        public Startup()
+        {
+            // Constructor for tests
+            string testProjectPath = Directory.GetCurrentDirectory();
+            string thisProjectPath = testProjectPath.Remove(testProjectPath.IndexOf(".Test"));
+
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(thisProjectPath)
                 .AddJsonFile("appsettings.json");
 
             _config = builder.Build();
@@ -49,21 +63,18 @@ namespace Aledrogo
             var context = serviceProvider.GetRequiredService<AledrogoContext>();
             var categoryCache = new CategoryCache(context);
 
-            services.AddSingleton(new ProductRespository(context, categoryCache));
             services.AddSingleton(categoryCache);
+            services.AddSingleton(new ProductRespository(context, categoryCache));
         }
-        
+
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             using (IServiceScope scope = app.ApplicationServices.CreateScope())
             {
                 IServiceProvider serviceProvider = scope.ServiceProvider;
 
-                SeedData.Initialize(
-                    serviceProvider.GetRequiredService<AledrogoContext>(),
-                    serviceProvider.GetRequiredService<UserManager<User>>(),
-                    serviceProvider.GetRequiredService<RoleManager<IdentityRole>>()
-                    ).Wait();
+                InitializeDatabaseWithSeedData(serviceProvider);
+                LoadCache(serviceProvider);
             }
 
             if (env.IsDevelopment())
@@ -76,6 +87,21 @@ namespace Aledrogo
             }
 
             app.UseMvcWithDefaultRoute();
+        }
+
+        public void InitializeDatabaseWithSeedData(IServiceProvider serviceProvider)
+        {
+            SeedData.Initialize(
+                serviceProvider.GetRequiredService<AledrogoContext>(),
+                serviceProvider.GetRequiredService<UserManager<User>>(),
+                serviceProvider.GetRequiredService<RoleManager<IdentityRole>>()
+                ).Wait();
+        }
+
+        public void LoadCache(IServiceProvider serviceProvider)
+        {
+            var categoryCache = serviceProvider.GetRequiredService<CategoryCache>();
+            categoryCache.LoadFromDatabase();
         }
     }
 }
