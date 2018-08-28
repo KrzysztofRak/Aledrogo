@@ -11,7 +11,7 @@ namespace Aledrogo.Tests
 
         public CategoryCacheTest()
         {
-            _categoryCache = Services.Provider.GetRequiredService<CategoryCache>();
+            _categoryCache = Service.Provider.GetRequiredService<CategoryCache>();
         }
 
         [Fact]

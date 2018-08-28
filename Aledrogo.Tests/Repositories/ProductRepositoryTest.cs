@@ -15,7 +15,7 @@ namespace Aledrogo.Tests.Repositories
 
         public ProductRepositoryTest()
         {
-            _productsRepository = Services.Provider.GetRequiredService<ProductRespository>();
+            _productsRepository = Service.Provider.GetRequiredService<ProductRespository>();
         }
 
         [Fact]

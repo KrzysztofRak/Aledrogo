@@ -11,7 +11,7 @@ using System;
 
 namespace Aledrogo.Tests
 {
-    public static class Services
+    public static class Service
     {
         private static IServiceProvider _provider;
 
@@ -46,15 +46,14 @@ namespace Aledrogo.Tests
             services.AddSingleton(mapper);
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<AledrogoContext>();
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IProductRepository, ProductRespository>();
 
             Provider = services.BuildServiceProvider();
+
             var context = Provider.GetRequiredService<AledrogoContext>();
             var categoryCache = new CategoryCache(context);
 
-            services.AddSingleton(categoryCache);
-            services.AddScoped<ICategoryCache, CategoryCache>();
             services.AddSingleton(new ProductRespository(context, categoryCache));
+            services.AddSingleton(categoryCache);
 
             Provider = services.BuildServiceProvider();
         }

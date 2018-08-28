@@ -27,6 +27,7 @@ namespace Aledrogo
 
             _config = builder.Build();
         }
+
         public void ConfigureServices(IServiceCollection services)
         {
             string connectionString = _config.GetConnectionString("DefaultConnection");
@@ -39,16 +40,15 @@ namespace Aledrogo
 
             services.AddMvc();
             services.AddDbContext<AledrogoContext>(options => options.UseSqlServer(connectionString));
-            services.AddSingleton(mapper);
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<AledrogoContext>();
+            services.AddSingleton(mapper);
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IProductRepository, ProductRespository>();
 
-            IServiceProvider provider = services.BuildServiceProvider();
-            var context = provider.GetRequiredService<AledrogoContext>();
+            IServiceProvider serviceProvider = services.BuildServiceProvider();
 
+            var context = serviceProvider.GetRequiredService<AledrogoContext>();
             services.AddSingleton(new CategoryCache(context));
-            services.AddScoped<ICategoryCache, CategoryCache>();
         }
         
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -57,7 +57,6 @@ namespace Aledrogo
             {
                 IServiceProvider serviceProvider = scope.ServiceProvider;
                 SeedData.Initialize(serviceProvider).Wait();
-                var x = serviceProvider.GetRequiredService<CategoryCache>();
             }
 
             if (env.IsDevelopment())
