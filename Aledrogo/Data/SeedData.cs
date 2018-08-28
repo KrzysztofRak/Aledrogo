@@ -13,11 +13,11 @@ namespace Aledrogo.Data
         private static UserManager<User> _userManager;
         private static RoleManager<IdentityRole> _roleManager;
 
-        public static async Task Initialize(IServiceProvider serviceProvider)
+        public static async Task Initialize(AledrogoContext context, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
-            _context = serviceProvider.GetRequiredService<AledrogoContext>();
-            _userManager = serviceProvider.GetRequiredService<UserManager<User>>();
-            _roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            _context = context;
+            _userManager = userManager;
+            _roleManager = roleManager;
 
             await _context.Database.EnsureDeletedAsync();
             await _context.Database.EnsureCreatedAsync();

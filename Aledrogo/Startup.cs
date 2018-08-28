@@ -47,7 +47,6 @@ namespace Aledrogo
             IServiceProvider provider = services.BuildServiceProvider();
             var context = provider.GetRequiredService<AledrogoContext>();
 
-            services.AddSingleton(new CategoryCache(context));
             services.AddScoped<ICategoryCache, CategoryCache>();
         }
         
@@ -56,8 +55,11 @@ namespace Aledrogo
             using (IServiceScope scope = app.ApplicationServices.CreateScope())
             {
                 IServiceProvider serviceProvider = scope.ServiceProvider;
-                SeedData.Initialize(serviceProvider).Wait();
-                var x = serviceProvider.GetRequiredService<CategoryCache>();
+                SeedData.Initialize(
+                    serviceProvider.GetRequiredService<AledrogoContext>(),
+                    serviceProvider.GetRequiredService<UserManager<User>>(),
+                    serviceProvider.GetRequiredService<RoleManager<IdentityRole>>()
+                    ).Wait();
             }
 
             if (env.IsDevelopment())
