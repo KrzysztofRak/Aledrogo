@@ -8,17 +8,18 @@ namespace Aledrogo.Tests
     [Collection("Services Collection")]
     public class CategoryCacheTest
     {
-        private readonly ServicesFixture _servicesFixture;
-
-        public CategoryCacheTest(ServicesFixture servicesFixture)
+        private readonly ICategoryCache _repo;
+        public CategoryCacheTest()
         {
-            _servicesFixture = servicesFixture;
+            var services = new ConfigureServices(new ServiceCollection()).Configure();
+            var serviceProvider = services.BuildServiceProvider();
+            _repo = serviceProvider.GetRequiredService<ICategoryCache>();
         }
 
         [Fact]
         public async void LoadFromDatabaseTest()
         {
-            Assert.True(_servicesFixture.CategoryCache.CategoryDTOs.Any());
+            Assert.True(_repo.CategoryDTOs.Any());
         }
     }
 }

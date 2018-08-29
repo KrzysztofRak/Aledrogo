@@ -1,7 +1,6 @@
 ﻿using Aledrogo.Data;
 using Aledrogo.DTO;
 using Aledrogo.Models;
-using Aledrogo.Repositories.Cache;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;

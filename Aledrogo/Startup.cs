@@ -1,18 +1,12 @@
 ﻿using Aledrogo.Data;
 using Aledrogo.Models;
-using Aledrogo.Repositories;
 using Aledrogo.Repositories.Cache;
-using Aledrogo.Utility;
-using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.IO;
-using System.Reflection;
 
 namespace Aledrogo
 {
@@ -29,42 +23,9 @@ namespace Aledrogo
             _config = builder.Build();
         }
 
-        public Startup()
-        {
-            // Constructor for tests
-            string testProjectPath = Directory.GetCurrentDirectory();
-            string thisProjectPath = testProjectPath.Remove(testProjectPath.IndexOf(".Test"));
-
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(thisProjectPath)
-                .AddJsonFile("appsettings.json");
-
-            _config = builder.Build();
-        }
-
         public void ConfigureServices(IServiceCollection services)
         {
-            string connectionString = _config.GetConnectionString("DefaultConnection");
-
-            var configMapper = new MapperConfiguration(c =>
-            {
-                c.AddProfile(new ApplicationProfile());
-            });
-            var mapper = configMapper.CreateMapper();
-
-            services.AddMvc();
-            services.AddDbContext<AledrogoContext>(options => options.UseSqlServer(connectionString));
-            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<AledrogoContext>();
-            services.AddSingleton(mapper);
-            services.AddScoped<IUserRepository, UserRepository>();
-
-            IServiceProvider serviceProvider = services.BuildServiceProvider();
-
-            var context = serviceProvider.GetRequiredService<AledrogoContext>();
-            var categoryCache = new CategoryCache(context);
-
-            services.AddSingleton(categoryCache);
-            services.AddSingleton(new ProductRespository(context, categoryCache));
+            new ConfigureServices(services).Configure();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
