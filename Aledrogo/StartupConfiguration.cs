@@ -29,27 +29,18 @@ namespace Aledrogo
             _services.AddSingleton(mapper);
             _services.AddScoped<IUserRepository, UserRepository>();
             _services.AddScoped<IProductRepository, ProductRespository>();
-            _services.AddSingleton<ICategoryCache, CategoryCache>();           
+            _services.AddSingleton<ICategoryCache, CategoryCache>();
 
             return _services;
         }
 
         public void InitializeDatabaseWithSeedData(IServiceProvider serviceProvider)
         {
-            InitializeDatabaseWithSeedData(
+            SeedData.Initialize(
                 serviceProvider.GetRequiredService<AledrogoContext>(),
                 serviceProvider.GetRequiredService<UserManager<User>>(),
                 serviceProvider.GetRequiredService<RoleManager<IdentityRole>>()
-                );
-        }
-        public void InitializeDatabaseWithSeedData(AledrogoContext context, 
-            UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
-        {
-            SeedData.Initialize(
-                context,
-                userManager,
-                roleManager
-                ).Wait();
+             ).Wait();
         }
     }
 }
