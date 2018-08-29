@@ -1,8 +1,5 @@
-﻿using Aledrogo.Data;
-using Aledrogo.Models;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -12,6 +9,7 @@ namespace Aledrogo
     public class Startup
     {
         private readonly IConfiguration _config;
+        private readonly StartupConfiguration _startupConfiguration;
 
         public Startup(IHostingEnvironment environment)
         {
@@ -20,11 +18,13 @@ namespace Aledrogo
                 .AddJsonFile("appsettings.json");
 
             _config = builder.Build();
+
+            _startupConfiguration = new StartupConfiguration();
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            new ServiceConfiguration(services).ConfigureServices();
+            _startupConfiguration.ConfigureServices(services);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -33,7 +33,7 @@ namespace Aledrogo
             {
                 IServiceProvider serviceProvider = scope.ServiceProvider;
 
-                InitializeDatabaseWithSeedData(serviceProvider);
+                _startupConfiguration.InitializeDatabaseWithSeedData(serviceProvider);
             }
 
             if (env.IsDevelopment())
@@ -48,13 +48,6 @@ namespace Aledrogo
             app.UseMvcWithDefaultRoute();
         }
 
-        public void InitializeDatabaseWithSeedData(IServiceProvider serviceProvider)
-        {
-            SeedData.Initialize(
-                serviceProvider.GetRequiredService<AledrogoContext>(),
-                serviceProvider.GetRequiredService<UserManager<User>>(),
-                serviceProvider.GetRequiredService<RoleManager<IdentityRole>>()
-                ).Wait();
-        }
+        
     }
 }

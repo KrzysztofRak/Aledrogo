@@ -18,11 +18,14 @@ namespace Aledrogo.Tests
         public IProductRepository ProductRepository { get; private set; }
         public ICategoryCache CategoryCache { get; private set; }
 
+        private readonly StartupConfiguration _startupConfiguration;
+
         private readonly IServiceProvider _provider;
 
         public ServicesFixture()
         {
-            var services = new ServiceConfiguration(new ServiceCollection()).ConfigureServices();
+            _startupConfiguration = new StartupConfiguration();
+            var services = _startupConfiguration.ConfigureServices(new ServiceCollection());
             _provider = services.BuildServiceProvider();
 
             Context = _provider.GetRequiredService<AledrogoContext>();
@@ -31,6 +34,7 @@ namespace Aledrogo.Tests
             UserRepository = _provider.GetRequiredService<IUserRepository>();
             ProductRepository = _provider.GetRequiredService<IProductRepository>();
             CategoryCache = _provider.GetRequiredService<ICategoryCache>();
+            _startupConfiguration.InitializeDatabaseWithSeedData(Context, UserManager, RoleManager);
         }
     }
 }

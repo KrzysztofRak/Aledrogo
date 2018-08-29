@@ -11,16 +11,9 @@ using System;
 
 namespace Aledrogo
 {
-    public class ServiceConfiguration
+    public class StartupConfiguration
     {
-        private readonly IServiceCollection _services;
-
-        public ServiceConfiguration(IServiceCollection services)
-        {
-            _services = services;
-        }
-
-        public IServiceCollection ConfigureServices()
+        public IServiceCollection ConfigureServices(IServiceCollection _services)
         {
             string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=AledrogoDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
@@ -36,9 +29,27 @@ namespace Aledrogo
             _services.AddSingleton(mapper);
             _services.AddScoped<IUserRepository, UserRepository>();
             _services.AddScoped<IProductRepository, ProductRespository>();
-            _services.AddSingleton<ICategoryCache, CategoryCache>();
+            _services.AddSingleton<ICategoryCache, CategoryCache>();           
 
             return _services;
+        }
+
+        public void InitializeDatabaseWithSeedData(IServiceProvider serviceProvider)
+        {
+            InitializeDatabaseWithSeedData(
+                serviceProvider.GetRequiredService<AledrogoContext>(),
+                serviceProvider.GetRequiredService<UserManager<User>>(),
+                serviceProvider.GetRequiredService<RoleManager<IdentityRole>>()
+                );
+        }
+        public void InitializeDatabaseWithSeedData(AledrogoContext context, 
+            UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
+        {
+            SeedData.Initialize(
+                context,
+                userManager,
+                roleManager
+                ).Wait();
         }
     }
 }
