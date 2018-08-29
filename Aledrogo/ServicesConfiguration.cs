@@ -11,14 +11,16 @@ using System;
 
 namespace Aledrogo
 {
-    public class ConfigureServices
+    public class ServiceConfiguration
     {
         private readonly IServiceCollection _services;
-        public ConfigureServices(IServiceCollection services)
+
+        public ServiceConfiguration(IServiceCollection services)
         {
             _services = services;
         }
-        public IServiceCollection Configure()
+
+        public IServiceCollection ConfigureServices()
         {
             string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=AledrogoDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
@@ -35,12 +37,6 @@ namespace Aledrogo
             _services.AddScoped<IUserRepository, UserRepository>();
             _services.AddScoped<IProductRepository, ProductRespository>();
             _services.AddSingleton<ICategoryCache, CategoryCache>();
-            //IServiceProvider serviceProvider = _services.BuildServiceProvider();
-
-            //var context = serviceProvider.GetRequiredService<AledrogoContext>();
-            //var categoryCache = new CategoryCache(context);
-
-            //_services.AddSingleton(categoryCache);
 
             return _services;
         }

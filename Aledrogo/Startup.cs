@@ -1,6 +1,5 @@
 ﻿using Aledrogo.Data;
 using Aledrogo.Models;
-using Aledrogo.Repositories.Cache;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -25,7 +24,7 @@ namespace Aledrogo
 
         public void ConfigureServices(IServiceCollection services)
         {
-            new ConfigureServices(services).Configure();
+            new ServiceConfiguration(services).ConfigureServices();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -35,7 +34,6 @@ namespace Aledrogo
                 IServiceProvider serviceProvider = scope.ServiceProvider;
 
                 InitializeDatabaseWithSeedData(serviceProvider);
-                LoadCache(serviceProvider);
             }
 
             if (env.IsDevelopment())
@@ -57,12 +55,6 @@ namespace Aledrogo
                 serviceProvider.GetRequiredService<UserManager<User>>(),
                 serviceProvider.GetRequiredService<RoleManager<IdentityRole>>()
                 ).Wait();
-        }
-
-        public void LoadCache(IServiceProvider serviceProvider)
-        {
-            var categoryCache = serviceProvider.GetRequiredService<CategoryCache>();
-            categoryCache.LoadFromDatabase();
         }
     }
 }

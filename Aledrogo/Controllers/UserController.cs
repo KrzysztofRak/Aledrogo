@@ -50,7 +50,7 @@ namespace Aledrogo.Controllers
 
             try
             {
-                var result = await _repo.Registration(dto, "user");
+                var result = await _repo.Register(dto, "user");
                 return new ObjectResult(result);
             }
             catch (Exception exc)

@@ -10,56 +10,49 @@ namespace Aledrogo.Repositories.Cache
     {
         private readonly AledrogoContext _context;
 
-        private IEnumerable<Category> Categories { get; set; }
-
-        public ICollection<CategoryDTO> CategoryDTOs { get; set; }
+        private IEnumerable<Category> categories;
+        private ICollection<CategoryDTO> categoriesDTOs;
 
         public CategoryCache(AledrogoContext context)
         {
             _context = context;
-        }
-
-        public void LoadFromDatabase()
-        {
-            Categories = _context.Categories.ToList();
-            CategoryDTOs = new List<CategoryDTO>();
-
-            foreach (Category category in Categories)
-            {
-                CategoryDTO cachedCategoryDTO = new CategoryDTO();
-                cachedCategoryDTO.CategoryId = category.Id;
-                AppendChildCategoriesIds(category.Id, cachedCategoryDTO.ChildCategoriesIds);
-
-                CategoryDTOs.Add(cachedCategoryDTO);
-            }
-        }
-
-        private void AppendChildCategoriesIds(int parentCategoryId, ICollection<int> childCategoriesIds)
-        {
-            IEnumerable<Category> firstLevelChildCategories = Categories.Where(c => c.ParentCategoryId == parentCategoryId);
-
-            foreach (Category category in firstLevelChildCategories)
-            {
-                childCategoriesIds.Add(category.Id);
-                AppendChildCategoriesIds(category.Id, childCategoriesIds);
-            }
+            LoadFromDatabase();
         }
 
         public IEnumerable<int> GetConcernedCategoriesIds(int categoryId)
         {
-            ICollection<int> concernedCategoriesIds = CategoryDTOs
-                                          .Where(c => c.CategoryId == categoryId)
-                                          .First().ChildCategoriesIds;
+            ICollection<int> concernedCategoriesIds = categoriesDTOs
+                                          .First(c => c.CategoryId == categoryId).ChildCategoriesIds;
 
             concernedCategoriesIds.Add(categoryId);
 
             return concernedCategoriesIds;
         }
 
-        public ICollection<CategoryDTO> GetAll()
+        public void LoadFromDatabase()
         {
-            LoadFromDatabase();
-            return CategoryDTOs;
+            categories = _context.Categories.ToList();
+            categoriesDTOs = new List<CategoryDTO>();
+
+            foreach (Category category in categories)
+            {
+                CategoryDTO cachedCategoryDTO = new CategoryDTO();
+                cachedCategoryDTO.CategoryId = category.Id;
+                AppendChildCategoriesIds(category.Id, cachedCategoryDTO.ChildCategoriesIds);
+
+                categoriesDTOs.Add(cachedCategoryDTO);
+            }
+        }
+
+        private void AppendChildCategoriesIds(int parentCategoryId, ICollection<int> childCategoriesIds)
+        {
+            IEnumerable<Category> firstLevelChildCategories = categories.Where(c => c.ParentCategoryId == parentCategoryId);
+
+            foreach (Category category in firstLevelChildCategories)
+            {
+                childCategoriesIds.Add(category.Id);
+                AppendChildCategoriesIds(category.Id, childCategoriesIds);
+            }
         }
     }
 }

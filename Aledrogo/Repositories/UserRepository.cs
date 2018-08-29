@@ -103,7 +103,7 @@ namespace Aledrogo.Repositories
             await _signInManager.SignOutAsync();
         }
 
-        public async Task<IdentityResult> Registration(RegistrationDTO dto, string roleName)
+        public async Task<IdentityResult> Register(RegistrationDTO dto, string roleName)
         {
             User newUser = new User
             {
