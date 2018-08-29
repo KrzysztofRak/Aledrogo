@@ -31,10 +31,11 @@ namespace Aledrogo.Tests
             Context = _provider.GetRequiredService<AledrogoContext>();
             UserManager = _provider.GetRequiredService<UserManager<User>>();
             RoleManager = _provider.GetRequiredService<RoleManager<IdentityRole>>();
+            _startupConfiguration.InitializeDatabaseWithSeedData(Context, UserManager, RoleManager);
             UserRepository = _provider.GetRequiredService<IUserRepository>();
             ProductRepository = _provider.GetRequiredService<IProductRepository>();
             CategoryCache = _provider.GetRequiredService<ICategoryCache>();
-            _startupConfiguration.InitializeDatabaseWithSeedData(Context, UserManager, RoleManager);
+            //_startupConfiguration.InitializeDatabaseWithSeedData(Context, UserManager, RoleManager);
         }
     }
 }
