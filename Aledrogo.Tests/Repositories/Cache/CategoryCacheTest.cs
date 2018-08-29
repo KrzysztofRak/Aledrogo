@@ -5,7 +5,6 @@ using Xunit;
 
 namespace Aledrogo.Tests
 {
-    [Collection("Services Collection")]
     public class CategoryCacheTest
     {
         private readonly ICategoryCache _repo;
@@ -19,7 +18,8 @@ namespace Aledrogo.Tests
         [Fact]
         public async void LoadFromDatabaseTest()
         {
-            Assert.True(_repo.CategoryDTOs.Any());
+            bool result = _repo.GetAll().Any();
+            Assert.True(result);
         }
     }
 }

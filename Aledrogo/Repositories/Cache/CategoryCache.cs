@@ -55,5 +55,11 @@ namespace Aledrogo.Repositories.Cache
 
             return concernedCategoriesIds;
         }
+
+        public ICollection<CategoryDTO> GetAll()
+        {
+            LoadFromDatabase();
+            return CategoryDTOs;
+        }
     }
 }

@@ -34,12 +34,13 @@ namespace Aledrogo
             _services.AddSingleton(mapper);
             _services.AddScoped<IUserRepository, UserRepository>();
             _services.AddScoped<IProductRepository, ProductRespository>();
-            IServiceProvider serviceProvider = _services.BuildServiceProvider();
+            _services.AddSingleton<ICategoryCache, CategoryCache>();
+            //IServiceProvider serviceProvider = _services.BuildServiceProvider();
 
-            var context = serviceProvider.GetRequiredService<AledrogoContext>();
-            var categoryCache = new CategoryCache(context);
+            //var context = serviceProvider.GetRequiredService<AledrogoContext>();
+            //var categoryCache = new CategoryCache(context);
 
-            _services.AddSingleton(categoryCache);
+            //_services.AddSingleton(categoryCache);
 
             return _services;
         }
