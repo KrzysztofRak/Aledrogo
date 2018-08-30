@@ -57,6 +57,7 @@ namespace Aledrogo
             services.AddSingleton(mapper);
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IProductRepository, ProductRespository>();
+            services.AddScoped<IAddressRespository, AddressRespository>();
             services.AddSingleton<ICategoryCache, CategoryCache>();
         }
 

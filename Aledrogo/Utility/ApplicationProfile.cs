@@ -7,6 +7,7 @@ namespace Aledrogo.Utility
     {
         public ApplicationProfile()
         {
+            CreateMap<Address, AddressDTO>().ReverseMap();
         }
     }
 }
