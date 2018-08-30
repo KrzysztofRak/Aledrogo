@@ -3,6 +3,7 @@ using Aledrogo.DTO;
 using Aledrogo.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,12 +23,19 @@ namespace Aledrogo.Repositories
             _context = context;
         }
 
-        public async Task<bool> ChangePassword(PasswordDTO dto)
+        public async Task<IdentityResult> ChangePassword(PasswordDTO dto)
         {
+            if(dto.NewPassword == string.Empty || dto.OldPassword == string.Empty || dto.UserName == string.Empty)
+            {
+                IdentityError error = new IdentityError();
+                error.Description = "Nazwa użytkownika, stare hasło lub nowe jest puste!";
+                return IdentityResult.Failed(error);
+            }
+
             User user = await _context.Users.FirstOrDefaultAsync(m => m.UserName == dto.UserName);
             IdentityResult result = await _userManager.ChangePasswordAsync(user, dto.OldPassword, dto.NewPassword);
 
-            return result.Succeeded;
+            return result;
         }
 
         public async Task ChangeRole(RoleDTO dto)
@@ -80,7 +88,18 @@ namespace Aledrogo.Repositories
 
         public async Task<UserDTO> GetById(string id)
         {
+            if(id == string.Empty)
+            {
+                return null;
+            }
+
             User result = await _context.Users.FirstOrDefaultAsync(m => m.Id == id);
+            string idt = (await _context.Users.FirstOrDefaultAsync(m => m.UserName == "test3@wp.pl")).Id;
+
+            if (result == null)
+            {
+                return null;
+            }
             string roleName = (await _userManager.GetRolesAsync(result))[0];
             UserDTO dto = new UserDTO
             {
@@ -105,13 +124,27 @@ namespace Aledrogo.Repositories
 
         public async Task<IdentityResult> Register(RegistrationDTO dto, string roleName)
         {
+            IdentityResult result = new IdentityResult();
+            if (roleName == string.Empty)
+            {
+                IdentityError error = new IdentityError();
+                error.Description = "Brak roli dla użytkownika";
+                return IdentityResult.Failed(error);
+            }
+            else if (!String.Equals(dto.Password,dto.ConfirmPassword))
+            {
+                IdentityError error = new IdentityError();
+                error.Description = "Hasla się nie zgadzają";
+                return IdentityResult.Failed(error);
+            }
+
             User newUser = new User
             {
                 UserName = dto.UserName,
                 Email = dto.UserName
             };
 
-            IdentityResult result = await _userManager.CreateAsync(newUser, dto.Password);
+            result = await _userManager.CreateAsync(newUser, dto.Password);
 
             if(result.Succeeded)
             {
