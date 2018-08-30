@@ -8,10 +8,12 @@ namespace Aledrogo.Tests
 
         public StartupFixture()
         {
-            Startup startup = new Startup();
-            IServiceCollection services = startup.ConfigureServices(new ServiceCollection());
+            var startup = new Startup();
+            var services = new ServiceCollection();
 
+            startup.ConfigureServices(services);
             ServiceProvider = services.BuildServiceProvider();
+
             startup.InitializeDatabaseWithSeedData(ServiceProvider);
         }
     }

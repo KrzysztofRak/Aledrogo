@@ -41,7 +41,7 @@ namespace Aledrogo
             _config = builder.Build();
         }
 
-        public IServiceCollection ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             string connectionString = _config.GetConnectionString("DefaultConnection");
 
@@ -58,8 +58,6 @@ namespace Aledrogo
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IProductRepository, ProductRespository>();
             services.AddSingleton<ICategoryCache, CategoryCache>();
-
-            return services;
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
