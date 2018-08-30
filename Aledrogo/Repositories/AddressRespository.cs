@@ -4,6 +4,7 @@ using Aledrogo.Models;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Aledrogo.Repositories
@@ -19,14 +20,14 @@ namespace Aledrogo.Repositories
         }
         public async Task<bool> AddAddress(AddressDTO dto)
         {
-            string userId = (await _context.Users.FirstOrDefaultAsync(m => m.UserName == dto.UserName)).Id;
-            if(userId == null)
+            User user = await _context.Users.FirstOrDefaultAsync(m => m.UserName == dto.UserName);
+            if (user == null)
             {
                 return false;
             }
 
             Address newAddress = _mapper.Map<Address>(dto);
-            newAddress.UserId = userId;
+            newAddress.UserId = user.Id;
 
             await _context.Addresses.AddAsync(newAddress);
 
@@ -54,9 +55,15 @@ namespace Aledrogo.Repositories
             return dto;
         }
         
-        public async Task<ICollection<AddressDTO>> GetAllUserAddresses()
+        public async Task<ICollection<AddressDTO>> GetAllUserAddresses(string userName)
         {
-            ICollection<Address> addresses = await _context.Addresses.ToListAsync();
+            User user = await _context.Users.FirstOrDefaultAsync(m => m.UserName == userName);
+            if(user == null)
+            {
+                return null;
+            }
+
+            ICollection<Address> addresses = await _context.Addresses.Where(m => m.UserId == user.Id).ToListAsync();
             ICollection<AddressDTO> dtos = _mapper.Map<ICollection<AddressDTO>>(addresses);
 
             return dtos;

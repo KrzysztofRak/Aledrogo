@@ -6,7 +6,7 @@ namespace Aledrogo.Repositories
 {
     public interface IAddressRespository
     {
-        Task<ICollection<AddressDTO>> GetAllUserAddresses();
+        Task<ICollection<AddressDTO>> GetAllUserAddresses(string userName);
         Task<AddressDTO> GetAddressById(int id);
         Task<bool> DeleteAddressById(int id);
         Task<bool> AddAddress(AddressDTO dto);
