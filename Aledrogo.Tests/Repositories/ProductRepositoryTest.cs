@@ -1,26 +1,28 @@
 ﻿using Aledrogo.ModelFilters;
 using Aledrogo.Models;
 using Aledrogo.Models.Enums;
+using Aledrogo.Repositories;
+using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
 namespace Aledrogo.Tests.Repositories
 {
-    [Collection("Services")]
+    [Collection("StartupCollection")]
     public class ProductRepositoryTest
     {
-        private readonly ServicesFixture _services;
+        private readonly IProductRepository _productRepository;
 
-        public ProductRepositoryTest(ServicesFixture services)
+        public ProductRepositoryTest(StartupFixture startupFixture)
         {
-            _services = services;
+            _productRepository = startupFixture.ServiceProvider.GetRequiredService<IProductRepository>();
         }
 
         [Fact]
         public async void GetAllFromCategoryTest()
         {
-            ICollection<Product> products = await _services.ProductRepository.GetAllFromCategory(1);
+            ICollection<Product> products = await _productRepository.GetAllFromCategory(1);
 
             Assert.True(products.Count == 10);
         }
@@ -40,7 +42,7 @@ namespace Aledrogo.Tests.Repositories
             productFilter.TypesOfOffers.Add(TypeOfOffer.AUCTION | TypeOfOffer.BUY_IT_NOW);
             productFilter.TypesOfOffers.Add(TypeOfOffer.ADVERTISEMENT);
 
-            ICollection<Product> products = await _services.ProductRepository.GetByFilter(productFilter, 1, 1);
+            ICollection<Product> products = await _productRepository.GetByFilter(productFilter, 1, 1);
 
             Assert.True(products.Count >= 1, products.Count().ToString());
         }

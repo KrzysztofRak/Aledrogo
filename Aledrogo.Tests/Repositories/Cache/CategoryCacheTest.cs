@@ -1,22 +1,24 @@
+using Aledrogo.Repositories.Cache;
+using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 using Xunit;
 
 namespace Aledrogo.Tests
 {
-    [Collection("Services")]
+    [Collection("StartupCollection")]
     public class CategoryCacheTest
     {
-        private readonly ServicesFixture _services;
+        private readonly ICategoryCache _categoryCache;
 
-        public CategoryCacheTest(ServicesFixture services)
+        public CategoryCacheTest(StartupFixture startupFixture)
         {
-            _services = services;
+            _categoryCache = startupFixture.ServiceProvider.GetRequiredService<ICategoryCache>();
         }
 
         [Fact]
         public async void LoadFromDatabaseTest()
         {
-            var concernedCategoriesIds = _services.CategoryCache.GetConcernedCategoriesIds(1);
+            var concernedCategoriesIds = _categoryCache.GetConcernedCategoriesIds(1);
 
             Assert.True(concernedCategoriesIds.Any());
         }

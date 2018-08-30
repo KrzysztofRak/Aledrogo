@@ -1,23 +1,25 @@
 ﻿using Aledrogo.DTO;
+using Aledrogo.Repositories;
+using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
 namespace Aledrogo.Tests.Repositories
 {
-    [Collection("Services")]
+    [Collection("StartupCollection")]
     public class UserRepositoryTest
     {
-        private readonly ServicesFixture _services;
+        private readonly IUserRepository _userRepository;
 
-        public UserRepositoryTest(ServicesFixture services)
+        public UserRepositoryTest(StartupFixture startupFixture)
         {
-            _services = services;
+            _userRepository = startupFixture.ServiceProvider.GetRequiredService<IUserRepository>();
         }
 
         [Fact]
         public void RegistrationTest()
         {
             RegistrationDTO dto = new RegistrationDTO { UserName = "TestUser", Password = "Qwerty1234!", ConfirmPassword = "Qwerty1234!" };
-            bool result = (_services.UserRepository.Register(dto, "User")).Result.Succeeded;
+            bool result = (_userRepository.Register(dto, "User")).Result.Succeeded;
             Assert.True(result);
         }
     }
