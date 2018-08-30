@@ -13,7 +13,7 @@ namespace Aledrogo.Repositories
         Task<UserDTO> GetById(string id);
         Task<ICollection<UserDTO>> GetAllByName(string name);
         Task<ICollection<UserDTO>> GetAll();
-        Task<bool> ChangePassword(PasswordDTO dto);
+        Task<IdentityResult> ChangePassword(PasswordDTO dto);
         Task ChangeRole(RoleDTO dto);
     }
 }
