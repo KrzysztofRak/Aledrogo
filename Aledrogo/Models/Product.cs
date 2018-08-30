@@ -17,6 +17,9 @@ namespace Aledrogo.Models
         public int CategoryId { get; set; }
         public virtual Category Category { get; set; }
 
+        public int ProductStateId { get; set; }
+        public virtual ProductState ProductState { get; set; }
+
         public virtual ICollection<Image> Images { get; set; }
         public virtual ICollection<Product_SpecificFieldValue> ProductSpecificFieldsValues { get; set; }
         public virtual ICollection<Basket> Baskets { get; set; }
@@ -38,9 +41,6 @@ namespace Aledrogo.Models
         public TypeOfOffer TypeOfOffer { get; set; }
 
         public ushort DaysForReturn { get; set; }
-
-        [Required]
-        public ProductState ProductState { get; set; }
 
         [Required]
         [Range(0, 10000)]

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Aledrogo.Data.DataToSeed
 {
-    public static class AddressSeed
+    public class AddressSeed : IDataToSeed
     {
         public static Address krzysztof_address1 = new Address() { UserId = UserSeed.krzysztof.Id, FullName = "Krzysztof Rak", StreetAddress = "Dereźnia 1", PostCode = "23-400", City = "Biłgoraj", Country = "Polska", PhoneNumber = "+48 724-391-490" };
         public static Address krzysztof_address2 = new Address() { UserId = UserSeed.krzysztof.Id, FullName = "Krzysztof Rak", StreetAddress = "ul. Radzyńska 20", PostCode = "20-480", City = "Lublin", Country = "Polska", PhoneNumber = "+48 724-391-490" };
@@ -18,7 +18,7 @@ namespace Aledrogo.Data.DataToSeed
 
         public static Address test3_address1 = new Address() { UserId = UserSeed.test3.Id, FullName = "Test Trzy", StreetAddress = "Henryka 8", PostCode = "29-300", City = "Białystok", Country = "Polska", PhoneNumber = "+48 681-339-783" };
 
-        public static List<Address> Addresses = new List<Address>()
+        public IEnumerable<object> Items { get; } = new List<Address>()
         {
             krzysztof_address1, krzysztof_address2, krzysztof_address3,
             artur_address1, artur_address2,

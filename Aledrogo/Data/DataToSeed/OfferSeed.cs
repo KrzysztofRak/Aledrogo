@@ -1,14 +1,12 @@
 ﻿using Aledrogo.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Aledrogo.Data.DataToSeed
 {
-    public static class OfferSeed
+    public class OfferSeed : IDataToSeed
     {
-        public static List<Offer> Offers = new List<Offer>()
+        public IEnumerable<object> Items { get; } = new List<Offer>()
         {
             new Offer() {  BidderId = UserSeed.test1.Id, Product = ProductSeed.telefon_xiaomi, Value = 200, DateOfSubmission = DateTime.UtcNow },
             new Offer() {  BidderId = UserSeed.test2.Id, Product = ProductSeed.telefon_xiaomi, Value = 300, DateOfSubmission = DateTime.UtcNow.AddHours(1) },

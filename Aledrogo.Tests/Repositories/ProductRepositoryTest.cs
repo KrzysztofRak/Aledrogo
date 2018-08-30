@@ -1,4 +1,5 @@
-﻿using Aledrogo.ModelFilters;
+﻿using Aledrogo.Data.DataToSeed;
+using Aledrogo.ModelFilters;
 using Aledrogo.Models;
 using Aledrogo.Models.Enums;
 using Aledrogo.Repositories;
@@ -35,16 +36,21 @@ namespace Aledrogo.Tests.Repositories
             productFilter.MinPrice = 200;
             productFilter.MaxPrice = 0;
             productFilter.CategoryId = 2;
-            productFilter.ProductStates.Add(ProductState.SECONDHAND);
-            productFilter.ProductStates.Add(ProductState.DAMAGED);
-            productFilter.ProductStates.Add(ProductState.AFTER_EXHIBITION);
 
-            productFilter.TypesOfOffers.Add(TypeOfOffer.AUCTION | TypeOfOffer.BUY_IT_NOW);
-            productFilter.TypesOfOffers.Add(TypeOfOffer.ADVERTISEMENT);
+            productFilter.TypeOfOffer = TypeOfOffer.AUCTION | TypeOfOffer.BUY_IT_NOW | TypeOfOffer.ADVERTISEMENT;
+
+            productFilter.ProductStateIds.Add(ProductStateSeed.uzywany.Id);
+            productFilter.ProductStateIds.Add(ProductStateSeed.powystawowy.Id);
+            productFilter.ProductStateIds.Add(ProductStateSeed.uszkodzony.Id);
+
+            productFilter.DeliveryMethodTypeIds.Add(DeliveryMethodTypeSeed.kurier.Id);
+            productFilter.DeliveryMethodTypeIds.Add(DeliveryMethodTypeSeed.list.Id);
+            productFilter.DeliveryMethodTypeIds.Add(DeliveryMethodTypeSeed.odbior_osobisty.Id);
+            productFilter.DeliveryMethodTypeIds.Add(DeliveryMethodTypeSeed.paczkomat.Id);
 
             ICollection<Product> products = await _productRepository.GetByFilter(productFilter, 1, 1);
 
-            Assert.True(products.Count >= 1, products.Count().ToString());
+            Assert.True(products.Count == 1, products.Count().ToString());
         }
     }
 }

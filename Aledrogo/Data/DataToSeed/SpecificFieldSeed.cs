@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Aledrogo.Data.DataToSeed
 {
-    public static class SpecificFieldSeed
+    public class SpecificFieldSeed : IDataToSeed
     {
         private static SpecificField Create(Category _category, string _name, bool _isRequired, int? _minNumericValue = null, int? _maxNumericValue = null)
         {
@@ -33,7 +33,7 @@ namespace Aledrogo.Data.DataToSeed
 
         public static SpecificField interfejs = Create(CategorySeed.xiaomi, "Interfejs", true);
 
-        public static List<SpecificField> SpecificFields { get; } = new List<SpecificField>()
+        public IEnumerable<object> Items { get; } = new List<SpecificField>()
         {
             klasa_energetyczna,
             rodzaj_dysku, liczba_rdzeni, pamiec_ram, pojemnosc_dysku,

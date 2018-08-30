@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Aledrogo.Data.DataToSeed
 {
-    public static class ImageSeed
+    public class ImageSeed : IDataToSeed
     {
         private static string imagesDirectoryPath = AppDomain.CurrentDomain.BaseDirectory.Remove(AppDomain.CurrentDomain.BaseDirectory.LastIndexOf("\\Aledrogo")) + @"\Aledrogo\Data\DataToSeed\Images\";
 
@@ -14,7 +14,7 @@ namespace Aledrogo.Data.DataToSeed
         private static string _img_04_Path = imagesDirectoryPath + "img04.jpg";
         private static string _img_05_Path = imagesDirectoryPath + "img05.jpg";
 
-        public static List<Image> Images = new List<Image>()
+        public IEnumerable<object> Items { get; } = new List<Image>()
         {
             new Image() { ImagePath = _img_01_Path, Product = ProductSeed.arduino },
             new Image() { ImagePath = _img_02_Path, Product = ProductSeed.arduino },

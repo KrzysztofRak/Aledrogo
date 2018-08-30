@@ -83,11 +83,11 @@ namespace Aledrogo
 
         public void InitializeDatabaseWithSeedData(IServiceProvider serviceProvider)
         {
-            SeedData.Initialize(
+            DataSeed.Initialize(
                 serviceProvider.GetRequiredService<AledrogoContext>(),
                 serviceProvider.GetRequiredService<UserManager<User>>(),
                 serviceProvider.GetRequiredService<RoleManager<IdentityRole>>()
-             ).Wait();
+             );
         }
     }
 }

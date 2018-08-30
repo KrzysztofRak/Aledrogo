@@ -1,12 +1,9 @@
 ﻿using Aledrogo.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Aledrogo.Data.DataToSeed
 {
-    public static class Product_DeliveryMethodSeed
+    public class Product_DeliveryMethodSeed : IDataToSeed
     {
         public static Product_DeliveryMethod telefon_xiaomi_przesylka_kurierska = new Product_DeliveryMethod() { Product = ProductSeed.telefon_xiaomi, DeliveryMethod = DeliveryMethodSeed.przesylka_kurierska, Price = 18.00m };
         public static Product_DeliveryMethod telefon_xiaomi_paczkomaty = new Product_DeliveryMethod() { Product = ProductSeed.telefon_xiaomi, DeliveryMethod = DeliveryMethodSeed.paczkomaty };
@@ -51,7 +48,7 @@ namespace Aledrogo.Data.DataToSeed
 
         public static Product_DeliveryMethod konsola_ps4_przesylka_kurierska = new Product_DeliveryMethod() { Product = ProductSeed.konsola_ps4, DeliveryMethod = DeliveryMethodSeed.przesylka_kurierska, Price = 13.90m };
 
-        public static List<Product_DeliveryMethod> Products_DeliveryMethods = new List<Product_DeliveryMethod>()
+        public IEnumerable<object> Items { get; } = new List<Product_DeliveryMethod>()
         {
             telefon_xiaomi_przesylka_kurierska,
             telefon_xiaomi_paczkomaty,

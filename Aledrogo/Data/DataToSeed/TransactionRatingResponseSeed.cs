@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Aledrogo.Data.DataToSeed
 {
-    public static class TransactionRatingResponseSeed
+    public class TransactionRatingResponseSeed : IDataToSeed
     {
-        public static List<TransactionRatingResponse> TransactionRatingResponses = new List<TransactionRatingResponse>()
+        public IEnumerable<object> Items { get; } = new List<TransactionRatingResponse>()
         {
             new TransactionRatingResponse()
             {

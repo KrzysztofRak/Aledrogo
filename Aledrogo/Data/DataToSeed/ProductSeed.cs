@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Aledrogo.Data.DataToSeed
 {
-    public static class ProductSeed
+    public class ProductSeed : IDataToSeed
     {
         private const string DESCRIPTION = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.";
 
@@ -19,7 +19,7 @@ namespace Aledrogo.Data.DataToSeed
             Price = 1200,
             TypeOfOffer = TypeOfOffer.BUY_IT_NOW,
             DaysForReturn = 7,
-            ProductState = ProductState.NEW,
+            ProductState = ProductStateSeed.nowy,
             ItemsInStock = 20,
             ShippingTimeInWorkingDays = 1,
             EndDate = DateTime.UtcNow.AddDays(14)
@@ -35,7 +35,7 @@ namespace Aledrogo.Data.DataToSeed
             Price = 0,
             TypeOfOffer = TypeOfOffer.AUCTION,
             DaysForReturn = 0,
-            ProductState = ProductState.SECONDHAND,
+            ProductState = ProductStateSeed.uzywany,
             ItemsInStock = 1,
             ShippingTimeInWorkingDays = 3,
             EndDate = DateTime.UtcNow.AddDays(7)
@@ -51,7 +51,7 @@ namespace Aledrogo.Data.DataToSeed
             Price = 500,
             TypeOfOffer = TypeOfOffer.AUCTION | TypeOfOffer.BUY_IT_NOW,
             DaysForReturn = 0,
-            ProductState = ProductState.SECONDHAND,
+            ProductState = ProductStateSeed.uzywany,
             ItemsInStock = 1,
             ShippingTimeInWorkingDays = 3,
             EndDate = DateTime.UtcNow.AddDays(7),
@@ -67,7 +67,7 @@ namespace Aledrogo.Data.DataToSeed
             Price = 50,
             TypeOfOffer = TypeOfOffer.BUY_IT_NOW,
             DaysForReturn = 0,
-            ProductState = ProductState.DAMAGED,
+            ProductState = ProductStateSeed.uszkodzony,
             ItemsInStock = 30,
             ShippingTimeInWorkingDays = 3,
             EndDate = DateTime.UtcNow.AddDays(10)
@@ -83,7 +83,7 @@ namespace Aledrogo.Data.DataToSeed
             Price = 1800,
             TypeOfOffer = TypeOfOffer.BUY_IT_NOW,
             DaysForReturn = 14,
-            ProductState = ProductState.NEW,
+            ProductState = ProductStateSeed.odnowiony_przez_producenta,
             ItemsInStock = 10,
             ShippingTimeInWorkingDays = 3,
             EndDate = DateTime.UtcNow.AddDays(8)
@@ -100,7 +100,7 @@ namespace Aledrogo.Data.DataToSeed
             Price = 38,
             TypeOfOffer = TypeOfOffer.BUY_IT_NOW,
             DaysForReturn = 14,
-            ProductState = ProductState.NEW,
+            ProductState = ProductStateSeed.nowy,
             ItemsInStock = 100,
             ShippingTimeInWorkingDays = 1,
             EndDate = DateTime.UtcNow.AddDays(20),
@@ -117,7 +117,7 @@ namespace Aledrogo.Data.DataToSeed
             Price = 120,
             TypeOfOffer = TypeOfOffer.BUY_IT_NOW,
             DaysForReturn = 14,
-            ProductState = ProductState.NEW,
+            ProductState = ProductStateSeed.nowy,
             ItemsInStock = 30,
             ShippingTimeInWorkingDays = 1,
             EndDate = DateTime.UtcNow.AddDays(14)
@@ -133,7 +133,7 @@ namespace Aledrogo.Data.DataToSeed
             Price = 15,
             TypeOfOffer = TypeOfOffer.BUY_IT_NOW,
             DaysForReturn = 14,
-            ProductState = ProductState.SECONDHAND,
+            ProductState = ProductStateSeed.uzywany,
             ItemsInStock = 50,
             ShippingTimeInWorkingDays = 3,
             EndDate = DateTime.UtcNow.AddDays(14)
@@ -149,7 +149,7 @@ namespace Aledrogo.Data.DataToSeed
             Price = 1100,
             TypeOfOffer = TypeOfOffer.AUCTION | TypeOfOffer.BUY_IT_NOW,
             DaysForReturn = 14,
-            ProductState = ProductState.AFTER_EXHIBITION,
+            ProductState = ProductStateSeed.powystawowy,
             ItemsInStock = 1,
             ShippingTimeInWorkingDays = 2,
             EndDate = DateTime.UtcNow.AddDays(14),
@@ -167,14 +167,14 @@ namespace Aledrogo.Data.DataToSeed
             Price = 950,
             TypeOfOffer = TypeOfOffer.BUY_IT_NOW,
             DaysForReturn = 0,
-            ProductState = ProductState.NEW,
+            ProductState = ProductStateSeed.uzywany,
             ItemsInStock = 4,
             ShippingTimeInWorkingDays = 3,
             EndDate = DateTime.UtcNow.AddDays(7),
             IsHighlighted = true
         };
 
-        public static List<Product> Products { get; } = new List<Product>()
+        public IEnumerable<object> Items { get; } = new List<Product>()
         {
             komputer_nowy, laptop_uzywany, telefon_xiaomi, arduino, pralka,
             powerbank, etui, ladowarka, telewizor, konsola_ps4

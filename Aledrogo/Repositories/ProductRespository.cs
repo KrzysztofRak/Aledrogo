@@ -1,6 +1,7 @@
 ﻿using Aledrogo.Data;
 using Aledrogo.ModelFilters;
 using Aledrogo.Models;
+using Aledrogo.Models.Enums;
 using Aledrogo.Repositories.Cache;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -57,41 +58,18 @@ namespace Aledrogo.Repositories
 
         public async Task<ICollection<Product>> GetByFilter(ProductFilter productFilter, int pageIndex, int pageSize)
         {
-              var concernedCategoriesIds = _categoryCache.GetConcernedCategoriesIds(productFilter.CategoryId);
+              IEnumerable<int> concernedCategoriesIds = (productFilter.CategoryId == ProductFilter.PRICE_UNDEFINED) ?
+                                                         null : _categoryCache.GetConcernedCategoriesIds(productFilter.CategoryId);
 
-            ICollection<Product> products = _context.Products.Where(p => concernedCategoriesIds.Contains(p.CategoryId)
+            ICollection<Product> products = _context.Products.Where(p => (concernedCategoriesIds == null || concernedCategoriesIds.Contains(p.CategoryId))
                                                      && p.Name.Contains(productFilter.SearchString)
-                                                     && (productFilter.MinPrice == 0 || p.Price > productFilter.MinPrice || p.MinimalPrice > productFilter.MinPrice)
-                                                     && (productFilter.MaxPrice == 0 || p.Price < productFilter.MaxPrice || p.MinimalPrice < productFilter.MaxPrice)
-                                                     && productFilter.ProductStates.Contains(p.ProductState)
-                                                     && productFilter.TypesOfOffers.Contains(p.TypeOfOffer)
-                                                     //&& productFilter.DeliveryMethodTypes.Select(d => d.Id)
-                                                     //   .Intersect(p.ProductDeliveryMethods.de)
-                                                     //    Any()
-                                                  ).ToList();
-            //if (productFilter.SearchString != String.Empty && productFilter.CategoryId != -1)
-            //    products = await GetBySearchInCategory(productFilter.SearchString, productFilter.CategoryId);
-            //else if(productFilter.SearchString != String.Empty)
-            //    products = await GetBySearch(productFilter.SearchString);
-            //else if (productFilter.CategoryId != -1)
-            //    products = await GetAllFromCategory(productFilter.CategoryId);
-
-
-            //if(productFilter.MinPrice > 0)
-            //    products = products.Where(p => p.Price > productFilter.MinPrice || p.MinimalPrice > productFilter.MinPrice).ToList();
-            //if(productFilter.MaxPrice > 0)
-            //    products = products.Where(p => p.Price < productFilter.MaxPrice || p.MinimalPrice < productFilter.MaxPrice).ToList();
-
-            //if(productFilter.ProductStates != null)
-            //    products = products.Where(p => productFilter.ProductStates.Contains(p.ProductState)).ToList();
-
-            //if (productFilter.TypesOfOffers != null)
-            //    products = products.Where(p => productFilter.TypesOfOffers.Contains(p.TypeOfOffer)).ToList();
-            //   categoryProducts = categoryProducts.Where(p => p.P)
-            //IEnumerable<Product> categoryProducts = await GetAllFromCategory(categoryId);
-            //IEnumerable<Product> categoryProducts = await GetAllFromCategory(categoryId);
-
-            //return _context.Products.Where(p => p.Name.Contains(productName));
+                                                     && (productFilter.MinPrice == ProductFilter.PRICE_UNDEFINED || p.Price > productFilter.MinPrice || p.MinimalPrice > productFilter.MinPrice)
+                                                     && (productFilter.MaxPrice == ProductFilter.PRICE_UNDEFINED || p.Price < productFilter.MaxPrice || p.MinimalPrice < productFilter.MaxPrice)
+                                                     && (productFilter.TypeOfOffer == TypeOfOffer.UNDEFINED || productFilter.TypeOfOffer.HasFlag(p.TypeOfOffer))
+                                                     && (!productFilter.ProductStateIds.Any() || productFilter.ProductStateIds.Contains(p.ProductStateId))
+                                                     && (!productFilter.DeliveryMethodTypeIds.Any() || p.ProductDeliveryMethods
+                                                        .Where(pdm => productFilter.DeliveryMethodTypeIds.Contains(pdm.DeliveryMethod.DeliveryMethodTypeId)).Any())
+                                                    ).ToList();
             return products;
         }
 

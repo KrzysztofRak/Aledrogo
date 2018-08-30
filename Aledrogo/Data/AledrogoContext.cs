@@ -13,6 +13,7 @@ namespace Aledrogo.Data
         public DbSet<Image> Images { get; set; }
         public DbSet<Offer> Offers { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<ProductState> ProductStates { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<DeliveryMethod> DeliveryMethods { get; set; }
         public DbSet<DeliveryMethodType> DeliveryMethodTypes { get; set; }
@@ -33,6 +34,7 @@ namespace Aledrogo.Data
             builder.Entity<Image>().ToTable("Image");
             builder.Entity<Offer>().ToTable("Offer");
             builder.Entity<Order>().ToTable("Order");
+            builder.Entity<ProductState>().ToTable("ProductState");
             builder.Entity<Product>().ToTable("Product");
             builder.Entity<DeliveryMethod>().ToTable("DeliveryMethod");
             builder.Entity<DeliveryMethodType>().ToTable("DeliveryMethodType");

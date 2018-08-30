@@ -7,8 +7,9 @@ namespace Aledrogo.Models.Enums
 {
     public enum TypeOfOffer
     {
-        BUY_IT_NOW,
-        AUCTION,
-        ADVERTISEMENT
+        UNDEFINED = 0,
+        BUY_IT_NOW = 1,
+        AUCTION = 2,
+        ADVERTISEMENT = 4
     }
 }

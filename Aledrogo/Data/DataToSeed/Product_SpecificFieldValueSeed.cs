@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Aledrogo.Data.DataToSeed
 {
-    public static class Product_SpecificFieldValueSeed
+    public class Product_SpecificFieldValueSeed : IDataToSeed
     {
-        public static List<Product_SpecificFieldValue> Products_SpecificFieldValues { get; } = new List<Product_SpecificFieldValue>()
+        public IEnumerable<object> Items { get; } = new List<Product_SpecificFieldValue>()
         {
           new Product_SpecificFieldValue() { Product = ProductSeed.komputer_nowy, SpecificFieldValue = SpecificFieldValueSeed.klasa_energetyczna_niedotyczy },
           new Product_SpecificFieldValue() { Product = ProductSeed.komputer_nowy, SpecificFieldValue = SpecificFieldValueSeed.liczba_rdzeni_8},

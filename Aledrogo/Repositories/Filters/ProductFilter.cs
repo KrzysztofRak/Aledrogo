@@ -1,24 +1,24 @@
-﻿using Aledrogo.Models;
-using Aledrogo.Models.Enums;
+﻿using Aledrogo.Models.Enums;
 using Aledrogo.Repositories.Cache.CacheDTOs;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Aledrogo.ModelFilters
 {
     public class ProductFilter
     {
+        public static readonly int CATEGORY_NOT_SELECTED = 0;
+        public static readonly int PRICE_UNDEFINED = 0;
+
         public string SearchString { get; set; } = String.Empty;
-        public int CategoryId { get; set; }
-        public decimal MinPrice { get; set; } = 0;
-        public decimal MaxPrice { get; set; } = 0;
+        public int CategoryId { get; set; } = CATEGORY_NOT_SELECTED;
+        public decimal MinPrice { get; set; } = PRICE_UNDEFINED;
+        public decimal MaxPrice { get; set; } = PRICE_UNDEFINED;
+        public TypeOfOffer TypeOfOffer { get; set; } = TypeOfOffer.UNDEFINED;
 
-        public ICollection<ProductState> ProductStates { get; set; } = new List<ProductState>();
-        public ICollection<TypeOfOffer> TypesOfOffers { get; set; } = new List<TypeOfOffer>();
-        public ICollection<DeliveryMethodType> DeliveryMethodTypes { get; set; } = new List<DeliveryMethodType>();
+        public ICollection<int> ProductStateIds { get; set; } = new List<int>();
+        public ICollection<int> DeliveryMethodTypeIds { get; set; } = new List<int>();
 
-        public ICollection<SpecificFieldValueDTO> SpecificFieldsValues { get; set; }
+        public ICollection<SpecificFieldValueDTO> SpecificFieldsValues { get; set; } = new List<SpecificFieldValueDTO>();
     }
 }

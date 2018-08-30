@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Aledrogo.Data.DataToSeed
 {
-    public class SpecificFieldValueSeed
+    public class SpecificFieldValueSeed : IDataToSeed
     {
         private static SpecificFieldValue Create(SpecificField _specificField, string _value)
         {
@@ -47,7 +47,7 @@ namespace Aledrogo.Data.DataToSeed
         public static SpecificFieldValue interfejs_miui_8 = Create(SpecificFieldSeed.interfejs, "MIUI 8");
         public static SpecificFieldValue interfejs_miui_9 = Create(SpecificFieldSeed.interfejs, "MIUI 9");
 
-        public static List<SpecificFieldValue> SpecificFieldsValues = new List<SpecificFieldValue>()
+        public IEnumerable<object> Items { get; } = new List<SpecificFieldValue>()
         {
             klasa_energetyczna_a, klasa_energetyczna_b, klasa_energetyczna_c,
             liczba_rdzeni_4, liczba_rdzeni_8, pamiec_ram_8gb, pamiec_ram_16gb,

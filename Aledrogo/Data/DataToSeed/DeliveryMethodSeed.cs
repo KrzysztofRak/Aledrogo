@@ -1,12 +1,9 @@
 ﻿using Aledrogo.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Aledrogo.Data.DataToSeed
 {
-    public static class DeliveryMethodSeed
+    public class DeliveryMethodSeed : IDataToSeed
     {
         public static DeliveryMethod przesylka_kurierska = new DeliveryMethod() { Name = "Przesyłka kurierska", DeliveryMethodType = DeliveryMethodTypeSeed.kurier };
         public static DeliveryMethod paczkomaty = new DeliveryMethod() { Name = "Paczkomaty 24/7", Price = 8.70m, DeliveryMethodType = DeliveryMethodTypeSeed.paczkomat };
@@ -16,7 +13,7 @@ namespace Aledrogo.Data.DataToSeed
         public static DeliveryMethod paczka_pocztowa_ekonomiczna = new DeliveryMethod() { Name = "Paczka pocztowa ekonomiczna", DeliveryMethodType = DeliveryMethodTypeSeed.paczka };
         public static DeliveryMethod odbior_osobisty_po_przedplacie = new DeliveryMethod() { Name = "Odbiór osobity po przedpłacie", Price = 0.00m, DeliveryMethodType = DeliveryMethodTypeSeed.odbior_osobisty };
 
-        public static List<DeliveryMethod> DeliveryMethods = new List<DeliveryMethod>()
+        public IEnumerable<object> Items { get; } = new List<DeliveryMethod>()
         {
             przesylka_kurierska, paczkomaty, list_ekonomiczny, list_priorytetowy, list_polecony_priorytetowy,
             paczka_pocztowa_ekonomiczna, odbior_osobisty_po_przedplacie

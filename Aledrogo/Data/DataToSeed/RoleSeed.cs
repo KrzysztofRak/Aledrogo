@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Aledrogo.Data.DataToSeed
 {
-    public class RoleSeed
+    public class RoleSeed : IDataToSeed
     {
-        public static List<string> RoleNames { get; } = new List<string>()
+        public IEnumerable<object> Items { get; } = new List<string>()
         {
             "Admin", "User"
         };

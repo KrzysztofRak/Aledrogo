@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Aledrogo.Data.DataToSeed
 {
-    public static class CategorySeed
+    public class CategorySeed : IDataToSeed
     {
         public static Category elektronika = new Category() { Name = "Elektornika" };
         public static Category rtv_i_agd = new Category() { Name = "RTV i AGD", ParentCategory = elektronika };
@@ -13,7 +13,7 @@ namespace Aledrogo.Data.DataToSeed
         public static Category xiaomi = new Category() { Name = "Xiaomi", ParentCategory = telefony_i_akcesoria };
         public static Category powerbanki = new Category() { Name = "Powerbanki", ParentCategory = telefony_i_akcesoria };
 
-        public static List<Category> Categories { get; private set; } = new List<Category>()
+        public IEnumerable<object> Items { get; } = new List<Category>()
         {
             elektronika,
                 rtv_i_agd,

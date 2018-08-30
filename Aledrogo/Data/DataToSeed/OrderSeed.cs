@@ -1,10 +1,9 @@
 ﻿using Aledrogo.Models;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Aledrogo.Data.DataToSeed
 {
-    public static class OrderSeed
+    public class OrderSeed : IDataToSeed
     {
         public static Order telefon_xiaomi_artur_order = new Order()
         {
@@ -75,7 +74,7 @@ namespace Aledrogo.Data.DataToSeed
             DeliveryPrice = Product_DeliveryMethodSeed.konsola_ps4_przesylka_kurierska.Price
         };
 
-        public static List<Order> Orders = new List<Order>()
+        public IEnumerable<object> Items { get; } = new List<Order>()
         {
             telefon_xiaomi_artur_order,
             laptop_uzywany_test1_order,

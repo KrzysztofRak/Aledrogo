@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Aledrogo.Data.DataToSeed
 {
-    public static class BasketSeed
+    public class BasketSeed : IDataToSeed
     {
-        public static List<Basket> Baskets = new List<Basket>()
+        public IEnumerable<object> Items { get; } = new List<Basket>()
         {
             new Basket() { UserId = UserSeed.artur.Id, Product = ProductSeed.arduino, Quantity = 2 },
             new Basket() { UserId = UserSeed.artur.Id, Product = ProductSeed.telefon_xiaomi, Quantity = 1 },

@@ -1,12 +1,9 @@
 ﻿using Aledrogo.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Aledrogo.Data.DataToSeed
 {
-    public static class TransactionRatingSeed
+    public class TransactionRatingSeed : IDataToSeed
     {
         public static TransactionRating telefon_xiaomi_transaction_rating = new TransactionRating()
         {
@@ -47,7 +44,7 @@ namespace Aledrogo.Data.DataToSeed
             Comment = "NIE POLECAM! Powerbank rozładowuje się po chwili po całym dniu ładowania... do tego bardzo się nagrzewa przy ładowaniu. Odradzam zakup."
         };
 
-        public static List<TransactionRating> TransactionRatings = new List<TransactionRating>()
+        public IEnumerable<object> Items { get; } = new List<TransactionRating>()
         {
             telefon_xiaomi_transaction_rating,
             telefon_xiaomi_transaction_rating,
