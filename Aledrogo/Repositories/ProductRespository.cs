@@ -61,7 +61,7 @@ namespace Aledrogo.Repositories
               IEnumerable<int> concernedCategoriesIds = (productFilter.CategoryId == ProductFilter.PRICE_UNDEFINED) ?
                                                          null : _categoryCache.GetConcernedCategoriesIds(productFilter.CategoryId);
 
-            ICollection<Product> products = _context.Products.Where(p => (concernedCategoriesIds == null || concernedCategoriesIds.Contains(p.CategoryId))
+            ICollection<Product> products = await _context.Products.Where(p => (concernedCategoriesIds == null || concernedCategoriesIds.Contains(p.CategoryId))
                                                      && p.Name.Contains(productFilter.SearchString)
                                                      && (productFilter.MinPrice == ProductFilter.PRICE_UNDEFINED || p.Price > productFilter.MinPrice || p.MinimalPrice > productFilter.MinPrice)
                                                      && (productFilter.MaxPrice == ProductFilter.PRICE_UNDEFINED || p.Price < productFilter.MaxPrice || p.MinimalPrice < productFilter.MaxPrice)
@@ -69,7 +69,8 @@ namespace Aledrogo.Repositories
                                                      && (!productFilter.ProductStateIds.Any() || productFilter.ProductStateIds.Contains(p.ProductStateId))
                                                      && (!productFilter.DeliveryMethodTypeIds.Any() || p.ProductDeliveryMethods
                                                         .Where(pdm => productFilter.DeliveryMethodTypeIds.Contains(pdm.DeliveryMethod.DeliveryMethodTypeId)).Any())
-                                                    ).ToList();
+                                                    ).ToListAsync();
+
             return products;
         }
 

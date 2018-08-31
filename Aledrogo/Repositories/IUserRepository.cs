@@ -15,5 +15,6 @@ namespace Aledrogo.Repositories
         Task<ICollection<UserDTO>> GetAll();
         Task<IdentityResult> ChangePassword(PasswordDTO dto);
         Task ChangeRole(RoleDTO dto);
+        Task<bool> RemoveUser(string userName);
     }
 }

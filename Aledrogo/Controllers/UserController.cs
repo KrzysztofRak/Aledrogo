@@ -14,7 +14,7 @@ namespace Aledrogo.Controllers
         {
             _repo = repo;
         }
-        [HttpPost]
+        [HttpPost("login")]
         public async Task<IActionResult> LogIn([FromBody] LogInDTO dto)
         {
             if (dto == null)
@@ -45,7 +45,7 @@ namespace Aledrogo.Controllers
             }
             if (!ModelState.IsValid)
             {
-                return BadRequest(dto);
+                return BadRequest(ModelState.Values);
             }
 
             try
@@ -71,7 +71,7 @@ namespace Aledrogo.Controllers
                 return BadRequest(exc);
             }
         }
-        [HttpGet]
+        [HttpGet("{name}", Name = "GetUsersByName")]
         public async Task<IActionResult> Get(string name)
         {
             try
@@ -106,7 +106,7 @@ namespace Aledrogo.Controllers
                 return BadRequest(exc);
             }
         }
-        [HttpPut]
+        [HttpPut(Name = "ChangeRole")]
         public async Task<IActionResult> ChangeRole([FromBody]RoleDTO dto)
         {
             if (dto == null)
@@ -127,6 +127,19 @@ namespace Aledrogo.Controllers
             {
                 return BadRequest(exc);
             }
+        }
+        [HttpGet("LogOut")]
+        public async Task<IActionResult> LogOut()
+        {
+            await _repo.LogOut();
+            return new NoContentResult();
+        }
+        [HttpDelete("{name}")]
+        public async Task<IActionResult> Delete(string name)
+        {
+            bool result = await _repo.RemoveUser(name);
+
+            return Json(result);
         }
     }
 }

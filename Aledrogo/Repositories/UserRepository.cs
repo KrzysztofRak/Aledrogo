@@ -154,6 +154,20 @@ namespace Aledrogo.Repositories
             return result;
         }
 
+        public async Task<bool> RemoveUser(string userName)
+        {
+            User deleteUser = await _context.Users.FirstOrDefaultAsync(m => m.UserName == userName);
+            if(deleteUser == null)
+            {
+                return false;
+            }
+
+            _context.Remove(deleteUser);
+            await _context.SaveChangesAsync();
+
+            return true;            
+        }
+
         private async Task AddRoleToUser(User user, string roleName) => await _userManager.AddToRoleAsync(user, roleName);
     }
 }
