@@ -30,6 +30,7 @@ namespace Aledrogo.Repositories
             newAddress.UserId = user.Id;
 
             await _context.Addresses.AddAsync(newAddress);
+            await _context.SaveChangesAsync();
 
             return true;
         }
