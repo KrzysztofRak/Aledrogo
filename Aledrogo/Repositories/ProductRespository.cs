@@ -61,17 +61,16 @@ namespace Aledrogo.Repositories
             IEnumerable<int> concernedCategoriesIds = (productFilter.CategoryId == ProductFilter.CATEGORY_NOT_SELECTED) ?
                                                        null : _categoryCache.GetConcernedCategoriesIds(productFilter.CategoryId);
 
-            ICollection<Product> products = _context.Products.ToList();
-            
-            products = products.Where(p => (concernedCategoriesIds == null || concernedCategoriesIds.Contains(p.CategoryId))
+            ICollection<Product> products = await _context.Products.Where(p => (concernedCategoriesIds == null || concernedCategoriesIds.Contains(p.CategoryId))
                                                      && p.Name.Contains(productFilter.SearchString)
                                                      && (productFilter.MinPrice == ProductFilter.PRICE_UNDEFINED || p.Price > productFilter.MinPrice || p.MinimalPrice > productFilter.MinPrice)
                                                      && (productFilter.MaxPrice == ProductFilter.PRICE_UNDEFINED || p.Price < productFilter.MaxPrice || p.MinimalPrice < productFilter.MaxPrice)
                                                      && (productFilter.TypeOfOffer == TypeOfOffer.ANY || productFilter.TypeOfOffer.HasFlag(p.TypeOfOffer))
                                                      && (!productFilter.ProductStateIds.Any() || productFilter.ProductStateIds.Contains(p.ProductStateId))
-                                                     && (!productFilter.DeliveryMethodTypeIds.Any() || p.ProductDeliveryMethods
-                                                        .Where(pdm => productFilter.DeliveryMethodTypeIds.Contains(pdm.DeliveryMethod.DeliveryMethodTypeId)).Any())
-                                                    ).ToList();
+                                                     && (!productFilter.DeliveryMethodIds.Any() || p.ProductDeliveryMethods
+                                                        .Where(pdm => productFilter.DeliveryMethodIds.Contains(pdm.DeliveryMethodId)).Any())
+                                                    ).ToListAsync();
+
             return products;
         }
 

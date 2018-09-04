@@ -2,6 +2,7 @@
 using Aledrogo.Models.Enums;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Aledrogo.Data.DataToSeed
 {
@@ -179,5 +180,73 @@ namespace Aledrogo.Data.DataToSeed
             komputer_nowy, laptop_uzywany, telefon_xiaomi, arduino, pralka,
             powerbank, etui, ladowarka, telewizor, konsola_ps4
         };
+
+        public static object GetRandomObject(List<object> objects)
+        {
+            Random rand = new Random();
+            int randomIndex = rand.Next(0, objects.Count - 1);
+
+            return objects[randomIndex];
+        }
+
+        public static IEnumerable<object> GetRandomProducts(int numberOfProducts)
+        {
+            Random rand = new Random();
+
+            ICollection<Product> products = new List<Product>();
+
+            Product product;
+
+            for (int i = 0; i < numberOfProducts; i++)
+            {
+                product = new Product()
+                {
+                    SellerId = UserSeed.artur.Id,
+                    Category = (Category)GetRandomObject(new CategorySeed().Items.ToList()),
+                    Name = GenerateName(100),
+                    Description = DESCRIPTION,
+                    MinimalPrice = GetRandomPrice(),
+                    Price = GetRandomPrice(),
+                    TypeOfOffer = TypeOfOffer.AUCTION | TypeOfOffer.BUY_IT_NOW,
+                    ProductState = (ProductState)GetRandomObject(new ProductStateSeed().Items.ToList()),
+                    ItemsInStock = (ushort)rand.Next(1, 1000),
+                    ShippingTimeInWorkingDays = (byte)rand.Next(1, 5),
+                    EndDate = DateTime.UtcNow.AddDays(rand.Next(1, 14)),
+                    IsHighlighted = rand.Next(1, 100) % 2 == 0,
+                    //ProductDeliveryMethods = (ICollection<Product_DeliveryMethod>)new Product_DeliveryMethodSeed().Items.ToList()
+                };
+
+                products.Add(product);
+            }
+
+            return products;
+        }
+
+        public static decimal GetRandomPrice()
+        {
+            Random rand = new Random();
+            bool isZero = rand.Next(1, 100) % 2 == 0;
+
+            if (isZero)
+                return 0;
+            else
+                return rand.Next(100, 20000);
+        }
+
+        public static string GenerateName(int length)
+        {
+            Random random = new Random();
+            string[] consonants = { "a", "e", "i", "o", "u", "b","c","d","f","g","h","j","k","l","m","n","p","q","r","s","sh","z","zh",
+            "t","v","w","x","y", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0" };
+
+            string output = "";
+
+            for (int i = 0; i < length; i++)
+            {
+                output += consonants[random.Next(0, consonants.Length - 1)];
+            }
+
+            return output;
+        }
     }
 }

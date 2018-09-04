@@ -16,7 +16,6 @@ namespace Aledrogo.Data
         public DbSet<ProductState> ProductStates { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<DeliveryMethod> DeliveryMethods { get; set; }
-        public DbSet<DeliveryMethodType> DeliveryMethodTypes { get; set; }
         public DbSet<Product_DeliveryMethod> Products_DeliveryMethods { get; set; }
         public DbSet<TransactionRating> TransactionRatings { get; set; }
         public DbSet<TransactionRatingResponse> TransactionRatingResponses { get; set; }
@@ -37,7 +36,6 @@ namespace Aledrogo.Data
             builder.Entity<ProductState>().ToTable("ProductState");
             builder.Entity<Product>().ToTable("Product");
             builder.Entity<DeliveryMethod>().ToTable("DeliveryMethod");
-            builder.Entity<DeliveryMethodType>().ToTable("DeliveryMethodType");
             builder.Entity<Product_DeliveryMethod>().ToTable("Product_DeliveryMethod");
             builder.Entity<TransactionRating>().ToTable("TransactionRating");
             builder.Entity<TransactionRatingResponse>().ToTable("TransactionRatingResponse");

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Aledrogo.Migrations
 {
     [DbContext(typeof(AledrogoContext))]
-    [Migration("20180830135322_Initial")]
+    [Migration("20180904135224_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -106,8 +106,6 @@ namespace Aledrogo.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("DeliveryMethodTypeId");
-
                     b.Property<bool>("IsSafe");
 
                     b.Property<string>("Name");
@@ -116,22 +114,7 @@ namespace Aledrogo.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DeliveryMethodTypeId");
-
                     b.ToTable("DeliveryMethod");
-                });
-
-            modelBuilder.Entity("Aledrogo.Models.DeliveryMethodType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DeliveryMethodType");
                 });
 
             modelBuilder.Entity("Aledrogo.Models.Image", b =>
@@ -612,14 +595,6 @@ namespace Aledrogo.Migrations
                     b.HasOne("Aledrogo.Models.Category", "ParentCategory")
                         .WithMany()
                         .HasForeignKey("ParentCategoryId")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
-            modelBuilder.Entity("Aledrogo.Models.DeliveryMethod", b =>
-                {
-                    b.HasOne("Aledrogo.Models.DeliveryMethodType", "DeliveryMethodType")
-                        .WithMany("DeliveryMethods")
-                        .HasForeignKey("DeliveryMethodTypeId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 

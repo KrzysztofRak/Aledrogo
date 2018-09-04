@@ -17,7 +17,7 @@ namespace Aledrogo.ModelFilters
         public TypeOfOffer TypeOfOffer { get; set; } = TypeOfOffer.ANY;
 
         public ICollection<int> ProductStateIds { get; set; } = new List<int>();
-        public ICollection<int> DeliveryMethodTypeIds { get; set; } = new List<int>();
+        public ICollection<int> DeliveryMethodIds { get; set; } = new List<int>();
 
         public ICollection<SpecificFieldValueDTO> SpecificFieldsValues { get; set; } = new List<SpecificFieldValueDTO>();
     }

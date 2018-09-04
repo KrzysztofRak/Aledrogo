@@ -43,8 +43,8 @@ namespace Aledrogo.Tests.Repositories
             productFilter.ProductStateIds.Add(ProductStateSeed.powystawowy.Id);
             productFilter.ProductStateIds.Add(ProductStateSeed.uszkodzony.Id);
 
-            productFilter.DeliveryMethodTypeIds.Add(DeliveryMethodTypeSeed.kurier.Id);
-            productFilter.DeliveryMethodTypeIds.Add(DeliveryMethodTypeSeed.odbior_osobisty.Id);
+            productFilter.DeliveryMethodIds.Add(DeliveryMethodSeed.przesylka_kurierska.Id);
+            productFilter.DeliveryMethodIds.Add(DeliveryMethodSeed.odbior_osobisty_po_przedplacie.Id);
 
             ICollection<Product> products = await _productRepository.GetByFilter(productFilter, 1, 1);
 
