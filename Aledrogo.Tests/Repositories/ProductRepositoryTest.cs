@@ -44,13 +44,11 @@ namespace Aledrogo.Tests.Repositories
             productFilter.ProductStateIds.Add(ProductStateSeed.uszkodzony.Id);
 
             productFilter.DeliveryMethodTypeIds.Add(DeliveryMethodTypeSeed.kurier.Id);
-            productFilter.DeliveryMethodTypeIds.Add(DeliveryMethodTypeSeed.list.Id);
             productFilter.DeliveryMethodTypeIds.Add(DeliveryMethodTypeSeed.odbior_osobisty.Id);
-            productFilter.DeliveryMethodTypeIds.Add(DeliveryMethodTypeSeed.paczkomat.Id);
 
             ICollection<Product> products = await _productRepository.GetByFilter(productFilter, 1, 1);
 
-            Assert.True(products.Count == 1, products.Count().ToString());
+            Assert.True(products.Contains(ProductSeed.telefon_xiaomi));
         }
     }
 }

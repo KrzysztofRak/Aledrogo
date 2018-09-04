@@ -14,7 +14,7 @@ namespace Aledrogo.ModelFilters
         public int CategoryId { get; set; } = CATEGORY_NOT_SELECTED;
         public decimal MinPrice { get; set; } = PRICE_UNDEFINED;
         public decimal MaxPrice { get; set; } = PRICE_UNDEFINED;
-        public TypeOfOffer TypeOfOffer { get; set; } = TypeOfOffer.UNDEFINED;
+        public TypeOfOffer TypeOfOffer { get; set; } = TypeOfOffer.ANY;
 
         public ICollection<int> ProductStateIds { get; set; } = new List<int>();
         public ICollection<int> DeliveryMethodTypeIds { get; set; } = new List<int>();
