@@ -79,7 +79,7 @@ namespace Aledrogo
                 app.UseExceptionHandler();
             }
 
-            app.UseMvcWithDefaultRoute();
+            app.UseMvc();
         }
 
         public void InitializeDatabaseWithSeedData(IServiceProvider serviceProvider)
