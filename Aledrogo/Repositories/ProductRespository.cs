@@ -144,6 +144,9 @@ namespace Aledrogo.Repositories
 
         private async Task<IQueryable<Product>> FilterBySpecificFieldsValues(IQueryable<Product> products, IEnumerable<SpecificFieldFilter> specificFieldsFilters)
         {
+            if (!specificFieldsFilters.Any())
+                return products;
+
             return products.Where(p => (specificFieldsFilters
                                         .All(sff => !p.ProductSpecificFieldsValues
                                          .Select(psfv => psfv.SpecificFieldValue.SpecificFieldId)
