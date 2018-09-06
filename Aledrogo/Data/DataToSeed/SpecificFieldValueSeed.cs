@@ -47,6 +47,9 @@ namespace Aledrogo.Data.DataToSeed
         public static SpecificFieldValue interfejs_miui_8 = Create(SpecificFieldSeed.interfejs, "MIUI 8");
         public static SpecificFieldValue interfejs_miui_9 = Create(SpecificFieldSeed.interfejs, "MIUI 9");
 
+        public static SpecificFieldValue ilosc_kolorow_16m = Create(SpecificFieldSeed.ilosc_kolorow, "16000000");
+
+
         public IEnumerable<object> Items { get; } = new List<SpecificFieldValue>()
         {
             klasa_energetyczna_a, klasa_energetyczna_b, klasa_energetyczna_c,
@@ -56,7 +59,7 @@ namespace Aledrogo.Data.DataToSeed
             maksymalne_obroty_1400, ladownosc_8kg,
             wyswietlacz_led, wyswietlacz_segmentowy, wyswietlacz_inny,
             kolor_bialy, kolor_szary, kolor_czarny, kolor_czerwony, kolor_niebieski, kolor_zolty, kolor_zielony, kolor_rozowy, kolor_pomaranczowy, kolor_fioletowy, kolor_bezbarwny, kolor_inny,
-            interfejs_miui_7, interfejs_miui_8, interfejs_miui_9
+            interfejs_miui_7, interfejs_miui_8, interfejs_miui_9, ilosc_kolorow_16m
         };
     }
 }

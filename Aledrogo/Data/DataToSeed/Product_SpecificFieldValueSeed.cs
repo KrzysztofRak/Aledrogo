@@ -27,6 +27,7 @@ namespace Aledrogo.Data.DataToSeed
 
           new Product_SpecificFieldValue() { Product = ProductSeed.telefon_xiaomi, SpecificFieldValue = SpecificFieldValueSeed.kolor_czarny },
           new Product_SpecificFieldValue() { Product = ProductSeed.telefon_xiaomi, SpecificFieldValue = SpecificFieldValueSeed.interfejs_miui_9 },
+          new Product_SpecificFieldValue() { Product = ProductSeed.telefon_xiaomi, SpecificFieldValue = SpecificFieldValueSeed.ilosc_kolorow_16m },
 
           new Product_SpecificFieldValue() { Product = ProductSeed.ladowarka, SpecificFieldValue = SpecificFieldValueSeed.kolor_pomaranczowy },
 

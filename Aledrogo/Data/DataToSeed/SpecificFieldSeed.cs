@@ -32,6 +32,7 @@ namespace Aledrogo.Data.DataToSeed
         public static SpecificField kolor = Create(CategorySeed.telefony_i_akcesoria, "Kolor", true);
 
         public static SpecificField interfejs = Create(CategorySeed.xiaomi, "Interfejs", true);
+        public static SpecificField ilosc_kolorow = Create(CategorySeed.xiaomi, "Ilość kolorów", true);
 
         public IEnumerable<object> Items { get; } = new List<SpecificField>()
         {

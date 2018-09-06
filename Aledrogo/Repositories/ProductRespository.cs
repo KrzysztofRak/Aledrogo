@@ -147,22 +147,22 @@ namespace Aledrogo.Repositories
             if (!specificFieldsFilters.Any())
                 return products;
 
-            return products.Where(p => (specificFieldsFilters
-                                        .All(sff => !p.ProductSpecificFieldsValues
-                                         .Select(psfv => psfv.SpecificFieldValue.SpecificFieldId)
-                                          .Contains(sff.SpecificFieldId) ||
+            return products.Where(p => (specificFieldsFilters // CHECK IF PRODUCT CONTAINS SpecificFieldValue FOR SpecificField
+                                        .All(sff => p.ProductSpecificFieldsValues
+                                                    .Select(psfv => psfv.SpecificFieldValue.SpecificFieldId)
+                                                     .Contains(sff.SpecificFieldId) == false ||
 
-                                       (sff.SpecificFieldValueId != null
-                                        && p.ProductSpecificFieldsValues
-                                         .Where(psfv => psfv.SpecificFieldValue.SpecificFieldId == sff.SpecificFieldId
-                                          && psfv.SpecificFieldValueId == sff.SpecificFieldValueId)
-                                         .Any()) ||
+                                                   (sff.SpecificFieldValueId != null // CHECK IF SpecificFieldValue OF PRODUCT EQUALS TO SpecificFieldValue IN FILTER
+                                                    && p.ProductSpecificFieldsValues
+                                                     .Where(psfv => psfv.SpecificFieldValue.SpecificFieldId == sff.SpecificFieldId
+                                                      && psfv.SpecificFieldValueId == sff.SpecificFieldValueId)
+                                                     .Any()) ||
 
-                                       (p.ProductSpecificFieldsValues
-                                        .Where(psfv => psfv.SpecificFieldValue.SpecificFieldId == sff.SpecificFieldId
-                                         && (sff.MinValue == null || int.Parse(psfv.SpecificFieldValue.Value) >= sff.MinValue)
-                                         && (sff.MaxValue == null || int.Parse(psfv.SpecificFieldValue.Value) <= sff.MaxValue))
-                                        .Any()))));
+                                                   (p.ProductSpecificFieldsValues // CHECK IF SpecificFieldValue OF PRODUCT IS IN RANGE SPECIFIED IN FILTER
+                                                    .Where(psfv => psfv.SpecificFieldValue.SpecificFieldId == sff.SpecificFieldId
+                                                     && (sff.MinValue == null || int.Parse(psfv.SpecificFieldValue.Value) >= sff.MinValue)
+                                                     && (sff.MaxValue == null || int.Parse(psfv.SpecificFieldValue.Value) <= sff.MaxValue))
+                                                    .Any()))));
         }
     }
 }

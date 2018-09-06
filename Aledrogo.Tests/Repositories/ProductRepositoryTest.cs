@@ -39,8 +39,9 @@ namespace Aledrogo.Tests.Repositories
             productFilter.DeliveryMethodsIds.Add(DeliveryMethodSeed.przesylka_kurierska.Id);
             productFilter.DeliveryMethodsIds.Add(DeliveryMethodSeed.odbior_osobisty_po_przedplacie.Id);
 
-           productFilter.SpecificFieldsFilters.Add(new SpecificFieldFilter() { SpecificFieldId = SpecificFieldSeed.interfejs.Id, SpecificFieldValueId = SpecificFieldValueSeed.interfejs_miui_9.Id });
+            productFilter.SpecificFieldsFilters.Add(new SpecificFieldFilter() { SpecificFieldId = SpecificFieldSeed.interfejs.Id, SpecificFieldValueId = SpecificFieldValueSeed.interfejs_miui_9.Id });
             productFilter.SpecificFieldsFilters.Add(new SpecificFieldFilter() { SpecificFieldId = SpecificFieldSeed.kolor.Id, SpecificFieldValueId = SpecificFieldValueSeed.kolor_czarny.Id });
+            productFilter.SpecificFieldsFilters.Add(new SpecificFieldFilter() { SpecificFieldId = SpecificFieldSeed.ilosc_kolorow.Id, MinValue = 13000000, MaxValue = 30000000 });
 
             ICollection<Product> products = await _productRepository.GetByFilter(productFilter, 1, 1);
 
