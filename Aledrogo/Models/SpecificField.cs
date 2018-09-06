@@ -18,7 +18,7 @@ namespace Aledrogo.Models
         public string Name { get; set; }
 
         public bool IsRequired { get; set; }
-        public bool IsCustomNumericValue { get; set; } = false;
+        public bool IsRangeValue { get; set; } = false;
         public int? MinNumericValue { get; set; }
         public int? MaxNumericValue { get; set; }
     }

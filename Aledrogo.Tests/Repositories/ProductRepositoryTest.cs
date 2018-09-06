@@ -3,6 +3,7 @@ using Aledrogo.ModelFilters;
 using Aledrogo.Models;
 using Aledrogo.Models.Enums;
 using Aledrogo.Repositories;
+using Aledrogo.Repositories.Filters.FilterDTOs;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,34 +22,35 @@ namespace Aledrogo.Tests.Repositories
         }
 
         [Fact]
-        public async void GetAllFromCategoryTest()
-        {
-            ICollection<Product> products = await _productRepository.GetAllFromCategory(1);
-
-            Assert.True(products.Count == 10);
-        }
-
-        [Fact]
         public async void GetByFilterTest()
         {
             ProductFilter productFilter = new ProductFilter();
-            productFilter.SearchString = "Redmi Note";
+            productFilter.SearchName = "Redmi Note";
             productFilter.MinPrice = 200;
-            productFilter.MaxPrice = 0;
+            productFilter.MaxPrice = 1400;
             productFilter.CategoryId = 2;
 
-            productFilter.TypeOfOffer = TypeOfOffer.AUCTION | TypeOfOffer.BUY_IT_NOW | TypeOfOffer.ADVERTISEMENT;
+            productFilter.OfferType = OfferType.AUCTION | OfferType.BUY_IT_NOW;
 
-            productFilter.ProductStateIds.Add(ProductStateSeed.uzywany.Id);
-            productFilter.ProductStateIds.Add(ProductStateSeed.powystawowy.Id);
-            productFilter.ProductStateIds.Add(ProductStateSeed.uszkodzony.Id);
+            productFilter.ProductStatesIds.Add(ProductStateSeed.uzywany.Id);
+            productFilter.ProductStatesIds.Add(ProductStateSeed.powystawowy.Id);
+            productFilter.ProductStatesIds.Add(ProductStateSeed.uszkodzony.Id);
 
-            productFilter.DeliveryMethodIds.Add(DeliveryMethodSeed.przesylka_kurierska.Id);
-            productFilter.DeliveryMethodIds.Add(DeliveryMethodSeed.odbior_osobisty_po_przedplacie.Id);
+            productFilter.DeliveryMethodsIds.Add(DeliveryMethodSeed.przesylka_kurierska.Id);
+            productFilter.DeliveryMethodsIds.Add(DeliveryMethodSeed.odbior_osobisty_po_przedplacie.Id);
+
+            productFilter.SpecificFieldsFilters.Add(new SpecificFieldFilter() { SpecificFieldId = SpecificFieldSeed.interfejs.Id, SpecificFieldValueId = SpecificFieldValueSeed.interfejs_miui_9.Id });
+            productFilter.SpecificFieldsFilters.Add(new SpecificFieldFilter() { SpecificFieldId = SpecificFieldSeed.kolor.Id, SpecificFieldValueId = SpecificFieldValueSeed.kolor_czarny.Id });
 
             ICollection<Product> products = await _productRepository.GetByFilter(productFilter, 1, 1);
 
             Assert.True(products.Contains(ProductSeed.telefon_xiaomi));
+        }
+
+        [Fact]
+        public async void GetByFilterTest2()
+        {
+            GetByFilterTest();
         }
     }
 }

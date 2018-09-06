@@ -12,7 +12,7 @@ namespace Aledrogo.Data.DataToSeed
                 Category = _category,
                 Name = _name,
                 IsRequired = _isRequired,
-                IsCustomNumericValue = (_minNumericValue != null || _maxNumericValue != null),
+                IsRangeValue = (_minNumericValue != null || _maxNumericValue != null),
                 MinNumericValue = _minNumericValue,
                 MaxNumericValue = _maxNumericValue
             };

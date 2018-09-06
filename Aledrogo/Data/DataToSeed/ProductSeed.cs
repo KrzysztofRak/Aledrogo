@@ -18,7 +18,6 @@ namespace Aledrogo.Data.DataToSeed
             Description = DESCRIPTION,
             MinimalPrice = 0,
             Price = 1200,
-            TypeOfOffer = TypeOfOffer.BUY_IT_NOW,
             DaysForReturn = 7,
             ProductState = ProductStateSeed.nowy,
             ItemsInStock = 20,
@@ -34,7 +33,6 @@ namespace Aledrogo.Data.DataToSeed
             Description = DESCRIPTION,
             MinimalPrice = 300,
             Price = 0,
-            TypeOfOffer = TypeOfOffer.AUCTION,
             DaysForReturn = 0,
             ProductState = ProductStateSeed.uzywany,
             ItemsInStock = 1,
@@ -50,7 +48,6 @@ namespace Aledrogo.Data.DataToSeed
             Description = DESCRIPTION,
             MinimalPrice = 350,
             Price = 500,
-            TypeOfOffer = TypeOfOffer.AUCTION | TypeOfOffer.BUY_IT_NOW,
             DaysForReturn = 0,
             ProductState = ProductStateSeed.uzywany,
             ItemsInStock = 1,
@@ -66,7 +63,6 @@ namespace Aledrogo.Data.DataToSeed
             Description = DESCRIPTION,
             MinimalPrice = 0,
             Price = 50,
-            TypeOfOffer = TypeOfOffer.BUY_IT_NOW,
             DaysForReturn = 0,
             ProductState = ProductStateSeed.uszkodzony,
             ItemsInStock = 30,
@@ -82,7 +78,6 @@ namespace Aledrogo.Data.DataToSeed
             Description = DESCRIPTION,
             MinimalPrice = 0,
             Price = 1800,
-            TypeOfOffer = TypeOfOffer.BUY_IT_NOW,
             DaysForReturn = 14,
             ProductState = ProductStateSeed.odnowiony_przez_producenta,
             ItemsInStock = 10,
@@ -99,7 +94,6 @@ namespace Aledrogo.Data.DataToSeed
             Description = DESCRIPTION,
             MinimalPrice = 0,
             Price = 38,
-            TypeOfOffer = TypeOfOffer.BUY_IT_NOW,
             DaysForReturn = 14,
             ProductState = ProductStateSeed.nowy,
             ItemsInStock = 100,
@@ -116,7 +110,6 @@ namespace Aledrogo.Data.DataToSeed
             Description = DESCRIPTION,
             MinimalPrice = 0,
             Price = 120,
-            TypeOfOffer = TypeOfOffer.BUY_IT_NOW,
             DaysForReturn = 14,
             ProductState = ProductStateSeed.nowy,
             ItemsInStock = 30,
@@ -132,7 +125,6 @@ namespace Aledrogo.Data.DataToSeed
             Description = DESCRIPTION,
             MinimalPrice = 0,
             Price = 15,
-            TypeOfOffer = TypeOfOffer.BUY_IT_NOW,
             DaysForReturn = 14,
             ProductState = ProductStateSeed.uzywany,
             ItemsInStock = 50,
@@ -148,7 +140,6 @@ namespace Aledrogo.Data.DataToSeed
             Description = DESCRIPTION,
             MinimalPrice = 500,
             Price = 1100,
-            TypeOfOffer = TypeOfOffer.AUCTION | TypeOfOffer.BUY_IT_NOW,
             DaysForReturn = 14,
             ProductState = ProductStateSeed.powystawowy,
             ItemsInStock = 1,
@@ -166,7 +157,6 @@ namespace Aledrogo.Data.DataToSeed
             Description = DESCRIPTION,
             MinimalPrice = 0,
             Price = 950,
-            TypeOfOffer = TypeOfOffer.BUY_IT_NOW,
             DaysForReturn = 0,
             ProductState = ProductStateSeed.uzywany,
             ItemsInStock = 4,
@@ -180,73 +170,5 @@ namespace Aledrogo.Data.DataToSeed
             komputer_nowy, laptop_uzywany, telefon_xiaomi, arduino, pralka,
             powerbank, etui, ladowarka, telewizor, konsola_ps4
         };
-
-        public static object GetRandomObject(List<object> objects)
-        {
-            Random rand = new Random();
-            int randomIndex = rand.Next(0, objects.Count - 1);
-
-            return objects[randomIndex];
-        }
-
-        public static IEnumerable<object> GetRandomProducts(int numberOfProducts)
-        {
-            Random rand = new Random();
-
-            ICollection<Product> products = new List<Product>();
-
-            Product product;
-
-            for (int i = 0; i < numberOfProducts; i++)
-            {
-                product = new Product()
-                {
-                    SellerId = UserSeed.artur.Id,
-                    Category = (Category)GetRandomObject(new CategorySeed().Items.ToList()),
-                    Name = GenerateName(100),
-                    Description = DESCRIPTION,
-                    MinimalPrice = GetRandomPrice(),
-                    Price = GetRandomPrice(),
-                    TypeOfOffer = TypeOfOffer.AUCTION | TypeOfOffer.BUY_IT_NOW,
-                    ProductState = (ProductState)GetRandomObject(new ProductStateSeed().Items.ToList()),
-                    ItemsInStock = (ushort)rand.Next(1, 1000),
-                    ShippingTimeInWorkingDays = (byte)rand.Next(1, 5),
-                    EndDate = DateTime.UtcNow.AddDays(rand.Next(1, 14)),
-                    IsHighlighted = rand.Next(1, 100) % 2 == 0,
-                    //ProductDeliveryMethods = (ICollection<Product_DeliveryMethod>)new Product_DeliveryMethodSeed().Items.ToList()
-                };
-
-                products.Add(product);
-            }
-
-            return products;
-        }
-
-        public static decimal GetRandomPrice()
-        {
-            Random rand = new Random();
-            bool isZero = rand.Next(1, 100) % 2 == 0;
-
-            if (isZero)
-                return 0;
-            else
-                return rand.Next(100, 20000);
-        }
-
-        public static string GenerateName(int length)
-        {
-            Random random = new Random();
-            string[] consonants = { "a", "e", "i", "o", "u", "b","c","d","f","g","h","j","k","l","m","n","p","q","r","s","sh","z","zh",
-            "t","v","w","x","y", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0" };
-
-            string output = "";
-
-            for (int i = 0; i < length; i++)
-            {
-                output += consonants[random.Next(0, consonants.Length - 1)];
-            }
-
-            return output;
-        }
     }
 }

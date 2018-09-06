@@ -9,11 +9,9 @@ namespace Aledrogo.Repositories
 {
     public interface IProductRepository
     {
-        Task<ICollection<Product>> GetByFilter(ProductFilter productFilter, int pageIndex, int pageSize);
         Task<Product> GetById(int productId);
         Task<ICollection<Product>> GetAllBuyedBy(string userId);
         Task<IEnumerable<Product>> GetAllSelledBy(string userId);
-        Task<ICollection<Product>> GetAllFromCategory(int categoryId);
-        Task<ICollection<Product>> GetBySearchInCategory(string productName, int categoryId);
+        Task<ICollection<Product>> GetByFilter(ProductFilter productFilter, int pageIndex, int pageSize);
     }
 }

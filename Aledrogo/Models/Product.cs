@@ -38,8 +38,6 @@ namespace Aledrogo.Models
         public decimal MinimalPrice { get; set; }
         public decimal Price { get; set; }
 
-        public TypeOfOffer TypeOfOffer { get; set; }
-
         public ushort DaysForReturn { get; set; }
 
         [Required]

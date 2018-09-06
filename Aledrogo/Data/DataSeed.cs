@@ -36,13 +36,6 @@ namespace Aledrogo.Data
             SeedData(new OrderSeed());
             SeedData(new ProductStateSeed());
             SeedData(new ProductSeed());
-
-            var products = ProductSeed.GetRandomProducts(1);
-            foreach (Product item in products)
-            {
-                _context.Products.Add(item);
-            }
-
             SeedData(new Product_DeliveryMethodSeed());
             SeedData(new Product_SpecificFieldValueSeed());
             SeedData(new SpecificFieldSeed());
