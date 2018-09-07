@@ -22,11 +22,11 @@ namespace Aledrogo.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetByFilter([FromHeader]ProductFilter productFilter, int? pageIndex = null, int? pageSize = null)
+        public async Task<IActionResult> GetByFilter(int? pageIndex = null, int? pageSize = null)
         {
             try
             {
-             //   ProductFilter productFilter = new ProductFilter();
+                ProductFilter productFilter = new ProductFilter();
                // productFilter.SearchName = "Redmi Note";
                 //productFilter.MinPrice = 200;
                 //productFilter.MaxPrice = 1400;

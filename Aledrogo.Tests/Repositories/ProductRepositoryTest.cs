@@ -197,5 +197,15 @@ namespace Aledrogo.Tests.Repositories
             Assert.True(products.Count == pageSize);
             Assert.True(products.Where(p => p.Id > (pageIndex-1)*pageSize && p.Id <= pageIndex*pageSize).Count() == pageSize);
         }
+
+        [Fact]
+        public async void GetWithEmptyFilterTest()
+        {
+            ProductFilter productFilter = new ProductFilter();
+
+            ICollection<Product> products = await _productRepository.GetByFilter(productFilter);
+
+            Assert.True(products.Count == new ProductSeed().Items.Count());
+        }
     }
 }

@@ -51,7 +51,11 @@ namespace Aledrogo
             });
             var mapper = configMapper.CreateMapper();
 
-            services.AddMvc();
+
+            services.AddMvc()
+                .AddJsonOptions(
+                    options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
             services.AddDbContext<AledrogoContext>(options => options.UseSqlServer(connectionString));
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<AledrogoContext>();
             services.AddSingleton(mapper);
@@ -67,7 +71,7 @@ namespace Aledrogo
             {
                 IServiceProvider serviceProvider = scope.ServiceProvider;
 
-                InitializeDatabaseWithSeedData(serviceProvider);
+                // InitializeDatabaseWithSeedData(serviceProvider);
             }
 
             if (env.IsDevelopment())
