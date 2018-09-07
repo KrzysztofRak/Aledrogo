@@ -66,17 +66,21 @@ namespace Aledrogo.Repositories
             return _context.Products.Where(p => p.Id == productId).FirstOrDefault();
         }
 
-        public async Task<ICollection<Product>> GetAllBuyedBy(string userId)
+        public async Task<ICollection<Product>> GetAllBuyedBy(string userId, int? pageIndex = null, int? pageSize = null)
         {
-            return _context.Products.Where(p => p.Orders.Contains(p.Orders.Where(o => o.CustomerId == userId).First())).ToList();
+            IQueryable<Product> products = _context.Products.Where(p => p.Orders.Select(o => o.CustomerId).Contains(userId));
+            products = await FilterByPageIndex(products, pageIndex, pageSize);
+            return await products.ToListAsync();
         }
 
-        public async Task<IEnumerable<Product>> GetAllSelledBy(string userId)
+        public async Task<ICollection<Product>> GetAllSelledBy(string userId, int? pageIndex = null, int? pageSize = null)
         {
-            return _context.Products.Where(p => p.SellerId == userId).ToList();
+            IQueryable<Product> products = _context.Products.Where(p => p.SellerId == userId);
+            products = await FilterByPageIndex(products, pageIndex, pageSize);
+            return await products.ToListAsync();
         }
 
-        public async Task<ICollection<Product>> GetByFilter(ProductFilter productFilter, int pageIndex, int pageSize)
+        public async Task<ICollection<Product>> GetByFilter(ProductFilter productFilter, int? pageIndex = null, int? pageSize = null)
         {
             IQueryable<Product> products = _context.Products;
 
@@ -86,9 +90,20 @@ namespace Aledrogo.Repositories
             products = await FilterByOfferType(products, productFilter.OfferType);
             products = await FilterByProductStates(products, productFilter.ProductStatesIds);
             products = await FilterByDeliveryMethods(products, productFilter.DeliveryMethodsIds);
-            products = await FilterBySpecificFieldsValues(products, productFilter.SpecificFieldsFilters);
+            products = await FilterBySpecificFields(products, productFilter.SpecificFieldsFilters);
+            products = await FilterByPageIndex(products, pageIndex, pageSize);
 
             return await products.ToListAsync();
+        }
+
+        private async Task<IQueryable<Product>> FilterByPageIndex(IQueryable<Product> products, int? pageIndex = null, int? pageSize = null)
+        {
+            if (pageIndex == null || pageSize == null)
+                return products;
+
+            int numberOfElementsOnPreviousPages = (int)((pageIndex - 1) * pageSize);
+
+            return products.Skip(numberOfElementsOnPreviousPages).Take((int)pageSize);
         }
 
         private async Task<IQueryable<Product>> FilterByNameSearch(IQueryable<Product> products, string searchName)
@@ -142,16 +157,13 @@ namespace Aledrogo.Repositories
                                           .Any()));
         }
 
-        private async Task<IQueryable<Product>> FilterBySpecificFieldsValues(IQueryable<Product> products, IEnumerable<SpecificFieldFilter> specificFieldsFilters)
+        private async Task<IQueryable<Product>> FilterBySpecificFields(IQueryable<Product> products, IEnumerable<SpecificFieldFilter> specificFieldsFilters)
         {
             if (!specificFieldsFilters.Any())
                 return products;
 
             return products.Where(p => (specificFieldsFilters // CHECK IF PRODUCT CONTAINS SpecificFieldValue FOR SpecificField
-                                        .All(sff => p.ProductSpecificFieldsValues
-                                                    .Select(psfv => psfv.SpecificFieldValue.SpecificFieldId)
-                                                     .Contains(sff.SpecificFieldId) == false ||
-
+                                        .All(sff =>
                                                    (sff.SpecificFieldValueId != null // CHECK IF SpecificFieldValue OF PRODUCT EQUALS TO SpecificFieldValue IN FILTER
                                                     && p.ProductSpecificFieldsValues
                                                      .Where(psfv => psfv.SpecificFieldValue.SpecificFieldId == sff.SpecificFieldId

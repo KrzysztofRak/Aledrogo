@@ -58,7 +58,7 @@ namespace Aledrogo
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IProductRepository, ProductRespository>();
             services.AddScoped<IAddressRespository, AddressRespository>();
-            services.AddSingleton<ICategoryCache, CategoryCache>();
+            services.AddScoped<ICategoryCache, CategoryCache>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
