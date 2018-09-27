@@ -71,7 +71,7 @@ namespace Aledrogo
             {
                 IServiceProvider serviceProvider = scope.ServiceProvider;
 
-                // InitializeDatabaseWithSeedData(serviceProvider);
+                InitializeDatabaseWithSeedData(serviceProvider);
             }
 
             if (env.IsDevelopment())

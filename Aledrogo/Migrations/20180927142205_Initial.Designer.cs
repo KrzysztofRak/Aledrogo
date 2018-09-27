@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Aledrogo.Migrations
 {
     [DbContext(typeof(AledrogoContext))]
-    [Migration("20180904135224_Initial")]
+    [Migration("20180927142205_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -106,11 +106,13 @@ namespace Aledrogo.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<byte>("DeliveryTime");
+
                     b.Property<bool>("IsSafe");
 
                     b.Property<string>("Name");
 
-                    b.Property<decimal?>("Price");
+                    b.Property<decimal>("Price");
 
                     b.HasKey("Id");
 
@@ -229,8 +231,6 @@ namespace Aledrogo.Migrations
 
                     b.Property<DateTime>("StartDate");
 
-                    b.Property<int>("TypeOfOffer");
-
                     b.Property<long>("ViewsNumber");
 
                     b.HasKey("Id");
@@ -305,7 +305,7 @@ namespace Aledrogo.Migrations
 
                     b.Property<int>("CategoryId");
 
-                    b.Property<bool>("IsCustomNumericValue");
+                    b.Property<bool>("IsRangeValue");
 
                     b.Property<bool>("IsRequired");
 

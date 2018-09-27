@@ -104,11 +104,13 @@ namespace Aledrogo.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<byte>("DeliveryTime");
+
                     b.Property<bool>("IsSafe");
 
                     b.Property<string>("Name");
 
-                    b.Property<decimal?>("Price");
+                    b.Property<decimal>("Price");
 
                     b.HasKey("Id");
 
@@ -227,8 +229,6 @@ namespace Aledrogo.Migrations
 
                     b.Property<DateTime>("StartDate");
 
-                    b.Property<int>("TypeOfOffer");
-
                     b.Property<long>("ViewsNumber");
 
                     b.HasKey("Id");
@@ -303,7 +303,7 @@ namespace Aledrogo.Migrations
 
                     b.Property<int>("CategoryId");
 
-                    b.Property<bool>("IsCustomNumericValue");
+                    b.Property<bool>("IsRangeValue");
 
                     b.Property<bool>("IsRequired");
 

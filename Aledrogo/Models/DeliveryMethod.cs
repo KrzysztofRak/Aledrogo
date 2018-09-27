@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Aledrogo.Models
 {
@@ -10,6 +11,9 @@ namespace Aledrogo.Models
 
         public string Name { get; set; }
         public bool IsSafe { get; set; } = true;
-        public decimal? Price { get; set; } = null;
+        public decimal Price { get; set; }
+        [Required]
+        [Range(1, 14)]
+        public byte DeliveryTime { get; set; }
     }
 }

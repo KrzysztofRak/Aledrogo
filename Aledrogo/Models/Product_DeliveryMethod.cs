@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Aledrogo.Models
+﻿namespace Aledrogo.Models
 {
     public class Product_DeliveryMethod
     {

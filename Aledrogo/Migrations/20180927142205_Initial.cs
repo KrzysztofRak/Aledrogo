@@ -77,7 +77,8 @@ namespace Aledrogo.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
                     IsSafe = table.Column<bool>(nullable: false),
-                    Price = table.Column<decimal>(nullable: true)
+                    Price = table.Column<decimal>(nullable: false),
+                    DeliveryTime = table.Column<byte>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -237,7 +238,7 @@ namespace Aledrogo.Migrations
                     CategoryId = table.Column<int>(nullable: false),
                     Name = table.Column<string>(maxLength: 100, nullable: false),
                     IsRequired = table.Column<bool>(nullable: false),
-                    IsCustomNumericValue = table.Column<bool>(nullable: false),
+                    IsRangeValue = table.Column<bool>(nullable: false),
                     MinNumericValue = table.Column<int>(nullable: true),
                     MaxNumericValue = table.Column<int>(nullable: true)
                 },
@@ -265,7 +266,6 @@ namespace Aledrogo.Migrations
                     Description = table.Column<string>(maxLength: 10000, nullable: false),
                     MinimalPrice = table.Column<decimal>(nullable: false),
                     Price = table.Column<decimal>(nullable: false),
-                    TypeOfOffer = table.Column<int>(nullable: false),
                     DaysForReturn = table.Column<int>(nullable: false),
                     ItemsInStock = table.Column<int>(nullable: false),
                     ShippingTimeInWorkingDays = table.Column<byte>(nullable: false),
@@ -323,8 +323,8 @@ namespace Aledrogo.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    UserId = table.Column<string>(nullable: true),
                     ProductId = table.Column<int>(nullable: false),
+                    UserId = table.Column<string>(nullable: true),
                     Quantity = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
